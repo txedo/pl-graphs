@@ -90,7 +90,11 @@ public static final int ERROR_MSG_IDENT = 0;
 public static final int ERROR_SYNTAX  = 1;
 
 private Symbol symbol (int type) {
-	return new Symbol(type,yyline,yycolumn);
+	return new Symbol(type,yyline+1,yycolumn+1);
+}
+
+private Symbol symbol (int type, Object val) {
+	return new Symbol(type,yyline+1,yycolumn+1,val);
 }
 
 %}
@@ -117,12 +121,12 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 						if (yytext().equals("node")) return symbol(sym.node);
 						if (yytext().equals("edge")) return symbol(sym.edge);
 					} else {
-						if (yytext().equals("minimumSpanningTree")) return symbol(sym.operadorUnario);
-						if (yytext().equals("shortestPath")) return symbol(sym.operadorBinario);
-						if (yytext().equals("union")) return symbol(sym.operadorQuinario);
+						if (yytext().equals("minimumSpanningTree")) return symbol(sym.operadorUnario, yytext());
+						if (yytext().equals("shortestPath")) return symbol(sym.operadorBinario, yytext());
+						if (yytext().equals("union")) return symbol(sym.operadorQuinario, yytext());
 					}
 				} else {
-					return symbol(sym.ident);
+					return symbol(sym.ident, yytext());
 				}
 			}
 	"{"	{ return symbol(sym.l_bracket); }
@@ -132,9 +136,9 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 	";"	{ return symbol(sym.semicolon); }
 	","	{ return symbol(sym.comma); }
 	"="	{ return symbol(sym.equal); }
-	"-" | "->"	{ return symbol(sym.connector); }
-	[a-zA-Z][a-zA-Z0-9]*	{ return symbol(sym.ident); }
-	0 | [1-9][0-9]*	{ return symbol(sym.number); }
+	"-" | "->"	{ return symbol(sym.connector, yytext()); }
+	[a-zA-Z][a-zA-Z0-9]*	{ return symbol(sym.ident, yytext()); }
+	0 | [1-9][0-9]*	{ return symbol(sym.number, yytext()); }
 	"*/"	{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 	[0-9][a-zA-Z0-9]*	{ System.out.println(Utility.errorMsg(ERROR_MSG_IDENT)+" <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 	{WhiteSpace}	{ }
