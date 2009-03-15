@@ -1,0 +1,10 @@
+/* Ejemplo de un grafo no dirigido y no valorado */
+graph Grafo1 {
+	node A, B;
+	edge X;
+
+	X = A - B;
+
+	op shortestPath (A, E);
+	op minimumSpanningTree (D);
+};

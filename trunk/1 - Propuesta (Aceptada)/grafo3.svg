@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2636"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="grafo3.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs2638">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective2644" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="350"
+     inkscape:cy="806.05703"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="753"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata2641">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000"
+       id="path2385"
+       sodipodi:cx="113.13708"
+       sodipodi:cy="260.40259"
+       sodipodi:rx="38.385796"
+       sodipodi:ry="38.385796"
+       d="M 151.52287,260.40259 A 38.385796,38.385796 0 1 1 74.751282,260.40259 A 38.385796,38.385796 0 1 1 151.52287,260.40259 z"
+       transform="translate(5.4517671,-154.12353)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000"
+       id="path2402"
+       sodipodi:cx="113.13708"
+       sodipodi:cy="260.40259"
+       sodipodi:rx="38.385796"
+       sodipodi:ry="38.385796"
+       d="M 151.52287,260.40259 A 38.385796,38.385796 0 1 1 74.751282,260.40259 A 38.385796,38.385796 0 1 1 151.52287,260.40259 z"
+       transform="translate(226.607,-150.60796)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000"
+       id="path2404"
+       sodipodi:cx="113.13708"
+       sodipodi:cy="260.40259"
+       sodipodi:rx="38.385796"
+       sodipodi:ry="38.385796"
+       d="M 151.52287,260.40259 A 38.385796,38.385796 0 1 1 74.751282,260.40259 A 38.385796,38.385796 0 1 1 151.52287,260.40259 z"
+       transform="translate(123.99497,-37.618068)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000"
+       id="path2406"
+       sodipodi:cx="113.13708"
+       sodipodi:cy="260.40259"
+       sodipodi:rx="38.385796"
+       sodipodi:ry="38.385796"
+       d="M 151.52287,260.40259 A 38.385796,38.385796 0 1 1 74.751282,260.40259 A 38.385796,38.385796 0 1 1 151.52287,260.40259 z"
+       transform="translate(6.7013139,80.631361)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000"
+       id="path2422"
+       sodipodi:cx="113.13708"
+       sodipodi:cy="260.40259"
+       sodipodi:rx="38.385796"
+       sodipodi:ry="38.385796"
+       d="M 151.52287,260.40259 A 38.385796,38.385796 0 1 1 74.751282,260.40259 A 38.385796,38.385796 0 1 1 151.52287,260.40259 z"
+       transform="translate(368.27408,-30.472845)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2424"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       transform="translate(9.2682995,-96.003863)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion2426"><rect
+           id="rect2428"
+           width="33.57143"
+           height="40"
+           x="96.428574"
+           y="181.6479"
+           style="font-size:40px;fill:#ffffff" /></flowRegion><flowPara
+         id="flowPara2430">A</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="327.12546"
+       y="124.21544"
+       id="text2432"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2434"
+         x="327.12546"
+         y="124.21544">B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="104.2683"
+       y="355.64401"
+       id="text2436"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2438"
+         x="104.2683"
+         y="355.64401">D</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="222.12543"
+       y="236.35834"
+       id="text2440"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2442"
+         x="222.12543"
+         y="236.35834">C</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="467.83975"
+       y="242.78691"
+       id="text2444"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2446"
+         x="467.83975"
+         y="242.78691">E</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000"
+       id="path2681"
+       sodipodi:cx="113.13708"
+       sodipodi:cy="260.40259"
+       sodipodi:rx="38.385796"
+       sodipodi:ry="38.385796"
+       d="M 151.52287,260.40259 A 38.385796,38.385796 0 1 1 74.751282,260.40259 A 38.385796,38.385796 0 1 1 151.52287,260.40259 z"
+       transform="translate(226.86291,85.531023)"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="326.42859"
+       y="359.50507"
+       id="text2683"
+       inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\grafo1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan2685"
+         x="326.42859"
+         y="359.50507">F</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 157.14286,107.36218 C 301.42857,107.36218 301.42857,107.36218 301.42857,107.36218"
+       id="path2691" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 143.57143,134.50504 C 208.57143,197.36218 208.57143,197.36218 208.57143,197.36218"
+       id="path2693" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 119.28571,145.21932 C 119.28571,302.36218 119.28571,302.36218 119.28571,302.36218"
+       id="path2695" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 212.85714,251.6479 C 153.57143,321.6479 153.57143,321.6479 153.57143,321.6479"
+       id="path2697" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 158.57143,345.21932 C 308.57143,345.21932 308.57143,345.21932 308.57143,345.21932"
+       id="path2699" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 372.85714,126.6479 C 454.28571,203.79075 454.28571,203.79075 454.28571,203.79075"
+       id="path2705" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.91500503px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 373.52894,327.40468 C 454.32821,256.6054 454.32821,256.6054 454.32821,256.6054"
+       id="path2707" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="212.14285"
+       y="103.07647"
+       id="text2709"><tspan
+         sodipodi:role="line"
+         id="tspan2711"
+         x="212.14285"
+         y="103.07647">X = 7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="175.71428"
+       y="162.36217"
+       id="text2713"><tspan
+         sodipodi:role="line"
+         id="tspan2715"
+         x="175.71428"
+         y="162.36217">Y = 9</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="67.14286"
+       y="225.93359"
+       id="text2717"><tspan
+         sodipodi:role="line"
+         id="tspan2719"
+         x="67.14286"
+         y="225.93359">Z = 5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="138.57143"
+       y="278.07648"
+       id="text2721"><tspan
+         sodipodi:role="line"
+         id="tspan2723"
+         x="138.57143"
+         y="278.07648">V = 3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="201.42857"
+       y="339.50504"
+       id="text2725"><tspan
+         sodipodi:role="line"
+         id="tspan2727"
+         x="201.42857"
+         y="339.50504">W = 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="414.28571"
+       y="156.64789"
+       id="text2729"><tspan
+         sodipodi:role="line"
+         id="tspan2731"
+         x="414.28571"
+         y="156.64789">M = 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="416.42856"
+       y="309.50504"
+       id="text2733"><tspan
+         sodipodi:role="line"
+         id="tspan2735"
+         x="416.42856"
+         y="309.50504">N = 6</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 289.28571,99.505039 C 289.28571,99.505039 289.28571,99.505039 300,106.6479 C 290.71429,115.93361 290.71429,115.93361 290.71429,115.93361"
+       id="path2757" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 155.71429,133.79075 C 155.71429,133.79075 155.71429,133.79075 143.57143,133.79075 C 142.85714,146.6479 142.85714,146.6479 142.85714,146.6479"
+       id="path2761" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 127.14286,294.50504 C 127.14286,294.50504 127.14286,294.50504 119.28571,302.36218 C 110,293.79075 110,293.79075 110,293.79075"
+       id="path2763" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 212.14286,266.6479 C 212.14286,266.6479 212.14286,266.6479 212.14286,253.07647 C 200.71429,253.07647 200.71429,253.07647 200.71429,253.07647"
+       id="path2765" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 453.57143,203.07647 C 452.85714,191.6479 452.85714,191.6479 452.85714,191.6479"
+       id="path2767" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 452.85714,203.79075 C 440,200.21932 440,200.21932 440,200.21932"
+       id="path2769" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 374.28571,315.21932 C 374.28571,315.21932 375.71429,315.21932 372.14286,327.36218 C 384.28571,328.79075 384.28571,328.79075 384.28571,328.79075"
+       id="path2771" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 171.42857,336.6479 C 171.42857,336.6479 171.42857,336.6479 158.57143,344.50504 C 172.14286,355.93361 172.14286,355.93361 172.14286,355.93361"
+       id="path2773" />
+  </g>
+</svg>

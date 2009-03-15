@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docname="diagramasT.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\diagramasT.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.85876191"
+     inkscape:cx="559.26082"
+     inkscape:cy="465.20461"
+     inkscape:document-units="px"
+     inkscape:current-layer="g3457"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="785"
+     inkscape:window-x="0"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3216"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Arial;font-style:normal;font-weight:normal;font-size:40px;text-anchor:middle;text-align:center;-inkscape-font-specification:Arial;font-stretch:normal;font-variant:normal"><flowRegion
+         id="flowRegion3218"><rect
+           id="rect3220"
+           width="101.30864"
+           height="79.183762"
+           x="29.111677"
+           y="44.249748"
+           style="text-anchor:middle;text-align:center;-inkscape-font-specification:Arial;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal" /></flowRegion><flowPara
+         id="flowPara3222" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3224"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"><flowRegion
+         id="flowRegion3226"><rect
+           id="rect3228"
+           width="93.157372"
+           height="86.170563"
+           x="36.09848"
+           y="40.756348"
+           style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
+         id="flowPara3230">Graphsgr</flowPara></flowRoot>    <g
+       id="g3497">
+      <path
+         id="rect3153"
+         d="M 18.549428,19.699079 L 18.549428,152.63658 L 135.61193,152.63658 L 135.61193,279.76158 L 297.58068,279.76158 L 297.58068,152.63658 L 422.79943,152.63658 L 422.79943,19.699079 L 18.549428,19.699079 z"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.82076693;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         id="text3240"
+         y="101.30864"
+         x="29.111677"
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="101.30864"
+           x="29.111677"
+           id="tspan3242"
+           sodipodi:role="line">GraphS</tspan></text>
+      <flowRoot
+         style="font-size:28px;font-style:normal;font-weight:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3248"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3250"><rect
+             style="text-align:center;text-anchor:middle"
+             y="176.99899"
+             x="159.532"
+             height="79.183762"
+             width="109.45991"
+             id="rect3252" /></flowRegion><flowPara
+           id="flowPara3254" /><flowPara
+           id="flowPara3256">Java</flowPara></flowRoot>      <flowRoot
+         style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3282"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3284"><rect
+             style="font-size:18px"
+             y="33.769547"
+             x="300.43253"
+             height="110.62437"
+             width="114.11777"
+             id="rect3286" /></flowRegion><flowPara
+           id="flowPara3288" /><flowPara
+           id="flowPara3290">Graph Visualization and Layout</flowPara></flowRoot>    </g>
+    <g
+       id="g3464">
+      <path
+         id="path3194"
+         d="M 626.97558,22.513943 L 626.97558,155.45144 L 744.03808,155.45144 L 744.03808,282.57644 L 906.00683,282.57644 L 906.00683,155.45144 L 1031.2256,155.45144 L 1031.2256,22.513943 L 626.97558,22.513943 z"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.82076693;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         id="text3296"
+         y="102.47311"
+         x="639.29242"
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="102.47311"
+           x="639.29242"
+           id="tspan3298"
+           sodipodi:role="line">GraphS</tspan></text>
+      <flowRoot
+         style="font-size:18px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3312"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3314"><rect
+             style="font-size:18px"
+             y="36.09848"
+             x="903.62646"
+             height="104.80204"
+             width="118.77564"
+             id="rect3316" /></flowRegion><flowPara
+           id="flowPara3318" /><flowPara
+           id="flowPara3320">Graph Visualization and Layout</flowPara></flowRoot>      <flowRoot
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3352"
+         xml:space="preserve"
+         transform="translate(8.1512698,-16.30254)"><flowRegion
+           id="flowRegion3354"><rect
+             y="161.86093"
+             x="763.89044"
+             height="102.47311"
+             width="119.94011"
+             id="rect3356" /></flowRegion><flowPara
+           id="flowPara3358" /><flowPara
+           id="flowPara3362">  Bytecode</flowPara></flowRoot>    </g>
+    <g
+       id="g3480">
+      <path
+         id="path3192"
+         d="M 319.55627,173.89467 L 319.55627,306.83217 L 436.61877,306.83217 L 436.61877,433.95717 L 598.58752,433.95717 L 598.58752,306.83217 L 723.80627,306.83217 L 723.80627,173.89467 L 319.55627,173.89467 z"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.82076693;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <flowRoot
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3330"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3332"><rect
+             y="312.07718"
+             x="455.30664"
+             height="107.13097"
+             width="126.92692"
+             id="rect3334" /></flowRegion><flowPara
+           id="flowPara3336" /><flowPara
+           id="flowPara3340">  Código</flowPara><flowPara
+           id="flowPara3338">      M</flowPara></flowRoot>      <text
+         id="text3378"
+         y="209.60408"
+         x="338.85992"
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="209.60408"
+           x="338.85992"
+           id="tspan3380"
+           sodipodi:role="line" /><tspan
+           id="tspan3382"
+           y="244.60408"
+           x="338.85992"
+           sodipodi:role="line"> Java</tspan></text>
+      <flowRoot
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3384"
+         xml:space="preserve"
+         transform="translate(-13.973605,22.124875)"><flowRegion
+           id="flowRegion3386"><rect
+             y="199.12387"
+             x="604.35846"
+             height="38.42741"
+             width="128.09138"
+             id="rect3388" /></flowRegion><flowPara
+           id="flowPara3392">Bytecode</flowPara></flowRoot>    </g>
+    <g
+       id="g3450">
+      <rect
+         y="447.15536"
+         x="357.49139"
+         height="82.677162"
+         width="321.39291"
+         id="rect3400"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <flowRoot
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3434"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3436"><rect
+             y="477.43152"
+             x="405.23456"
+             height="44.249748"
+             width="224.74216"
+             id="rect3438" /></flowRegion><flowPara
+           id="flowPara3440">   Máquina - M</flowPara></flowRoot>    </g>
+    <g
+       id="g3457"
+       transform="translate(9.3157369,-2.3289342)">
+      <rect
+         y="318.48175"
+         x="674.22644"
+         height="82.677162"
+         width="321.39291"
+         id="rect3416"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <flowRoot
+         style="font-size:28px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         id="flowRoot3442"
+         xml:space="preserve"
+         transform="translate(-34.934013,-3.4934013)"><flowRegion
+           id="flowRegion3444"><rect
+             y="350.50461"
+             x="726.6275"
+             height="33.769547"
+             width="306.25485"
+             id="rect3446" /></flowRegion><flowPara
+           id="flowPara3448">  Java Virtual Machine</flowPara></flowRoot>    </g>
+  </g>
+</svg>
