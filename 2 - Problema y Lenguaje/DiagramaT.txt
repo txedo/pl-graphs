@@ -1,0 +1,3 @@
+Nuestro procesador de lenguajes va a ser programado en JAVA, tomando como entrada un lenguaje de especificación de grafos llamado GraphS, y cuya salida será Graph Visualization and Layout.
+
+Para ello, necesitamos otro procesador de lenguajes que convierta el lenguaje fuente JAVA a lenguaje máquina, para finalmente tener el procesador de lenguajes final en lenguaje máquina. La salida de este permitirá visualizar los grafos especificados e interaccionar con ellos.

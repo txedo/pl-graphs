@@ -1,0 +1,26 @@
+SYNTAX ::= DECL GRAPHS_SET
+GRAPHS_SET ::= GRAPH {GRAPH}
+GRAPH ::= graph ID '{' BODY '}' ';'
+BODY ::= (DECL ARCS | OPS_GEN) [OPS]
+DECL ::= {DECL_NODES | DECL_EDGES}
+DECL_NODES ::= node ID {',' ID} ';'
+DECL_EDGES ::= edge ID ['(' INT ')'] {',' ID ['(' INT ')']} ';'
+ARCS ::= ARC {ARC}
+ARC ::= ID '=' ID CONNECTOR ID ';'
+CONNECTOR ::= '-' | '->'
+OPS_GEN ::= OP_GEN
+OP_GEN::= OP5
+OPS ::= {OP}
+OP ::= (OP1 | OP2) ';'
+OP1 ::= OPN1 '(' ID ')'
+OPN1 ::= minimumSpanningTree
+OP2 ::= OPN2 '(' ID ',' ID ')'
+OPN2 ::= shortestPath
+OP5 ::= OPN5 '(' ID ',' ID ',' ID ',' ID ',' ID ')'
+OPN5 ::= union
+ID ::= (MAYUS | MINUS) {MAYUS | MINUS | DIGITO}
+INT ::= 0 | DIG {DIGITO}
+MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
+MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
+DIG ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+DIGITO ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9

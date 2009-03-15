@@ -1,0 +1,60 @@
+/* Esto es un comentario */
+//Esto tambien es un comentario
+
+/* Ejemplo de un grafo no dirigido y no valorado */
+graph Grafo1 {
+	//Declaracion de nodos
+	node A, B, C, D;
+	node E;
+	//declaracion de aristas
+	edge X, Y, Z, V, W; //no valoradas. Seria como poner X(0), Y(0)...
+	edge M;
+
+	//Conexion de nodos. El "-" indica una arista no dirigida.
+	X = A - B;
+	Y = A - D;
+	V = A - C;
+	Z = B - D;
+	W = C - D;
+	M = C - E;
+
+	//definicion de operaciones
+	op shortestPath (A, E); //Dijkstra o Floyd -> weighted and directed graphs
+	op minimumSpanningTree (D); //Kruskal o Prim -> weighted graph
+};
+
+
+/* Ejemplo de un grafo no dirigido y valorado */
+graph Grafo2 {
+	node A, B, C, D, E, F;
+	edge X(7), Y(9), Z(5), V(3), W(2), M(1), N(6);
+
+	X = A - B;
+	Y = A - C;
+	Z = A - D;
+	V = D - C;
+	W = D - F;
+	M = B - E;
+	N = F - E;
+
+	op shortestPath (A, F);
+	op minimumSpanningTree (E);
+};
+
+
+/* Ejemplo de un grafo dirigido y valorado */
+graph Grafo3 {
+	node A, B, C, D, E, F;
+	edge X(7), Y(9), Z(5), V(3), W(2), M(1), N(6);
+
+	X = A -> B; //"A -> B" indica una arista dirigida con origen en A y destino en B
+	Y = C -> A;
+	Z = A -> D;
+	V = D -> C;
+	W = F -> D;
+	M = B -> E;
+	N = E -> F;
+
+	op shortestPath (A, F);
+	op minimumSpanningTree (E);
+};

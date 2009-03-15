@@ -1,0 +1,10 @@
+/* Ejemplo de un grafo dirigido y valorado */
+graph 999Grafo2 {
+	node 0A, B0;
+	edge X(7);
+
+	X += A - B;
+
+	op shortestPath (A, F);
+	op minimumSpanningTree (E);
+};
