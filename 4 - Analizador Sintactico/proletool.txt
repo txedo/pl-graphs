@@ -1,0 +1,52 @@
+grammar graphs
+{
+	analysis LALR1;
+	terminal graph, node, edge, operadorUnario, operadorBinario, operadorQuinario, l_bracket, r_bracket, l_paren, r_paren, semicolon, comma, equal, connector, ident, number;
+	nonterminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES, MORE_NODES, MORE_EDGES, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+	
+	SYNTAX		:= DECL GRAPHS_SET 
+			;
+	GRAPHS_SET 	:= GRAPH GRAPHS_SET 
+			| 
+			;
+	GRAPH 		:= graph ident l_bracket BODY r_bracket semicolon
+			;
+	BODY 		:= DECL ARC ARCS OPS 
+			|   OPS_GEN   OPS
+			;
+	DECL 		:= DECL_NODES 
+			|   DECL_EDGES
+			|
+			;
+	DECL_NODES 	:= node ident MORE_NODES semicolon DECL 
+			;
+	MORE_NODES	:= comma ident MORE_NODES
+			|
+			;
+	DECL_EDGES 	:= edge ident                        MORE_EDGES semicolon DECL 
+			|   edge ident l_paren number r_paren MORE_EDGES semicolon DECL
+			;
+	MORE_EDGES 	:= comma ident                        MORE_EDGES 
+			|   comma ident l_paren number r_paren MORE_EDGES 
+			| 
+			;
+	ARCS 		:= ARC ARCS
+			|
+			;
+	ARC 		:= ident equal ident connector ident semicolon 
+			;
+	OPS_GEN 	:= OP5 semicolon
+			;
+	OPS 		:= OP OPS 
+			| 
+			;
+	OP 		:= OP1 semicolon 
+			|   OP2 semicolon
+			;
+	OP1 		:= operadorUnario   l_paren ident                                                 r_paren
+			;
+	OP2 		:= operadorBinario  l_paren ident comma ident                                     r_paren
+			;
+	OP5 		:= operadorQuinario l_paren ident comma ident comma ident comma ident comma ident r_paren
+			;
+}
