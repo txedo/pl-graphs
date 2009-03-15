@@ -2,6 +2,28 @@
 import java_cup.runtime.*;
 
 /* Componentes de codigo de usuario */
+parser code {:
+	public void report_error (String message, Object info) {
+		StringBuffer m = new StringBuffer("Error");
+
+		if (info instanceof java_cup.runtime.Symbol) {
+			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+			if (s.left >= 0) {
+				m.append(" en la linea "+(s.left));
+				if (s.right >= 0)
+					m.append(", columna "+(s.right));
+			}
+		}
+		m.append(" : "+message);
+		System.err.println(m);
+	}
+
+	public void report_fatal_error(String message, Object info) {
+		report_error(message,info);
+		System.exit(1);
+	}
+:};
+
 
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
 terminal graph, node, edge, operadorUnario, operadorBinario, operadorQuinario;
@@ -19,6 +41,16 @@ GRAPHS_SET 	::= GRAPH GRAPHS_SET
 		| 
 		;
 GRAPH 		::= graph ident l_bracket BODY r_bracket semicolon
+		| error ident l_bracket BODY r_bracket semicolon
+			{: parser.report_error("Error de sintaxis: La definicion del grafo debe iniciarse con la palabra reservada graph",null); :}
+		| error l_bracket BODY r_bracket semicolon
+			{: parser.report_error("Error de sintaxis: No existe identificador de grafo",null); :}
+		| error r_bracket semicolon
+			{: parser.report_error("Error de sintaxis: No se encuentra la apertura de bloque en la definicion del grafo",null); :}
+		| error semicolon
+			{: parser.report_error("Error de sintaxis: No se encuentra el cierre de bloque en la definicion del grafo",null); :}
+		| error
+			{: parser.report_error("Error de sintaxis. Es necesario finalizar la definicion del grafo con el caracter punto y coma",null); :}
 		;
 BODY 		::= DECL ARC ARCS OPS 
 		|   OPS_GEN   OPS
