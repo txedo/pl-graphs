@@ -13,9 +13,10 @@ non terminal IDENTS, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5
 /* Declaraciones de precedencia */
 
 /* Especificación de la gramatica */
-SYNTAX		::= DECL GRAPHS_SET 
+SYNTAX		::=      GRAPHS_SET
+		|   DECL GRAPHS_SET 
 		;
-GRAPHS_SET 	::= GRAPH
+GRAPHS_SET 	::= GRAPH 
 		|   GRAPH GRAPHS_SET
 		;
 GRAPH 		::= graph ident l_bracket BODY r_bracket semicolon
@@ -25,11 +26,13 @@ BODY 		::= DECL ARCS OPS
 		;
 DECL 		::= DECL_NODES 
 		|   DECL_EDGES
-		|   /* empty */
 		;
-DECL_NODES 	::= node IDENTS semicolon DECL 
+DECL_NODES 	::= node IDENTS semicolon
+		|   node IDENTS semicolon DECL 
 		;
-DECL_EDGES 	::= edge IDENTS semicolon DECL 
+DECL_EDGES 	::= edge IDENTS          semicolon
+		|   edge IDENTS          semicolon DECL 
+		|   edge IDENTS_WEIGHTED semicolon
 		|   edge IDENTS_WEIGHTED semicolon DECL
 		;
 IDENTS		::= ident
