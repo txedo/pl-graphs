@@ -5,6 +5,6 @@ graph 999Grafo2 {
 
 	X += A - B;
 
-	op shortestPath (A, F);
+	shortestPath (A, F);
 	op minimumSpanningTree (E);
 };
