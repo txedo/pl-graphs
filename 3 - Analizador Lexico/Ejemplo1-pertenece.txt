@@ -5,6 +5,6 @@ graph Grafo1 {
 
 	X = A - B;
 
-	op shortestPath (A, E);
-	op minimumSpanningTree (D);
+	shortestPath (A, E);
+	minimumSpanningTree (D);
 };
