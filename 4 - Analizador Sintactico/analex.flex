@@ -23,7 +23,7 @@ class Utility {
 		if (cadena.equals("graph")) token = "graph";
 		else if (cadena.equals("node")) token = "node";
 		else if (cadena.equals("edge")) token = "edge";
-		else if (cadena.equals("minimumSpanningTree")) token = "operadorBinario";
+		else if (cadena.equals("minimumSpanningTree")) token = "operadorUnario";
 		else if (cadena.equals("shortestPath")) token = "operadorBinario";
 		else if (cadena.equals("union")) token = "operadorQuinario";
 		else System.out.println (":: ERROR. El lexema no se encuentra asociado a ningun token.");
@@ -112,37 +112,36 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 <YYINITIAL> {
 	"//"	{ yybegin(COMMENT); }
 	"/*"	{ yybegin(COMMENTM); }
-	[a-z][a-zA-Z]*	{
-				if (Utility.isKeyword(yytext())) {
-					String Keyword = new String();
-					Keyword = Utility.Keyword(yytext());
-					if (Keyword.equals(yytext())) {
-						if (yytext().equals("graph")) return symbol(sym.graph);
-						if (yytext().equals("node")) return symbol(sym.node);
-						if (yytext().equals("edge")) return symbol(sym.edge);
+	[a-zA-Z][a-zA-Z0-9]*	{
+					if (Utility.isKeyword(yytext())) {
+						String Keyword = new String();
+						Keyword = Utility.Keyword(yytext());
+						if (Keyword.equals(yytext())) {
+							if (yytext().equals("graph")) return symbol(sym.graph);
+							if (yytext().equals("node")) return symbol(sym.node);
+							if (yytext().equals("edge")) return symbol(sym.edge);
+						} else {
+							if (yytext().equals("minimumSpanningTree")) return symbol(sym.operadorUnario, yytext());
+							if (yytext().equals("shortestPath")) return symbol(sym.operadorBinario, yytext());
+							if (yytext().equals("union")) return symbol(sym.operadorQuinario, yytext());
+						}
 					} else {
-						if (yytext().equals("minimumSpanningTree")) return symbol(sym.operadorUnario, yytext());
-						if (yytext().equals("shortestPath")) return symbol(sym.operadorBinario, yytext());
-						if (yytext().equals("union")) return symbol(sym.operadorQuinario, yytext());
+						return symbol(sym.ident, yytext());
 					}
-				} else {
-					return symbol(sym.ident, yytext());
 				}
-			}
-	"{"	{ return symbol(sym.l_bracket); }
-	"}"	{ return symbol(sym.r_bracket); }
-	"("	{ return symbol(sym.l_paren); }
-	")"	{ return symbol(sym.r_paren); }
-	";"	{ return symbol(sym.semicolon); }
-	","	{ return symbol(sym.comma); }
-	"="	{ return symbol(sym.equal); }
-	"-" | "->"	{ return symbol(sym.connector, yytext()); }
-	[a-zA-Z][a-zA-Z0-9]*	{ return symbol(sym.ident, yytext()); }
-	0 | [1-9][0-9]*	{ return symbol(sym.number, yytext()); }
-	"*/"	{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"{"			{ return symbol(sym.l_bracket); }
+	"}"			{ return symbol(sym.r_bracket); }
+	"("			{ return symbol(sym.l_paren); }
+	")"			{ return symbol(sym.r_paren); }
+	";"			{ return symbol(sym.semicolon); }
+	","			{ return symbol(sym.comma); }
+	"="			{ return symbol(sym.equal); }
+	"-" | "->"		{ return symbol(sym.connector, yytext()); }
+	0 | [1-9][0-9]*		{ return symbol(sym.number, yytext()); }
+	"*/"			{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 	[0-9][a-zA-Z0-9]*	{ System.out.println(Utility.errorMsg(ERROR_MSG_IDENT)+" <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
-	{WhiteSpace}	{ }
-	.	{ System.out.println("Expresion ilegal <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
+	{WhiteSpace}		{ }
+	.			{ System.out.println("Expresion ilegal <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 
 }
 
