@@ -3,7 +3,7 @@
 /* Codigo de usuario */
 
 class Utility {
-	public static final String Keywords[] = {"graph","node","edge","op","minimumSpanningTree","shortestPath","union"};
+	public static final String Keywords[] = {"graph","node","edge","minimumSpanningTree","shortestPath","union"};
 	public static final String errorMsg[] = {
 		"Identificador no valido",
 		"Error de sintaxis"
@@ -23,8 +23,7 @@ class Utility {
 		if (cadena.equals("graph")) token = "graph";
 		else if (cadena.equals("node")) token = "node";
 		else if (cadena.equals("edge")) token = "edge";
-		else if (cadena.equals("op")) token = "op";
-		else if (cadena.equals("minimumSpanningTree")) token = "operadorBinario";
+		else if (cadena.equals("minimumSpanningTree")) token = "operadorUnario";
 		else if (cadena.equals("shortestPath")) token = "operadorBinario";
 		else if (cadena.equals("union")) token = "operadorQuinario";
 		else System.out.println (":: ERROR. El lexema no se encuentra asociado a ningun token.");
@@ -106,34 +105,33 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 <YYINITIAL> {
 	"//"	{ yybegin(COMMENT); }
 	"/*"	{ yybegin(COMMENTM); }
-	[a-z][a-zA-Z]*	{
-				if (Utility.isKeyword(yytext())) {
-					String Keyword = new String();
-					Keyword = Utility.Keyword(yytext());
-					if (Keyword.equals(yytext())) {
-						System.out.println ("Token reconocido: "+Keyword+" id(14) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); 
+	[a-zA-Z][a-zA-Z0-9]*	{
+					if (Utility.isKeyword(yytext())) {
+						String Keyword = new String();
+						Keyword = Utility.Keyword(yytext());
+						if (Keyword.equals(yytext())) {
+							System.out.println ("Token reconocido: "+Keyword+" id(13) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); 	
+						} else {
+							System.out.println ("Token reconocido: "+Keyword+" id(13) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1));	
+						}
 					} else {
-						System.out.println ("Token reconocido: "+Keyword+" id(14) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1));
+						System.out.println("Token reconocido: ident id(13) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1));
 					}
-				} else {
-					System.out.println("Token reconocido: ident id(12) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1));
 				}
-			}
-	"{"	{ System.out.println("Token reconocido: { id(2) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"}"	{ System.out.println("Token reconocido: } id(3) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"("	{ System.out.println("Token reconocido: ( id(4) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	")"	{ System.out.println("Token reconocido: ) id(5) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	";"	{ System.out.println("Token reconocido: ; id(6) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	","	{ System.out.println("Token reconocido: , id(7) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"="	{ System.out.println("Token reconocido: = id(8) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"-"	{ System.out.println("Token reconocido: - id(9) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"->"	{ System.out.println("Token reconocido: -> id(11) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	[a-zA-Z][a-zA-Z0-9]*	{ System.out.println("Token reconocido: ident id(12) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	0 | [1-9][0-9]*	{ System.out.println("Token reconocido: int id(13) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"*/"	{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"{"			{ System.out.println("Token reconocido: { id(2) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"}"			{ System.out.println("Token reconocido: } id(3) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"("			{ System.out.println("Token reconocido: ( id(4) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	")"			{ System.out.println("Token reconocido: ) id(5) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	";"			{ System.out.println("Token reconocido: ; id(6) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	","			{ System.out.println("Token reconocido: , id(7) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"="			{ System.out.println("Token reconocido: = id(8) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"-" | "->"		{ System.out.println("Token reconocido: - id(9) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	0			{ System.out.println("Token reconocido: number id(11) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	[1-9][0-9]*		{ System.out.println("Token reconocido: number id(12) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"*/"			{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 	[0-9][a-zA-Z0-9]*	{ System.out.println(Utility.errorMsg(ERROR_MSG_IDENT)+" <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
-	{WhiteSpace}	{ }
-	.	{ System.out.println("Expresion ilegal <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
+	{WhiteSpace}		{ }
+	.			{ System.out.println("Expresion ilegal <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 
 }
 
