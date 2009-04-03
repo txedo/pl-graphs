@@ -118,14 +118,14 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 						System.out.println("Token reconocido: ident id(13) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1));
 					}
 				}
-	"{"			{ System.out.println("Token reconocido: { id(2) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"}"			{ System.out.println("Token reconocido: } id(3) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"("			{ System.out.println("Token reconocido: ( id(4) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	")"			{ System.out.println("Token reconocido: ) id(5) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	";"			{ System.out.println("Token reconocido: ; id(6) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	","			{ System.out.println("Token reconocido: , id(7) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"="			{ System.out.println("Token reconocido: = id(8) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
-	"-" | "->"		{ System.out.println("Token reconocido: - id(9) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"{"			{ System.out.println("Token reconocido: l_bracket id(2) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"}"			{ System.out.println("Token reconocido: r_bracket id(3) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"("			{ System.out.println("Token reconocido: l_paren id(4) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	")"			{ System.out.println("Token reconocido: r_paren id(5) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	";"			{ System.out.println("Token reconocido: semicolon id(6) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	","			{ System.out.println("Token reconocido: comma id(7) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"="			{ System.out.println("Token reconocido: equal id(8) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
+	"-" | "->"		{ System.out.println("Token reconocido: connector id(9) Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
 	0			{ System.out.println("Token reconocido: number id(11) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
 	[1-9][0-9]*		{ System.out.println("Token reconocido: number id(12) Lexema: "+yytext()+" Linea: " +(yyline+1)+" Columna: "+(yycolumn+1)); }
 	"*/"			{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
