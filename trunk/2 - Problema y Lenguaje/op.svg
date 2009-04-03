@@ -16,7 +16,7 @@
    version="1.0"
    sodipodi:docname="op.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\op.png"
+   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\pl-graphs\2 - Problema y Lenguaje\op.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -94,25 +94,15 @@
        height="110.87569"
        x="585.60138"
        y="121.56115" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#ffffff;stroke:#000000;stroke-width:2.40317464;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path8130"
-       sodipodi:cx="654.43054"
-       sodipodi:cy="309.16602"
-       sodipodi:rx="69.868027"
-       sodipodi:ry="70.450256"
-       d="M 724.29857,309.16602 A 69.868027,70.450256 0 1 1 584.56252,309.16602 A 69.868027,70.450256 0 1 1 724.29857,309.16602 z"
-       transform="matrix(0.8440679,0,0,0.8205631,-205.9548,26.364095)" />
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="61.716759"
+       x="341.71677"
        y="287.62338"
        id="text8741"><tspan
          sodipodi:role="line"
          id="tspan8743"
-         x="61.716759"
+         x="341.71677"
          y="287.62338">OP</tspan></text>
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -122,27 +112,10 @@
        x="586.76581"
        y="316.02716" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
-       d="M 139.73605,281.80104 L 286.44143,280.56126"
-       id="path8747"
-       inkscape:connector-type="polyline"
-       inkscape:connection-end="#path8130" />
-    <text
-       xml:space="preserve"
-       style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="331.87314"
-       y="288.78784"
-       id="text8749"><tspan
-         sodipodi:role="line"
-         id="tspan8751"
-         x="331.87314"
-         y="288.78784">op</tspan></text>
-    <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
        d="M 406.41659,280.07199 L 495.39518,280.09821"
        id="path8753"
-       inkscape:connector-type="polyline"
-       inkscape:connection-start="#path8130" />
+       inkscape:connector-type="polyline" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
        d="M 495.26716,175.59054 L 495.40878,374.28658"

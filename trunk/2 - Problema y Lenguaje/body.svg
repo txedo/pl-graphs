@@ -16,7 +16,7 @@
    version="1.0"
    sodipodi:docname="body.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="E:\Universidad\Ingenieria Superior\Procesadores de Lenguajes\Practica\2 - Problema y Lenguaje\body.png"
+   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\pl-graphs\2 - Problema y Lenguaje\body.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -63,15 +63,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.807019"
-     inkscape:cx="427.02559"
+     inkscape:cx="270.27587"
      inkscape:cy="443.47509"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="785"
-     inkscape:window-x="0"
-     inkscape:window-y="0" />
+     inkscape:window-width="1440"
+     inkscape:window-height="844"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
   <metadata
      id="metadata2418">
     <rdf:RDF>
@@ -151,40 +151,21 @@
        inkscape:connector-type="polyline" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
-       d="M 206.09838,189.01077 L 101.0241,189.26726"
+       d="M 257.76948,190.27602 L 101.0241,189.26726"
        id="path3167"
-       inkscape:connector-type="polyline" />
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#g2417" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
        d="M 327.36844,416.82546 L 101.05526,418.05175"
        id="path4472"
        inkscape:connector-type="polyline" />
-    <g
-       id="g10781"
-       transform="translate(-130.10846,4.9565128)">
-      <rect
-         y="133.66197"
-         x="338.12012"
-         height="107.15916"
-         width="215.27083"
-         id="rect4486"
-         style="fill:#ffffff;stroke:#000000;stroke-width:2.08364797;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <text
-         id="text4488"
-         y="192.20563"
-         x="377.18045"
-         style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-         xml:space="preserve"><tspan
-           y="192.20563"
-           x="377.18045"
-           id="tspan4490"
-           sodipodi:role="line">DECL_LOCAL</tspan></text>
-    </g>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 424.65281,191.52544 L 525.98626,191.7502"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+       d="M 369.22939,190.92726 L 525.98626,191.7502"
        id="path4516"
-       inkscape:connector-type="polyline" />
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#g2417" />
     <g
        id="g10823"
        transform="translate(-100.92242,2.9855499)">
@@ -246,5 +227,26 @@
        d="M 997.4982,412.08 L 997.4982,304.13209"
        id="path2417"
        inkscape:connector-type="polyline" />
+    <g
+       id="g2417"
+       transform="translate(-397.08611,3.7173846)">
+      <rect
+         y="131.60512"
+         x="655.85559"
+         height="110.62437"
+         width="109.45991"
+         id="rect2419"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         id="text2421"
+         y="192.33669"
+         x="679.80176"
+         style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="192.33669"
+           x="679.80176"
+           id="tspan2423"
+           sodipodi:role="line">DECL</tspan></text>
+    </g>
   </g>
 </svg>
