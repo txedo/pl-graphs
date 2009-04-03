@@ -1,18 +1,17 @@
-SYNTAX ::= [DECL_GLOBAL] GRAPHS_SET
-DECL_GLOBAL ::= DECL
+SYNTAX ::= DECL GRAPHS_SET
 GRAPHS_SET ::= GRAPH {GRAPH}
 GRAPH ::= graph ID '{' BODY '}' ';'
-BODY ::= (DECL_LOCAL ARCS | OPS_GEN) [OPS]
-DECL_LOCAL ::= DECL
-DECL ::= DECL_NODES {DECL_NODES} DECL_EDGES {DECL_EDGES}
+BODY ::= (DECL ARCS | OPS_GEN) [OPS]
+DECL ::= {DECL_NODES | DECL_EDGES}
 DECL_NODES ::= node ID {',' ID} ';'
 DECL_EDGES ::= edge ID ['(' INT ')'] {',' ID ['(' INT ')']} ';'
 ARCS ::= ARC {ARC}
-ARC ::= ID '=' ID ('-' | '->') ID ';'
+ARC ::= ID '=' ID CONNECTOR ID ';'
+CONNECTOR ::= '-' | '->'
 OPS_GEN ::= OP_GEN
-OP_GEN::= op OP5
+OP_GEN::= OP5
 OPS ::= {OP}
-OP ::= op (OP1 | OP2) ';'
+OP ::= (OP1 | OP2) ';'
 OP1 ::= OPN1 '(' ID ')'
 OPN1 ::= minimumSpanningTree
 OP2 ::= OPN2 '(' ID ',' ID ')'
@@ -25,3 +24,6 @@ MAYUS ::= A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R 
 MINUS ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
 DIG ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 DIGITO ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+COMMENT ::= '/''/' {^LINETERMINATOR} LINETERMINATOR
+COMMENT_M ::= '/''*' {ANY_STRING | LINETERMINATOR} '*''/'
+LINETERMINATOR ::= \r | \n | \r\n
