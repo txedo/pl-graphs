@@ -18,7 +18,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jToolBar1" pref="396" max="32767" attributes="0"/>
+                          <Component id="toolBar" pref="416" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -28,65 +28,74 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jToolBar1" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="toolBar" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="255" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="254" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JToolBar" name="jToolBar1">
+        <Container class="javax.swing.JToolBar" name="toolBar">
           <Properties>
             <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="toolBar" noResource="true"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="newButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton1.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="newButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="newButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="newButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="newButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="newButtonMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="openButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton2.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="openButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="openButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="openButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="openButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="openButtonMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="saveButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton3.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="saveButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="saveButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="saveButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="saveButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="saveButtonMouseClicked"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton4">
+            <Component class="javax.swing.JButton" name="saveAsButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton4.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="saveAsButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="saveAsButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="saveAsButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="saveAsButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
@@ -95,36 +104,36 @@
                 <Property name="name" type="java.lang.String" value="jSeparator5" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="cutButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton5.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="cutButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="cutButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="cutButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="cutButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton6">
+            <Component class="javax.swing.JButton" name="copyButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton6.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="copyButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="copyButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="copyButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="copyButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton7">
+            <Component class="javax.swing.JButton" name="pasteButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton7.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="pasteButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="pasteButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="pasteButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="pasteButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
@@ -133,14 +142,14 @@
                 <Property name="name" type="java.lang.String" value="jSeparator6" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
+            <Component class="javax.swing.JButton" name="compileButton">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton8.toolTipText"/>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="compileButton.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="compileButton.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="compileButton.toolTipText"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="compileButton" noResource="true"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
@@ -153,11 +162,11 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="procesadorTextArea">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="name" type="java.lang.String" value="jTextArea1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="procesadorTextArea" noResource="true"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -193,6 +202,9 @@
                 <Property name="toolTipText" type="java.lang.String" resourceKey="newMenuItem.toolTipText"/>
                 <Property name="name" type="java.lang.String" value="newMenuItem" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="openMenuItem">
               <Properties>
@@ -204,6 +216,9 @@
                 <Property name="toolTipText" type="java.lang.String" resourceKey="openMenuItem.toolTipText"/>
                 <Property name="name" type="java.lang.String" value="openMenuItem" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="saveMenuItem">
               <Properties>
@@ -215,6 +230,9 @@
                 <Property name="toolTipText" type="java.lang.String" resourceKey="saveMenuItem.toolTipText"/>
                 <Property name="name" type="java.lang.String" value="saveMenuItem" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="saveAsMenuItem">
               <Properties>
@@ -447,6 +465,9 @@
     </Property>
     <Property name="statusBar" type="javax.swing.JComponent" editor="org.netbeans.modules.form.ComponentChooserEditor">
       <ComponentRef name="statusPanel"/>
+    </Property>
+    <Property name="toolBar" type="javax.swing.JToolBar" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="toolBar"/>
     </Property>
   </Properties>
   <AuxValues>
