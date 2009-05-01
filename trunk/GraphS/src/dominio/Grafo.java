@@ -8,11 +8,15 @@ public class Grafo {
 	private Vector<Nodo> nodos;
 	private Vector<Arco> arcos;
 	private Vector<Operacion> operaciones;
+    private int[][] adyacencia;
 	
 	public Grafo(String nombre, int tipo){
 		this.nombre=nombre;
 		this.tipo=tipo;
 		nodos = new Vector<Nodo>();
+        arcos = new Vector<Arco>();
+        operaciones = new Vector<Operacion>();
+
 	}
 	
 	public Grafo(String nombre, int tipo, Vector<Nodo> nodosGlobales, Vector<Arco> arcosGlobales){
@@ -91,6 +95,14 @@ public class Grafo {
 		operaciones=op;
 	}
 	
+    public int[][] getAdyacencia(){
+		return adyacencia;
+	}
+	
+	public void setAdyacencia(int[][] ad){
+		adyacencia=ad;
+	}
+
 	public void imprimir(){
 
 		System.out.println("Nombre: " + getNombre().toString() + "\n");
@@ -171,7 +183,30 @@ public class Grafo {
 		}
 		return esta;
 	}
-	
 
-	
+    public void crearMatrizAdyacencia(){
+        adyacencia = new int[getNodos().size()][getNodos().size()];
+
+        for(int i=0;i<getNodos().size();i++){
+            for(int j=0;j<getNodos().size();j++){
+                adyacencia[i][j] = 9999;
+            }
+        }
+
+        for(int i=0;i<getArcos().size();i++){
+            for(int j=0;j<getNodos().size();j++){
+                for(int k=0;k<getNodos().size();k++){
+                    if((getArcos().elementAt(i).getNodoOrigen().equals(getNodos().elementAt(j)) && (getArcos().elementAt(i).getNodoDestino().equals(getNodos().elementAt(k))))){
+                        adyacencia[j][k] = getArcos().elementAt(i).getPeso();
+                    }
+                    if((getArcos().elementAt(i).getNodoOrigen().equals(getNodos().elementAt(k)) && (getArcos().elementAt(i).getNodoDestino().equals(getNodos().elementAt(j))))){
+                        adyacencia[k][j] = getArcos().elementAt(i).getPeso();
+                    }
+                }
+            }
+        }
+        
+    }
+
+    
 }

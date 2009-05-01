@@ -35,7 +35,8 @@ public class Nodo implements Cloneable{
 		return nombre;
 	}
 	
-	public Nodo clone() throws CloneNotSupportedException{
+    @Override
+	public Nodo clone(){
 		Nodo copia = new Nodo(this.getNombre());
 		return copia;
 	}
