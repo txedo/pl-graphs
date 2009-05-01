@@ -90,7 +90,8 @@ public class Arco implements Cloneable{
 		return iguales;
 	}
 	
-	public Arco clone() throws CloneNotSupportedException{
+    @Override
+	public Arco clone(){
 		Arco copia = new Arco(this.getArista(), this.getPeso(), this.getNodoOrigen(), this.getNodoOrigen());
 		return copia;
 	}
