@@ -5,7 +5,7 @@ grammar graphs
 	terminal l_bracket, r_bracket, l_paren, r_paren;
 	terminal semicolon, comma, equal, connector, ident, number;
 	nonterminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES;
-	nonterminal IDENTS, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+	nonterminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5;
 	
 	SYNTAX		:=      GRAPHS_SET
 			|  DECL GRAPHS_SET 
@@ -19,21 +19,25 @@ grammar graphs
 			|  OPS_GEN   OPS
 			;
 	DECL 		:= DECL_NODES 
-			|  DECL_EDGES
+			|   DECL_EDGES
 			;
-	DECL_NODES 	:= node IDENTS semicolon
-			|  node IDENTS semicolon DECL 
+	DECL_NODES 	:= node IDENTS_NODE semicolon
+			|   node IDENTS_NODE semicolon DECL
 			;
-	DECL_EDGES 	:= edge IDENTS          semicolon
-			|  edge IDENTS          semicolon DECL 
-			|  edge IDENTS_WEIGHTED semicolon
-			|  edge IDENTS_WEIGHTED semicolon DECL
+	IDENTS_NODE	:= ident
+			|   ident comma IDENTS_NODE
 			;
-	IDENTS		:= ident
-			|  ident comma IDENTS
+	DECL_EDGES 	:= edge IDENTS semicolon
+			|   edge IDENTS semicolon DECL 
+			;
+	IDENTS		:= IDENTS_SIMPLE
+			|   IDENTS_WEIGHTED
+			;
+	IDENTS_SIMPLE	:= ident
+			|   ident comma IDENTS
 			;
 	IDENTS_WEIGHTED	:= ident l_paren number r_paren 
-			|  ident l_paren number r_paren comma IDENTS_WEIGHTED
+			|   ident l_paren number r_paren comma IDENTS
 			;
 	ARCS 		:= ARC
 			|  ARC ARCS

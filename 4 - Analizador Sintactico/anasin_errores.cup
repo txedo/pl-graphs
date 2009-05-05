@@ -34,7 +34,6 @@ non terminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, ARCS, ARC, OPS
 
 /* Declaraciones de precedencia */
 
-
 /* Especificación de la gramatica */
 SYNTAX		::=      GRAPHS_SET
 		|   DECL GRAPHS_SET 
@@ -43,19 +42,17 @@ GRAPHS_SET 	::= GRAPH
 		|   GRAPH GRAPHS_SET
 		;
 GRAPH 		::= graph ident l_bracket BODY r_bracket semicolon
-		| error ident l_bracket BODY r_bracket semicolon
-			{: parser.report_error("Error de sintaxis: La definicion del grafo debe iniciarse con la palabra reservada graph",null); :}
-		| error l_bracket BODY r_bracket semicolon
-			{: parser.report_error("Error de sintaxis: No existe identificador de grafo",null); :}
-		| error r_bracket semicolon
-			{: parser.report_error("Error de sintaxis: No se encuentra la apertura de bloque en la definicion del grafo",null); :}
-		| error semicolon
-			{: parser.report_error("Error de sintaxis: No se encuentra el cierre de bloque en la definicion del grafo",null); :}
 		| error
-			{: parser.report_error("Error de sintaxis. Es necesario finalizar la definicion del grafo con el caracter punto y coma",null); :}
+			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
 		;
 BODY 		::= DECL ARCS OPS 
 		|   OPS_GEN   OPS
+		| error ARCS OPS
+			{: parser.report_error("Error de sintaxis en la zona de declaracion de nodos y aristas.",null); :}
+		| error OPS
+			{: parser.report_error("Error de sintaxis en la conexion de aristas o generacion de grafo.",null); :}
+		| error
+			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
 		;
 DECL 		::= DECL_NODES 
 		|   DECL_EDGES
@@ -80,22 +77,8 @@ IDENTS_WEIGHTED	::= ident l_paren number r_paren
 		;
 ARCS 		::= ARC
 		|   ARC ARCS
-		| error ARCS
-			{: parser.report_error("Error de sintaxis. Se esperaba el caracter ;",null); :}
-		| error
-			{: parser.report_error("Error de sintaxis. Se esperaba el caracter ;",null); :}
 		;
 ARC 		::= ident equal ident connector ident semicolon 
-		| error equal ident connector ident semicolon
-			{: parser.report_error("Error de sintaxis. Se esperaba un identificador de arista",null); :}
-		| error ident connector ident semicolon
-			{: parser.report_error("Error de sintaxis. Se esperaba el caracter =",null); :}
-		| error connector ident semicolon
-			{: parser.report_error("Error de sintaxis. Se esperaba un identificador de nodo",null); :}
-		| error ident semicolon
-			{: parser.report_error("Error de sintaxis. Se esperaba un conector",null); :}
-		| error semicolon
-			{: parser.report_error("Error de sintaxis. Se esperaba un identificador de nodo",null); :}
 		;
 OPS_GEN 	::= OP5 semicolon
 		;
@@ -104,6 +87,8 @@ OPS 		::= OP
 		;
 OP 		::= OP1 semicolon 
 		|   OP2 semicolon
+		| error
+			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
 		;
 OP1 		::= operadorUnario   l_paren ident                                                 r_paren
 		;
