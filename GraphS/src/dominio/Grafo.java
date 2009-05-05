@@ -4,31 +4,34 @@ import java.util.ArrayList;
 public class Grafo {
 	
 	private String nombre;
-	private int tipo;
+	private boolean valorado;
+    private boolean dirigido;
 	private ArrayList<String> nodos;
 	private ArrayList<Arco> arcos;
 	private ArrayList<Operacion> operaciones;
     private int[][] adyacencia;
 	
-	public Grafo(String nombre, int tipo){
+	public Grafo(String nombre, boolean valorado, boolean dirigido){
 		this.nombre=nombre;
-		this.tipo=tipo;
+		this.valorado=valorado;
+        this.dirigido=dirigido;
 		nodos = new ArrayList<String>();
         arcos = new ArrayList<Arco>();
         operaciones = new ArrayList<Operacion>();
-
 	}
 	
-	public Grafo(String nombre, int tipo, ArrayList<String> nodosGlobales, ArrayList<Arco> arcosGlobales){
+	public Grafo(String nombre, boolean valorado, boolean dirigido, ArrayList<String> nodosGlobales, ArrayList<Arco> arcosGlobales){
 		this.nombre=nombre;
-		this.tipo=tipo;
+		this.valorado=valorado;
+        this.dirigido=dirigido;
 		this.nodos.addAll(nodosGlobales);
 		this.arcos.addAll(arcosGlobales);
 	}
 	
-	public Grafo(String nombre, int tipo, ArrayList<String> nodos, ArrayList<Arco> arcos, ArrayList<Operacion> operaciones){
+	public Grafo(String nombre, boolean valorado, boolean dirigido, ArrayList<String> nodos, ArrayList<Arco> arcos, ArrayList<Operacion> operaciones){
 		this.nombre=nombre;
-		this.tipo=tipo;
+		this.valorado=valorado;
+        this.dirigido=dirigido;
 		this.nodos=nodos;
 		this.arcos=arcos;
 		this.operaciones=operaciones;
@@ -42,26 +45,22 @@ public class Grafo {
 		nombre=nom;
 	}
 	
-	public int getTipo(){
-		return tipo;
+	public boolean getValorado(){
+		return valorado;
 	}
 	
-	public String getStringTipo(){
-		String res = "";
-		switch(this.tipo){
-			case 0:
-				res = "No dirigido";
-				break;
-			case 1:
-				res = "Dirigido";
-				break;
-		}
-		return res;
+	public void setValorado(boolean val){
+		valorado=val;
 	}
-	
-	public void setTipo(int tip){
-		tipo=tip;
+
+    public boolean getDirigido(){
+		return dirigido;
 	}
+
+	public void setDirigido(boolean dir){
+		dirigido=dir;
+	}
+
 
 	public ArrayList<String> getNodos(){
 		return nodos;
@@ -98,7 +97,6 @@ public class Grafo {
 	public String toString(){
 		String res;
 		res = "Nombre: " + getNombre().toString() + "\n";
-		res+= "Tipo: " + getStringTipo() + "\n";
 		res+= " Nodos: ";
 		for(int i=0; i<getNodos().size(); i++){
 			res+="  " + getNodos().get(i).toString();
@@ -120,7 +118,12 @@ public class Grafo {
 		if ((obj != null) && (obj instanceof Grafo)) {
 			iguales=true;
 			Grafo aut=(Grafo)obj;
-			if (this.getTipo() == aut.getTipo()){
+			if (this.getValorado() == aut.getValorado()){
+				iguales=true;
+			}else{
+				iguales=false;
+			}
+            if (this.getDirigido() == aut.getDirigido()){
 				iguales=true;
 			}else{
 				iguales=false;

@@ -133,7 +133,7 @@ public class Operacion {
        String destino = dest;
        String nodoaux = null;
        boolean parada = false;
-       Grafo res = new Grafo("shortestPath_"+grafo.getNombre(), 1);
+       Grafo res = new Grafo("shortestPath_"+grafo.getNombre(), true, true);
        res.getNodos().add(destino);
        while(!origen.equals(nodoaux) && !parada){
            int intermedio = dist[grafo.getNodos().indexOf(origen)][grafo.getNodos().indexOf(destino)].getIntermedio();
@@ -157,7 +157,7 @@ public class Operacion {
         Grafo res = null;
         TipoDato[][] dist;
 
-		if(grafo.getTipo() == 1){ //Solo se puede realizar para grafos dirigidos
+		if(grafo.getValorado()){ //Solo se puede realizar para grafos valorados
 			grafo.crearMatrizAdyacencia();
             dist = floyd(grafo.getAdyacencia());
             res = reconstruirCamino(grafo, origen, destino, dist);
@@ -170,11 +170,11 @@ public class Operacion {
 	public static Grafo union(String nombre, Grafo grafo1, Grafo grafo2, String nodo1, String nodo2, Arco arco){
 		Grafo res = null;
 		
-		if(grafo1.getTipo() == 1 && grafo2.getTipo() == 1){
-			res = new Grafo(nombre, 1);
+		if(grafo1.getValorado() && grafo2.getValorado()){
+			res = new Grafo(nombre, true, true);
 		}else{
-			if(grafo1.getTipo() == 0 && grafo2.getTipo() == 0){
-				res = new Grafo(nombre, 0);
+			if(grafo1.getValorado() && grafo2.getValorado()){
+				res = new Grafo(nombre, false, false);
 			}else{
 				System.err.println("Error");
 			}

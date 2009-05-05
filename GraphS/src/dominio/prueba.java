@@ -20,15 +20,8 @@ public class prueba {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        Grafo g = new Grafo("Grafo prueba", 1);
-        /*Nodo s = new Nodo("s");
-        Nodo uno = new Nodo("1");
-        Nodo dos = new Nodo("2");
-        Nodo tres = new Nodo("3");
-        Nodo cuatro = new Nodo("4");
-        Nodo cinco = new Nodo("5");
-        Nodo seis = new Nodo("6");
-        Nodo t = new Nodo("t");*/
+        Grafo g = new Grafo("Grafo prueba", true, true);
+
         
         g.getNodos().add("s");
         g.getNodos().add("1");
