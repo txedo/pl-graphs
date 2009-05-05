@@ -4,8 +4,8 @@ public class Arco implements Cloneable{
 
 	private String arista;
 	private int peso;
-	private Nodo nodoOrigen;
-	private Nodo nodoDestino;
+	private String nodoOrigen;
+	private String nodoDestino;
 
 	public Arco(String arista){
 		this.arista=arista;
@@ -17,7 +17,7 @@ public class Arco implements Cloneable{
 		this.peso=peso;
 	}
 	
-	public Arco(String arista, int peso, Nodo nodoOrigen, Nodo nodoDestino){
+	public Arco(String arista, int peso, String nodoOrigen, String nodoDestino){
 		this.arista=arista;
 		this.peso=peso;
 		this.nodoOrigen=nodoOrigen;
@@ -32,11 +32,11 @@ public class Arco implements Cloneable{
 		this.arista=a;
 	}
 	
-	public Nodo getNodoOrigen(){
+	public String getNodoOrigen(){
 		return this.nodoOrigen;
 	}
 	
-	public void setNodoOrigen(Nodo estOrig){
+	public void setNodoOrigen(String estOrig){
 		this.nodoOrigen=estOrig;
 	}
 	
@@ -48,11 +48,11 @@ public class Arco implements Cloneable{
 		this.peso=p;
 	}
 	
-	public Nodo getNodoDestino(){
+	public String getNodoDestino(){
 		return nodoDestino;
 	}
 	
-	public void setNodoDestino(Nodo estDest){
+	public void setNodoDestino(String estDest){
 		this.nodoDestino=estDest;
 	}
 	
@@ -60,8 +60,19 @@ public class Arco implements Cloneable{
 		String cadena = getArista() + " = " + getNodoOrigen().toString() + " (" + getPeso() + ") " + " -> " + getNodoDestino().toString() + "\n";
 		return cadena;
 	}
-	
-	public boolean equals(Object obj){
+
+    public boolean equals(Object obj){
+		boolean iguales=false;
+		if ((obj != null) && (obj instanceof Arco)) {
+			Arco aris=(Arco)obj;
+			if (getNodoOrigen().equals(aris.getNodoOrigen()) && getNodoDestino().equals(aris.getNodoDestino())){
+				iguales=true;
+			}
+		}
+		return iguales;
+	}
+
+	/*public boolean equals(Object obj){
 		boolean iguales=false;
 		if ((obj != null) && (obj instanceof Arco)) {
 			iguales=true;
@@ -88,7 +99,7 @@ public class Arco implements Cloneable{
 			}
 		}
 		return iguales;
-	}
+	}*/
 	
     @Override
 	public Arco clone(){
