@@ -103,13 +103,30 @@ public class Operacion {
         return res;
     }
 
-    public static void reconstruirCamino(int origen, int destino, TipoDato[][] dist){
+    public static void reconstruirCamino(int origen, int destino, TipoDato[][] dist, Grafo grafo, Grafo res){
+        if(dist[origen][destino].getIntermedio() != destino){
+            reconstruirCamino(origen, dist[origen][destino].getIntermedio(), dist, grafo, res);
+            Nodo aux1 = grafo.getNodos().elementAt(origen).clone();
+            Nodo aux2 = grafo.getNodos().elementAt(dist[origen][destino].getIntermedio()).clone();
+            res.getNodos().add(aux1);
+            res.getNodos().add(aux2);
+            for(int i=0; i<grafo.getArcos().size(); i++){
+                if(grafo.getArcos().elementAt(i).getNodoOrigen().equals(aux1) && grafo.getArcos().elementAt(i).getNodoDestino().equals(aux2)){
+                    res.getArcos().add(grafo.getArcos().elementAt(i).clone());
+                }
+            }
+            System.out.println("->"+ dist[origen][destino].getIntermedio());
+            reconstruirCamino(dist[origen][destino].getIntermedio(), destino, dist, grafo, res);
+        }
+    }
+
+    /*public static void reconstruirCamino2(int origen, int destino, TipoDato[][] dist){
         if(dist[origen][destino].getIntermedio() != destino){
             reconstruirCamino(origen, dist[origen][destino].getIntermedio(), dist);
             System.out.println("->"+ dist[origen][destino].getIntermedio());
             reconstruirCamino(dist[origen][destino].getIntermedio(), destino, dist);
         }
-    }
+    }*/
 
 	public static Grafo shortestPath(Grafo grafo, Nodo origen, Nodo destino){
         Grafo res = null;
@@ -127,7 +144,10 @@ public class Operacion {
             dist = floyd(grafo.getAdyacencia());
             aux = posOrigen;
 
-            /*while(dist[aux][posDestino].getIntermedio() != posDestino){
+
+            /*
+            res.getNodos().add(origen.clone());
+            while(dist[aux][posDestino].getIntermedio() != posDestino){
                 res.getNodos().add(grafo.getNodos().elementAt(dist[aux][posDestino].getIntermedio()).clone());
                 boolean encontrado = false;
                 for(int i=0; i< grafo.getArcos().size() && !encontrado; i++){
@@ -146,11 +166,19 @@ public class Operacion {
                     encontrado = true;
                     res.getArcos().add(grafo.getArcos().elementAt(i).clone());
                 }
+            }
+            if(encontrado == false){
+                res.getArcos().add(new Arco(grafo.getNodos().elementAt(aux).toString() + grafo.getNodos().elementAt(posDestino).toString(), 666, res.getNodos().get(res.getNodos().lastIndexOf(origen)), res.getNodos().get(res.getNodos().lastIndexOf(destino))));
             }*/
-            System.out.println("origen->"+ posOrigen);
-            reconstruirCamino(posOrigen, posDestino, dist);
-            System.out.println("destino->"+ posDestino);
 
+
+
+
+            
+            //System.out.println("origen->"+ posOrigen);
+            reconstruirCamino(posOrigen, posDestino, dist, grafo, res);
+            //System.out.println("destino->"+ posDestino);
+            
 		}
         return res;
 	}
@@ -170,30 +198,37 @@ public class Operacion {
 		
 		for(int i=0; i<grafo1.getNodos().size(); i++){
 			if(!res.getNodos().contains(grafo1.getNodos().elementAt(i))){
-				res.getNodos().add(grafo1.getNodos().elementAt(i));
+				res.getNodos().add(grafo1.getNodos().elementAt(i).clone());
 			}
 		}
 		
 		for(int i=0; i<grafo2.getNodos().size(); i++){
 			if(!res.getNodos().contains(grafo2.getNodos().elementAt(i))){
-				res.getNodos().add(grafo2.getNodos().elementAt(i));
+				res.getNodos().add(grafo2.getNodos().elementAt(i).clone());
 			}
 		}
 		
 		for(int i=0; i<grafo1.getArcos().size(); i++){
 			if(!res.getArcos().contains(grafo1.getArcos().elementAt(i))){
-				res.getArcos().add(grafo1.getArcos().elementAt(i));
+				res.getArcos().add(grafo1.getArcos().elementAt(i).clone());
 			}
 		}
 		
 		for(int i=0; i<grafo2.getArcos().size(); i++){
 			if(!res.getArcos().contains(grafo2.getArcos().elementAt(i))){
-				res.getArcos().add(grafo2.getArcos().elementAt(i));
+				res.getArcos().add(grafo2.getArcos().elementAt(i).clone());
 			}
 		}
 		
-		res.getArcos().get(res.getArcos().lastIndexOf(arco)).setNodoOrigen(nodo1);
-		res.getArcos().get(res.getArcos().lastIndexOf(arco)).setNodoDestino(nodo2);
+        if(res.getArcos().contains(arco)){
+            res.getArcos().get(res.getArcos().lastIndexOf(arco)).setNodoOrigen(nodo1);
+            res.getArcos().get(res.getArcos().lastIndexOf(arco)).setNodoDestino(nodo2);
+        }else{
+            arco.setNodoOrigen(nodo1);
+            arco.setNodoDestino(nodo2);
+            res.getArcos().add(arco);
+        }
+        
 		
 		return res;
 	}
