@@ -33,7 +33,8 @@ terminal l_bracket, r_bracket, l_paren, r_paren;
 terminal semicolon, comma, equal, connector, number;
 terminal String ident;
 non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES;
-non terminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+non terminal ArrayList<String> IDENTS_NODE;
 non terminal ArrayList<Arco> ARCS;
 non terminal Arco ARC;
 
@@ -54,9 +55,10 @@ GRAPH 		::= graph ident:identificador_grafo l_bracket BODY r_bracket semicolon
 		| error
 			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
 		;
-BODY 		::= DECL ARCS:lista_arcos OPS 
+BODY 		::= DECL:listaNodos ARCS:listaArcos OPS 
 			{:
-			   System.out.println (lista_arcos.toString());
+			   System.out.println (listaNodos.toString());
+			   System.out.println (listaArcos.toString());
 			:}
 		|   OPS_GEN   OPS
 		| error ARCS OPS
@@ -66,14 +68,32 @@ BODY 		::= DECL ARCS:lista_arcos OPS
 		| error
 			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
 		;
-DECL 		::= DECL_NODES 
+DECL 		::= DECL_NODES:listaNodos
+			{:
+			   RESULT = (ArrayList<String>)listaNodos;
+			:}
 		|   DECL_EDGES
 		;
-DECL_NODES 	::= node IDENTS_NODE semicolon
-		|   node IDENTS_NODE semicolon DECL
+DECL_NODES 	::= node IDENTS_NODE:listaNodos semicolon
+			{:
+			   RESULT = (ArrayList<String>)listaNodos;
+			:}
+		|   node IDENTS_NODE:listaNodos semicolon DECL
+			{:
+			   RESULT = (ArrayList<String>)listaNodos;
+			:}
 		;
-IDENTS_NODE	::= ident
-		|   ident comma IDENTS_NODE
+IDENTS_NODE	::= ident:identificador_nodo
+			{:
+			   ArrayList<String> listaNodos = new ArrayList<String>();
+			   listaNodos.add((String)identificador_nodo);
+			   RESULT = (ArrayList<String>)listaNodos;
+			:}
+		|   ident:identificador_nodo comma IDENTS_NODE:listaNodos
+			{:
+			   listaNodos.add((String)identificador_nodo);
+			   RESULT = (ArrayList<String>)listaNodos;
+			:}
 		;
 DECL_EDGES 	::= edge IDENTS semicolon
 		|   edge IDENTS semicolon DECL 
