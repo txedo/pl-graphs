@@ -30,9 +30,10 @@ terminal graph, node, edge, operadorUnario, operadorBinario, operadorQuinario;
 terminal l_bracket, r_bracket, l_paren, r_paren;
 terminal semicolon, comma, equal, connector, ident, number;
 non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES;
-non terminal IDENTS, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+non terminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5;
 
 /* Declaraciones de precedencia */
+
 
 /* Especificación de la gramatica */
 SYNTAX		::=      GRAPHS_SET
@@ -59,24 +60,42 @@ BODY 		::= DECL ARCS OPS
 DECL 		::= DECL_NODES 
 		|   DECL_EDGES
 		;
-DECL_NODES 	::= node IDENTS semicolon
-		|   node IDENTS semicolon DECL 
+DECL_NODES 	::= node IDENTS_NODE semicolon
+		|   node IDENTS_NODE semicolon DECL
 		;
-DECL_EDGES 	::= edge IDENTS          semicolon
-		|   edge IDENTS          semicolon DECL 
-		|   edge IDENTS_WEIGHTED semicolon
-		|   edge IDENTS_WEIGHTED semicolon DECL
+IDENTS_NODE	::= ident
+		|   ident comma IDENTS_NODE
 		;
-IDENTS		::= ident
+DECL_EDGES 	::= edge IDENTS semicolon
+		|   edge IDENTS semicolon DECL 
+		;
+IDENTS		::= IDENTS_SIMPLE
+		|   IDENTS_WEIGHTED
+		;
+IDENTS_SIMPLE	::= ident
 		|   ident comma IDENTS
 		;
 IDENTS_WEIGHTED	::= ident l_paren number r_paren 
-		|   ident l_paren number r_paren comma IDENTS_WEIGHTED
+		|   ident l_paren number r_paren comma IDENTS
 		;
 ARCS 		::= ARC
 		|   ARC ARCS
+		| error ARCS
+			{: parser.report_error("Error de sintaxis. Se esperaba el caracter ;",null); :}
+		| error
+			{: parser.report_error("Error de sintaxis. Se esperaba el caracter ;",null); :}
 		;
 ARC 		::= ident equal ident connector ident semicolon 
+		| error equal ident connector ident semicolon
+			{: parser.report_error("Error de sintaxis. Se esperaba un identificador de arista",null); :}
+		| error ident connector ident semicolon
+			{: parser.report_error("Error de sintaxis. Se esperaba el caracter =",null); :}
+		| error connector ident semicolon
+			{: parser.report_error("Error de sintaxis. Se esperaba un identificador de nodo",null); :}
+		| error ident semicolon
+			{: parser.report_error("Error de sintaxis. Se esperaba un conector",null); :}
+		| error semicolon
+			{: parser.report_error("Error de sintaxis. Se esperaba un identificador de nodo",null); :}
 		;
 OPS_GEN 	::= OP5 semicolon
 		;
