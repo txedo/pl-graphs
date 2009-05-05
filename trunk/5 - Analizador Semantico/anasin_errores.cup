@@ -1,5 +1,7 @@
 /* Especificaciones de package e imports */
 import java_cup.runtime.*;
+import dominio.*;
+import java.util.ArrayList;
 
 /* Componentes de codigo de usuario */
 parser code {:
@@ -28,9 +30,12 @@ parser code {:
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
 terminal graph, node, edge, operadorUnario, operadorBinario, operadorQuinario;
 terminal l_bracket, r_bracket, l_paren, r_paren;
-terminal semicolon, comma, equal, connector, ident, number;
+terminal semicolon, comma, equal, connector, number;
+terminal String ident;
 non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES;
-non terminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+non terminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+non terminal ArrayList<Arco> ARCS;
+non terminal Arco ARC;
 
 /* Declaraciones de precedencia */
 
@@ -38,14 +43,21 @@ non terminal IDENTS, IDENTS_NODE, IDENTS_SIMPLE, IDENTS_WEIGHTED, ARCS, ARC, OPS
 SYNTAX		::=      GRAPHS_SET
 		|   DECL GRAPHS_SET 
 		;
-GRAPHS_SET 	::= GRAPH 
+GRAPHS_SET 	::= GRAPH:id
+			{:
+			   System.out.println ("Grafo " + id);
+			:}
 		|   GRAPH GRAPHS_SET
 		;
-GRAPH 		::= graph ident l_bracket BODY r_bracket semicolon
+GRAPH 		::= graph ident:identificador_grafo l_bracket BODY r_bracket semicolon
+			{: RESULT = identificador_grafo; :}
 		| error
 			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
 		;
-BODY 		::= DECL ARCS OPS 
+BODY 		::= DECL ARCS:lista_arcos OPS 
+			{:
+			   System.out.println (lista_arcos.toString());
+			:}
 		|   OPS_GEN   OPS
 		| error ARCS OPS
 			{: parser.report_error("Error de sintaxis en la zona de declaracion de nodos y aristas.",null); :}
@@ -75,10 +87,24 @@ IDENTS_SIMPLE	::= ident
 IDENTS_WEIGHTED	::= ident l_paren number r_paren 
 		|   ident l_paren number r_paren comma IDENTS
 		;
-ARCS 		::= ARC
-		|   ARC ARCS
+ARCS 		::= ARC:arco
+			{: 
+			   ArrayList<Arco> listaArcos = new ArrayList<Arco>();
+			   listaArcos.add((Arco)arco);
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
+		|   ARC:arco ARCS:listaArcos
+			{: 
+			   listaArcos.add((Arco)arco);
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
 		;
-ARC 		::= ident equal ident connector ident semicolon 
+ARC 		::= ident:id_arco equal ident:id_nodoOrigen connector:tipo ident:id_nodoDestino semicolon 
+			{: boolean dirigido = false;
+			   if (tipo.equals("->")) dirigido = true;
+			   Arco arco = new Arco (id_arco, 0, dirigido, id_nodoOrigen, id_nodoDestino);
+			   RESULT = (Arco)arco;
+			:}
 		;
 OPS_GEN 	::= OP5 semicolon
 		;
