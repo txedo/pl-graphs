@@ -179,7 +179,7 @@ public class Grafo {
 
     public Arco obtenerArista(String origen, String destino){
         Arco res = null;
-        Arco aux = new Arco("aux", 0, origen, destino);
+        Arco aux = new Arco("aux", 0, true, origen, destino);
         int indice;
         indice = getArcos().indexOf(aux);
 

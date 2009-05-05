@@ -1,5 +1,7 @@
 package dominio;
 
+import java.util.ArrayList;
+
 public class Operacion {
 
 
@@ -103,32 +105,6 @@ public class Operacion {
         return res;
     }
 
-    /*public static void reconstruirCamino(int origen, int destino, TipoDato[][] dist, Grafo grafo, Grafo res){
-        if(dist[origen][destino].getIntermedio() != destino){
-            reconstruirCamino(origen, dist[origen][destino].getIntermedio(), dist, grafo, res);
-            //Nodo aux1 = grafo.getNodos().elementAt(origen).clone();
-            String aux2 = grafo.getNodos().get(dist[origen][destino].getIntermedio());
-            //res.getNodos().add(aux1);
-            res.getNodos().add(aux2);
-            for(int i=0; i<grafo.getArcos().size(); i++){
-                if(grafo.getArcos().get(i).getNodoOrigen().equals(grafo.getNodos().get(origen)) && grafo.getArcos().get(i).getNodoDestino().equals(aux2)){
-                    System.out.println("Putisima");
-                    res.getArcos().add(grafo.getArcos().get(i).clone());
-                }
-            }
-            //System.out.println("->"+ dist[origen][destino].getIntermedio());
-            reconstruirCamino(dist[origen][destino].getIntermedio(), destino, dist, grafo, res);
-        }
-    }*/
-
-    /*public static void reconstruirCamino2(int origen, int destino, TipoDato[][] dist){
-        if(dist[origen][destino].getIntermedio() != destino){
-            reconstruirCamino(origen, dist[origen][destino].getIntermedio(), dist);
-            System.out.println("->"+ dist[origen][destino].getIntermedio());
-            reconstruirCamino(dist[origen][destino].getIntermedio(), destino, dist);
-        }
-    }*/
-
    public static Grafo reconstruirCamino(Grafo grafo, String origen, String dest, TipoDato[][] dist){
        String destino = dest;
        String nodoaux = null;
@@ -150,6 +126,18 @@ public class Operacion {
            }
            destino = nodoaux;
        }
+
+       ArrayList<String> nuevoNodos = new ArrayList<String>();
+       ArrayList<Arco> nuevoArcos = new ArrayList<Arco>();
+
+       for(int i=res.getNodos().size()-1; i>=0; i--){
+           nuevoNodos.add(res.getNodos().get(i));
+       }
+       for(int i=res.getArcos().size()-1; i>=0; i--){
+           nuevoArcos.add(res.getArcos().get(i));
+       }
+       res.setNodos(nuevoNodos);
+       res.setArcos(nuevoArcos);
        return res;
    }
 

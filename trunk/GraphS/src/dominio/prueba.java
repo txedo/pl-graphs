@@ -33,18 +33,18 @@ public class prueba {
         g.getNodos().add("t");
 
 
-        g.getArcos().add(new Arco("a", 2, "s", "1"));
-        g.getArcos().add(new Arco("b", 1, "s", "5"));
-        g.getArcos().add(new Arco("c", 2, "1", "3"));
-        g.getArcos().add(new Arco("d", 2, "1", "2"));
-        g.getArcos().add(new Arco("e", 4, "1", "4"));
-        g.getArcos().add(new Arco("f", 3, "3", "5"));
-        g.getArcos().add(new Arco("g", 4, "3", "4"));
-        g.getArcos().add(new Arco("h", 5, "5", "6"));
-        g.getArcos().add(new Arco("i", 3, "2", "4"));
-        g.getArcos().add(new Arco("j", 7, "4", "6"));
-        g.getArcos().add(new Arco("k", 1, "2", "t"));
-        g.getArcos().add(new Arco("l", 6, "6", "t"));
+        g.getArcos().add(new Arco("a", 2, true, "s", "1"));
+        g.getArcos().add(new Arco("b", 1, true, "s", "5"));
+        g.getArcos().add(new Arco("c", 2, true, "1", "3"));
+        g.getArcos().add(new Arco("d", 2, true, "1", "2"));
+        g.getArcos().add(new Arco("e", 4, true, "1", "4"));
+        g.getArcos().add(new Arco("f", 3,  true,"3", "5"));
+        g.getArcos().add(new Arco("g", 4, true, "3", "4"));
+        g.getArcos().add(new Arco("h", 5, true, "5", "6"));
+        g.getArcos().add(new Arco("i", 3, true, "2", "4"));
+        g.getArcos().add(new Arco("j", 7, true, "4", "6"));
+        g.getArcos().add(new Arco("k", 1, true, "2", "t"));
+        g.getArcos().add(new Arco("l", 6, true, "6", "t"));
 
         System.out.println(g.toString());
 
