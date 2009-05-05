@@ -4,6 +4,7 @@ public class Arco implements Cloneable{
 
 	private String arista;
 	private int peso;
+    private boolean dirigido;
 	private String nodoOrigen;
 	private String nodoDestino;
 
@@ -12,14 +13,16 @@ public class Arco implements Cloneable{
 		this.peso=0;
 	}
 	
-	public Arco(String arista, int peso){
+	public Arco(String arista, int peso, boolean dirigido){
 		this.arista=arista;
 		this.peso=peso;
+        this.dirigido=dirigido;
 	}
 	
-	public Arco(String arista, int peso, String nodoOrigen, String nodoDestino){
+	public Arco(String arista, int peso, boolean dirigido, String nodoOrigen, String nodoDestino){
 		this.arista=arista;
 		this.peso=peso;
+        this.dirigido=dirigido;
 		this.nodoOrigen=nodoOrigen;
 		this.nodoDestino=nodoDestino;
 	}
@@ -47,7 +50,15 @@ public class Arco implements Cloneable{
 	public void setPeso(int p){
 		this.peso=p;
 	}
-	
+
+    public boolean getDirigido(){
+		return dirigido;
+	}
+
+	public void setDirigido(boolean d){
+		this.dirigido=d;
+	}
+
 	public String getNodoDestino(){
 		return nodoDestino;
 	}
@@ -103,7 +114,7 @@ public class Arco implements Cloneable{
 	
     @Override
 	public Arco clone(){
-		Arco copia = new Arco(this.getArista(), this.getPeso(), this.getNodoOrigen(), this.getNodoDestino());
+		Arco copia = new Arco(this.getArista(), this.getPeso(), this.getDirigido(), this.getNodoOrigen(), this.getNodoDestino());
 		return copia;
 	}
 	
