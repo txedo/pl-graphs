@@ -129,29 +129,38 @@ public class Operacion {
         }
     }*/
 
-   public static void reconstruirCamino(Grafo grafo, Grafo res, String origen, String destino, TipoDato[][] dist){
-        res.getNodos().add(origen);
-        while(!origen.equals(destino)){
-            int intermedio = dist[grafo.getNodos().indexOf(origen)][grafo.getNodos().indexOf(destino)].getIntermedio();
-            String nodoaux = grafo.getNodos().get(intermedio);
-            res.getNodos().add(nodoaux);
-            Arco arcoaux = grafo.obtenerArista(origen, nodoaux);
-            res.getArcos().add(arcoaux);
-            origen = nodoaux;
-        }
+   public static Grafo reconstruirCamino(Grafo grafo, String origen, String dest, TipoDato[][] dist){
+       String destino = dest;
+       String nodoaux = null;
+       boolean parada = false;
+       Grafo res = new Grafo("shortestPath_"+grafo.getNombre(), 1);
+       res.getNodos().add(destino);
+       while(!origen.equals(nodoaux) && !parada){
+           int intermedio = dist[grafo.getNodos().indexOf(origen)][grafo.getNodos().indexOf(destino)].getIntermedio();
+           nodoaux = grafo.getNodos().get(intermedio);
+           System.out.println("Origen "+origen+" Destino "+destino+" Intermedio "+nodoaux);
+           if(destino.equals(nodoaux)){
+               parada = true;
+               res.getNodos().add(origen);
+               res.getArcos().add(grafo.obtenerArista(origen, nodoaux));
+           }else{
+               res.getNodos().add(nodoaux);
+               Arco arcoaux = grafo.obtenerArista(nodoaux, destino).clone();
+               res.getArcos().add(arcoaux);
+           }
+           destino = nodoaux;
+       }
+       return res;
    }
 
 	public static Grafo shortestPath(Grafo grafo, String origen, String destino){
         Grafo res = null;
-        int posOrigen, posDestino, aux;
         TipoDato[][] dist;
 
 		if(grafo.getTipo() == 1){ //Solo se puede realizar para grafos dirigidos
-            res = new Grafo("shortestPath_"+grafo.getNombre(), 1);
 			grafo.crearMatrizAdyacencia();
             dist = floyd(grafo.getAdyacencia());
-            
-            reconstruirCamino(grafo, res, origen, destino, dist);
+            res = reconstruirCamino(grafo, origen, destino, dist);
             
             
 		}
