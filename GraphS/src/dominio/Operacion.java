@@ -106,16 +106,16 @@ public class Operacion {
     public static void reconstruirCamino(int origen, int destino, TipoDato[][] dist, Grafo grafo, Grafo res){
         if(dist[origen][destino].getIntermedio() != destino){
             reconstruirCamino(origen, dist[origen][destino].getIntermedio(), dist, grafo, res);
-            Nodo aux1 = grafo.getNodos().elementAt(origen).clone();
+            //Nodo aux1 = grafo.getNodos().elementAt(origen).clone();
             Nodo aux2 = grafo.getNodos().elementAt(dist[origen][destino].getIntermedio()).clone();
-            res.getNodos().add(aux1);
+            //res.getNodos().add(aux1);
             res.getNodos().add(aux2);
             for(int i=0; i<grafo.getArcos().size(); i++){
-                if(grafo.getArcos().elementAt(i).getNodoOrigen().equals(aux1) && grafo.getArcos().elementAt(i).getNodoDestino().equals(aux2)){
+                if(grafo.getArcos().elementAt(i).getNodoOrigen().equals(grafo.getNodos().elementAt(origen)) && grafo.getArcos().elementAt(i).getNodoDestino().equals(aux2)){
                     res.getArcos().add(grafo.getArcos().elementAt(i).clone());
                 }
             }
-            System.out.println("->"+ dist[origen][destino].getIntermedio());
+            //System.out.println("->"+ dist[origen][destino].getIntermedio());
             reconstruirCamino(dist[origen][destino].getIntermedio(), destino, dist, grafo, res);
         }
     }
@@ -176,7 +176,9 @@ public class Operacion {
 
             
             //System.out.println("origen->"+ posOrigen);
+            res.getNodos().add(grafo.getNodos().elementAt(posOrigen).clone());
             reconstruirCamino(posOrigen, posDestino, dist, grafo, res);
+            res.getNodos().add(grafo.getNodos().elementAt(posDestino).clone());
             //System.out.println("destino->"+ posDestino);
             
 		}
