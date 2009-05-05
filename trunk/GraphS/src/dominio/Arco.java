@@ -103,7 +103,7 @@ public class Arco implements Cloneable{
 	
     @Override
 	public Arco clone(){
-		Arco copia = new Arco(this.getArista(), this.getPeso(), this.getNodoOrigen(), this.getNodoOrigen());
+		Arco copia = new Arco(this.getArista(), this.getPeso(), this.getNodoOrigen(), this.getNodoDestino());
 		return copia;
 	}
 	

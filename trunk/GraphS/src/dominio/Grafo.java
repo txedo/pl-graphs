@@ -179,8 +179,11 @@ public class Grafo {
         Arco aux = new Arco("aux", 0, origen, destino);
         int indice;
         indice = getArcos().indexOf(aux);
+
         if(indice != -1){
             res = getArcos().get(indice).clone();
+        }else{
+            res = aux;
         }
 
         return res;
