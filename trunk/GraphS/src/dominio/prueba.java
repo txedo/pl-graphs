@@ -51,7 +51,7 @@ public class prueba {
 
         System.out.println(g.toString());
 
-		//g.crearMatrizAdyacencia();
+		g.crearMatrizAdyacencia();
 
         for(int i=0; i<g.getAdyacencia().length;i++){
             for(int j=0; j<g.getAdyacencia().length;j++){
@@ -61,11 +61,11 @@ public class prueba {
         }
 
         Grafo res = Operacion.shortestPath(g, s, t);
-        Grafo res2 = Operacion.union("Union_g_res", g, res, uno, t, new Arco("union_arc", 2, uno, t));
+        //Grafo res2 = Operacion.union("Union_g_res", g, res, uno, t, new Arco("union_arc", 2, uno, t));
 
         System.out.println(res.toString()+"\n\n\n");
 
-        System.out.println(res2.toString()+"\n\n\n");
+        //System.out.println(res2.toString()+"\n\n\n");
     }
 
 }
