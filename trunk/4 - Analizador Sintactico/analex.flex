@@ -137,7 +137,7 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 	","			{ return symbol(sym.comma); }
 	"="			{ return symbol(sym.equal); }
 	"-" | "->"		{ return symbol(sym.connector, yytext()); }
-	0 | [1-9][0-9]*		{ return symbol(sym.number, yytext()); }
+	0 | [1-9][0-9]*		{ return symbol(sym.number, new Integer(yytext())); }
 	"*/"			{ System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 	[0-9][a-zA-Z0-9]*	{ System.out.println(Utility.errorMsg(ERROR_MSG_IDENT)+" <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
 	{WhiteSpace}		{ }
