@@ -1,46 +1,46 @@
 package dominio;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Programa {
 	
-	private Vector<Grafo> grafos;
-	private Vector<Nodo> nodosGlobales;
-	private Vector<Arco> arcosGlobales;
+	private ArrayList<Grafo> grafos;
+	private ArrayList<Nodo> nodosGlobales;
+	private ArrayList<Arco> arcosGlobales;
 	
-	public Programa(Vector<Grafo> grafos){
+	public Programa(ArrayList<Grafo> grafos){
 		this.grafos = grafos;
-		nodosGlobales = new Vector<Nodo>();
-		arcosGlobales = new Vector<Arco>();
+		nodosGlobales = new ArrayList<Nodo>();
+		arcosGlobales = new ArrayList<Arco>();
 	}
 	
-	public Programa(Vector<Grafo> grafos, Vector<Nodo> nodosGlobales, Vector<Arco> arcosGlobales){
+	public Programa(ArrayList<Grafo> grafos, ArrayList<Nodo> nodosGlobales, ArrayList<Arco> arcosGlobales){
 		this.grafos = grafos;
-		this.nodosGlobales = (Vector<Nodo>) nodosGlobales.clone();
-		this.arcosGlobales = (Vector<Arco>) arcosGlobales.clone();
+		this.nodosGlobales = (ArrayList<Nodo>) nodosGlobales.clone();
+		this.arcosGlobales = (ArrayList<Arco>) arcosGlobales.clone();
 	}
 	
-	public Vector<Grafo> getGrafos(){
+	public ArrayList<Grafo> getGrafos(){
 		return grafos;
 	}
 	
-	public void setGrafos(Vector<Grafo> g){
+	public void setGrafos(ArrayList<Grafo> g){
 		this.grafos=g;
 	}
 	
-	public Vector<Nodo> getNodosGlobales(){
+	public ArrayList<Nodo> getNodosGlobales(){
 		return nodosGlobales;
 	}
 	
-	public void setNodosGlobales(Vector<Nodo> n){
+	public void setNodosGlobales(ArrayList<Nodo> n){
 		this.nodosGlobales=n;
 	}
 	
-	public Vector<Arco> getArcosGlobales(){
+	public ArrayList<Arco> getArcosGlobales(){
 		return arcosGlobales;
 	}
 	
-	public void setArcosGlobales(Vector<Arco> a){
+	public void setArcosGlobales(ArrayList<Arco> a){
 		arcosGlobales=a;
 	}
 	
@@ -50,50 +50,6 @@ public class Programa {
 	
 	public void nuevoArcoGlobal(Arco a){
 		getArcosGlobales().add(a);
-	}
-	
-	public boolean equals(Object obj){
-		boolean iguales=false;
-		if ((obj != null) && (obj instanceof Programa)) {
-			iguales=true;
-			Programa prog=(Programa)obj;
-			if (this.getGrafos() == prog.getGrafos()){
-				iguales=true;
-			}else{
-				iguales=false;
-			}
-			if ((this.getNodosGlobales().equals(prog.getNodosGlobales())) && (iguales == true)){
-				iguales=true;
-			}else{
-				iguales=false;
-			}
-			if ((this.getArcosGlobales().equals(prog.getArcosGlobales())) && (iguales == true)){
-				iguales=true;
-			}else{
-				iguales=false;
-			}
-		}
-		
-		return iguales;
-	}
-	
-	public String toString(){
-		String res;
-		res= " Grafos: ";
-		for(int i=0; i<getGrafos().size(); i++){
-			res+="  " + getGrafos().get(i).toString();
-		}
-		res+= " Nodos: ";
-		for(int i=0; i<getNodosGlobales().size(); i++){
-			res+="  " + getNodosGlobales().get(i).toString();
-		}
-		res+="\n Arcos: ";
-		for(int i=0; i<getArcosGlobales().size(); i++){
-			res+="  " + getArcosGlobales().get(i).toString();
-		}
-
-		res+="\n";
-		return res;
 	}
 	
 	public void ejecutarOperaciones(){

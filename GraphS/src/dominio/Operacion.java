@@ -103,22 +103,23 @@ public class Operacion {
         return res;
     }
 
-    public static void reconstruirCamino(int origen, int destino, TipoDato[][] dist, Grafo grafo, Grafo res){
+    /*public static void reconstruirCamino(int origen, int destino, TipoDato[][] dist, Grafo grafo, Grafo res){
         if(dist[origen][destino].getIntermedio() != destino){
             reconstruirCamino(origen, dist[origen][destino].getIntermedio(), dist, grafo, res);
             //Nodo aux1 = grafo.getNodos().elementAt(origen).clone();
-            Nodo aux2 = grafo.getNodos().elementAt(dist[origen][destino].getIntermedio()).clone();
+            String aux2 = grafo.getNodos().get(dist[origen][destino].getIntermedio());
             //res.getNodos().add(aux1);
             res.getNodos().add(aux2);
             for(int i=0; i<grafo.getArcos().size(); i++){
-                if(grafo.getArcos().elementAt(i).getNodoOrigen().equals(grafo.getNodos().elementAt(origen)) && grafo.getArcos().elementAt(i).getNodoDestino().equals(aux2)){
-                    res.getArcos().add(grafo.getArcos().elementAt(i).clone());
+                if(grafo.getArcos().get(i).getNodoOrigen().equals(grafo.getNodos().get(origen)) && grafo.getArcos().get(i).getNodoDestino().equals(aux2)){
+                    System.out.println("Putisima");
+                    res.getArcos().add(grafo.getArcos().get(i).clone());
                 }
             }
             //System.out.println("->"+ dist[origen][destino].getIntermedio());
             reconstruirCamino(dist[origen][destino].getIntermedio(), destino, dist, grafo, res);
         }
-    }
+    }*/
 
     /*public static void reconstruirCamino2(int origen, int destino, TipoDato[][] dist){
         if(dist[origen][destino].getIntermedio() != destino){
@@ -128,7 +129,19 @@ public class Operacion {
         }
     }*/
 
-	public static Grafo shortestPath(Grafo grafo, Nodo origen, Nodo destino){
+   public static void reconstruirCamino(Grafo grafo, Grafo res, String origen, String destino, TipoDato[][] dist){
+        res.getNodos().add(origen);
+        while(!origen.equals(destino)){
+            int intermedio = dist[grafo.getNodos().indexOf(origen)][grafo.getNodos().indexOf(destino)].getIntermedio();
+            String nodoaux = grafo.getNodos().get(intermedio);
+            res.getNodos().add(nodoaux);
+            Arco arcoaux = grafo.obtenerArista(origen, nodoaux);
+            res.getArcos().add(arcoaux);
+            origen = nodoaux;
+        }
+   }
+
+	public static Grafo shortestPath(Grafo grafo, String origen, String destino){
         Grafo res = null;
         int posOrigen, posDestino, aux;
         TipoDato[][] dist;
@@ -136,56 +149,16 @@ public class Operacion {
 		if(grafo.getTipo() == 1){ //Solo se puede realizar para grafos dirigidos
             res = new Grafo("shortestPath_"+grafo.getNombre(), 1);
 			grafo.crearMatrizAdyacencia();
-            posOrigen = grafo.getNodos().indexOf(origen);
-            //System.out.println(" ->" + posOrigen);
-            //System.out.println(" ------->>>" + destino.toString());
-            posDestino = grafo.getNodos().indexOf(destino);
-            //System.out.println(" ->" + posDestino);
             dist = floyd(grafo.getAdyacencia());
-            aux = posOrigen;
-
-
-            /*
-            res.getNodos().add(origen.clone());
-            while(dist[aux][posDestino].getIntermedio() != posDestino){
-                res.getNodos().add(grafo.getNodos().elementAt(dist[aux][posDestino].getIntermedio()).clone());
-                boolean encontrado = false;
-                for(int i=0; i< grafo.getArcos().size() && !encontrado; i++){
-                    if(grafo.getArcos().elementAt(i).getNodoOrigen().equals(grafo.getNodos().elementAt(aux)) && grafo.getArcos().elementAt(i).getNodoDestino().equals(grafo.getNodos().elementAt(dist[aux][posDestino].getIntermedio()))){
-                        encontrado = true;
-                        res.getArcos().add(grafo.getArcos().elementAt(i).clone());
-                    }
-                    
-                }
-                aux = dist[aux][posDestino].getIntermedio();
-            }
-            res.getNodos().add(grafo.getNodos().elementAt(posDestino).clone());
-            boolean encontrado = false;
-            for(int i=0; i< grafo.getArcos().size() && !encontrado; i++){
-                if(grafo.getArcos().elementAt(i).getNodoOrigen().equals(grafo.getNodos().elementAt(aux)) && grafo.getArcos().elementAt(i).getNodoDestino().equals(grafo.getNodos().elementAt(posDestino))){
-                    encontrado = true;
-                    res.getArcos().add(grafo.getArcos().elementAt(i).clone());
-                }
-            }
-            if(encontrado == false){
-                res.getArcos().add(new Arco(grafo.getNodos().elementAt(aux).toString() + grafo.getNodos().elementAt(posDestino).toString(), 666, res.getNodos().get(res.getNodos().lastIndexOf(origen)), res.getNodos().get(res.getNodos().lastIndexOf(destino))));
-            }*/
-
-
-
-
             
-            //System.out.println("origen->"+ posOrigen);
-            res.getNodos().add(grafo.getNodos().elementAt(posOrigen).clone());
-            reconstruirCamino(posOrigen, posDestino, dist, grafo, res);
-            res.getNodos().add(grafo.getNodos().elementAt(posDestino).clone());
-            //System.out.println("destino->"+ posDestino);
+            reconstruirCamino(grafo, res, origen, destino, dist);
+            
             
 		}
         return res;
 	}
 	
-	public static Grafo union(String nombre, Grafo grafo1, Grafo grafo2, Nodo nodo1, Nodo nodo2, Arco arco){
+	public static Grafo union(String nombre, Grafo grafo1, Grafo grafo2, String nodo1, String nodo2, Arco arco){
 		Grafo res = null;
 		
 		if(grafo1.getTipo() == 1 && grafo2.getTipo() == 1){
@@ -199,26 +172,26 @@ public class Operacion {
 		}
 		
 		for(int i=0; i<grafo1.getNodos().size(); i++){
-			if(!res.getNodos().contains(grafo1.getNodos().elementAt(i))){
-				res.getNodos().add(grafo1.getNodos().elementAt(i).clone());
+			if(!res.getNodos().contains(grafo1.getNodos().get(i))){
+				res.getNodos().add(grafo1.getNodos().get(i));
 			}
 		}
 		
 		for(int i=0; i<grafo2.getNodos().size(); i++){
-			if(!res.getNodos().contains(grafo2.getNodos().elementAt(i))){
-				res.getNodos().add(grafo2.getNodos().elementAt(i).clone());
+			if(!res.getNodos().contains(grafo2.getNodos().get(i))){
+				res.getNodos().add(grafo2.getNodos().get(i));
 			}
 		}
 		
 		for(int i=0; i<grafo1.getArcos().size(); i++){
-			if(!res.getArcos().contains(grafo1.getArcos().elementAt(i))){
-				res.getArcos().add(grafo1.getArcos().elementAt(i).clone());
+			if(!res.getArcos().contains(grafo1.getArcos().get(i))){
+				res.getArcos().add(grafo1.getArcos().get(i).clone());
 			}
 		}
 		
 		for(int i=0; i<grafo2.getArcos().size(); i++){
-			if(!res.getArcos().contains(grafo2.getArcos().elementAt(i))){
-				res.getArcos().add(grafo2.getArcos().elementAt(i).clone());
+			if(!res.getArcos().contains(grafo2.getArcos().get(i))){
+				res.getArcos().add(grafo2.getArcos().get(i).clone());
 			}
 		}
 		
