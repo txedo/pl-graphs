@@ -11,17 +11,25 @@ public class Arco implements Cloneable{
 	public Arco(String arista){
 		this.arista=arista;
 		this.peso=0;
+        this.dirigido=false;
+        this.nodoOrigen=null;
+        this.nodoDestino=null;
 	}
 
     public Arco(String arista, int peso){
 		this.arista=arista;
 		this.peso=peso;
+        this.dirigido=false;
+        this.nodoOrigen=null;
+        this.nodoDestino=null;
 	}
 
 	public Arco(String arista, int peso, boolean dirigido){
 		this.arista=arista;
 		this.peso=peso;
         this.dirigido=dirigido;
+        this.nodoOrigen=null;
+        this.nodoDestino=null;
 	}
 	
 	public Arco(String arista, int peso, boolean dirigido, String nodoOrigen, String nodoDestino){
@@ -73,8 +81,22 @@ public class Arco implements Cloneable{
 	}
 	
 	public String toString(){
-		String cadena = getArista() + " = " + getNodoOrigen().toString() + " (" + getPeso() + ") " + " -> " + getNodoDestino().toString() + "\n";
+        String cadena = null;
+        
+        cadena = getArista();
+
+        if(getNodoOrigen() != null){
+            cadena = cadena + " = " + getNodoOrigen().toString();
+        }
+
+        cadena = cadena + " (" + getPeso() + ") ";
+
+        if(getNodoDestino() != null){
+            cadena = cadena + getNodoDestino().toString() + "\n";
+        }
+
 		return cadena;
+        
 	}
 
     public boolean equals(Object obj){
