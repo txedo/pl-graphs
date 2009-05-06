@@ -30,11 +30,14 @@ parser code {:
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
 terminal graph, node, edge, operadorUnario, operadorBinario, operadorQuinario;
 terminal l_bracket, r_bracket, l_paren, r_paren;
-terminal semicolon, comma, equal, connector, number;
+terminal semicolon, comma, equal, connector;
 terminal String ident;
-non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES;
-non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED, OPS_GEN, OPS, OP, OP1, OP2, OP5;
+terminal Integer number;
+non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY;
+non terminal OPS_GEN, OPS, OP, OP1, OP2, OP5;
+non terminal AtributosGrafo DECL, DECL_NODES, DECL_EDGES;
 non terminal ArrayList<String> IDENTS_NODE;
+non terminal ArrayList<Arco> IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED;
 non terminal ArrayList<Arco> ARCS;
 non terminal Arco ARC;
 
@@ -55,9 +58,10 @@ GRAPH 		::= graph ident:identificador_grafo l_bracket BODY r_bracket semicolon
 		| error
 			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
 		;
-BODY 		::= DECL:listaNodos ARCS:listaArcos OPS 
+BODY 		::= DECL:atrib ARCS:listaArcos OPS 
 			{:
-			   System.out.println (listaNodos.toString());
+			   System.out.println (atrib.getListaNodos().toString());
+			   System.out.println (atrib.getListaArcos().toString());
 			   System.out.println (listaArcos.toString());
 			:}
 		|   OPS_GEN   OPS
@@ -68,19 +72,25 @@ BODY 		::= DECL:listaNodos ARCS:listaArcos OPS
 		| error
 			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
 		;
-DECL 		::= DECL_NODES:listaNodos
+DECL 		::= DECL_NODES:atrib
 			{:
-			   RESULT = (ArrayList<String>)listaNodos;
+			   RESULT = (AtributosGrafo)atrib;
 			:}
-		|   DECL_EDGES
+		|   DECL_EDGES:atrib
+			{:
+			   RESULT = (AtributosGrafo)atrib;
+			:}
 		;
 DECL_NODES 	::= node IDENTS_NODE:listaNodos semicolon
 			{:
-			   RESULT = (ArrayList<String>)listaNodos;
+			   AtributosGrafo atrib = new AtributosGrafo();
+			   atrib.getListaNodos().addAll((ArrayList<String>)listaNodos);
+			   RESULT = (AtributosGrafo)atrib;
 			:}
-		|   node IDENTS_NODE:listaNodos semicolon DECL
+		|   node IDENTS_NODE:listaNodos semicolon DECL:atrib
 			{:
-			   RESULT = (ArrayList<String>)listaNodos;
+			   atrib.getListaNodos().addAll((ArrayList<String>)listaNodos);
+			   RESULT = (AtributosGrafo)atrib;
 			:}
 		;
 IDENTS_NODE	::= ident:identificador_nodo
@@ -95,17 +105,54 @@ IDENTS_NODE	::= ident:identificador_nodo
 			   RESULT = (ArrayList<String>)listaNodos;
 			:}
 		;
-DECL_EDGES 	::= edge IDENTS semicolon
-		|   edge IDENTS semicolon DECL 
+DECL_EDGES 	::= edge IDENTS:listaArcos semicolon
+			{:
+			   AtributosGrafo atrib = new AtributosGrafo();
+			   atrib.getListaArcos().addAll((ArrayList<Arco>)listaArcos);
+			   RESULT = (AtributosGrafo)atrib;
+			:}
+		|   edge IDENTS:listaArcos semicolon DECL:atrib
+			{:
+			   atrib.getListaArcos().addAll((ArrayList<Arco>)listaArcos);
+			   RESULT = (AtributosGrafo)atrib;
+			:}
 		;
-IDENTS		::= IDENTS_SIMPLE
-		|   IDENTS_WEIGHTED
+IDENTS		::= IDENTS_SIMPLE:listaArcos
+			{:
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
+		|   IDENTS_WEIGHTED:listaArcos
+			{:
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
 		;
-IDENTS_SIMPLE	::= ident
-		|   ident comma IDENTS
+IDENTS_SIMPLE	::= ident:identificador_arco
+			{:
+			   ArrayList<Arco> listaArcos = new ArrayList<Arco>();
+			   Arco arco = new Arco(identificador_arco, 0);
+			   listaArcos.add((Arco)arco);
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
+		|   ident:identificador_arco comma IDENTS:listaArcos
+			{:
+			   Arco arco = new Arco(identificador_arco, 0);
+			   listaArcos.add((Arco)arco);
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
 		;
-IDENTS_WEIGHTED	::= ident l_paren number r_paren 
-		|   ident l_paren number r_paren comma IDENTS
+IDENTS_WEIGHTED	::= ident:identificador_arco l_paren number:peso r_paren
+			{:
+			   ArrayList<Arco> listaArcos = new ArrayList<Arco>();
+			   Arco arco = new Arco(identificador_arco, peso);
+			   listaArcos.add((Arco)arco);
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
+		|   ident:identificador_arco l_paren number:peso r_paren comma IDENTS:listaArcos
+			{:
+			   Arco arco = new Arco(identificador_arco, peso);
+			   listaArcos.add((Arco)arco);
+			   RESULT = (ArrayList<Arco>)listaArcos;
+			:}
 		;
 ARCS 		::= ARC:arco
 			{: 
