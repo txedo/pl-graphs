@@ -12,7 +12,12 @@ public class Arco implements Cloneable{
 		this.arista=arista;
 		this.peso=0;
 	}
-	
+
+    public Arco(String arista, int peso){
+		this.arista=arista;
+		this.peso=peso;
+	}
+
 	public Arco(String arista, int peso, boolean dirigido){
 		this.arista=arista;
 		this.peso=peso;
