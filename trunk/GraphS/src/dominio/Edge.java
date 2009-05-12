@@ -1,3 +1,6 @@
+package dominio;
+
+
 public class Edge implements Comparable<Edge> {
 
 	String name;

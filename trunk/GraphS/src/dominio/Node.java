@@ -1,3 +1,5 @@
+package dominio;
+
 public class Node implements Comparable<Node> {
 
 	String name;
