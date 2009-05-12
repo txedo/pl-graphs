@@ -18,13 +18,11 @@ class FiltreSimple extends FileFilter{
    private String extension;
 
    // contructor a partir de la descripvión y la extensión aceptada
-   public FiltreSimple(String description, String extension){
-      if(description == null || extension ==null){
-         throw new NullPointerException("La descripción (o extensión) no pueden ser null.");
-      }
-      this.description = description;
-      this.extension = extension;
+   public FiltreSimple(){
+      this.description = "GraphS Files (*.graph)";
+      this.extension = ".graph";
    }
+
 
    // Implementación del FileFilter
    public boolean accept(File file){
@@ -36,6 +34,10 @@ class FiltreSimple extends FileFilter{
    }
    public String getDescription(){
       return description;
+   }
+
+   public String getExtension(){
+       return extension;
    }
 }
 

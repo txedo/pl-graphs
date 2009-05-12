@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import javax.swing.Timer;
@@ -30,6 +29,7 @@ import javax.swing.JFrame;
 /**
  * The application's main frame.
  */
+
 public class GraphSView extends FrameView {
 
     public GraphSView(SingleFrameApplication app) {
@@ -123,8 +123,12 @@ public class GraphSView extends FrameView {
         pasteButton = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
         compileButton = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         procesadorTextArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        realimentacionTextArea = new javax.swing.JTextArea();
+        jToggleButton1 = new javax.swing.JToggleButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
@@ -153,7 +157,10 @@ public class GraphSView extends FrameView {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
 
+        mainPanel.setMaximumSize(new java.awt.Dimension(450, 350));
+        mainPanel.setMinimumSize(new java.awt.Dimension(450, 350));
         mainPanel.setName("mainPanel"); // NOI18N
+        mainPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
         toolBar.setFloatable(false);
         toolBar.setRollover(true);
@@ -167,9 +174,9 @@ public class GraphSView extends FrameView {
         newButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newButton.setName("newButton"); // NOI18N
         newButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        newButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                newButtonMouseClicked(evt);
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
             }
         });
         toolBar.add(newButton);
@@ -181,9 +188,9 @@ public class GraphSView extends FrameView {
         openButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openButton.setName("openButton"); // NOI18N
         openButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        openButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                openButtonMouseClicked(evt);
+        openButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openButtonActionPerformed(evt);
             }
         });
         toolBar.add(openButton);
@@ -195,9 +202,9 @@ public class GraphSView extends FrameView {
         saveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveButton.setName("saveButton"); // NOI18N
         saveButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveButtonMouseClicked(evt);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
             }
         });
         toolBar.add(saveButton);
@@ -251,27 +258,52 @@ public class GraphSView extends FrameView {
         compileButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         compileButton.setName("compileButton"); // NOI18N
         compileButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        compileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compileButtonActionPerformed(evt);
+            }
+        });
         toolBar.add(compileButton);
+
+        jSplitPane1.setDividerLocation(200);
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane1.setMaximumSize(new java.awt.Dimension(400, 200));
+        jSplitPane1.setMinimumSize(new java.awt.Dimension(450, 200));
+        jSplitPane1.setName("jSplitPane1"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         procesadorTextArea.setColumns(20);
         procesadorTextArea.setRows(5);
+        procesadorTextArea.setMinimumSize(new java.awt.Dimension(20, 40));
         procesadorTextArea.setName("procesadorTextArea"); // NOI18N
         jScrollPane1.setViewportView(procesadorTextArea);
+
+        jSplitPane1.setTopComponent(jScrollPane1);
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        realimentacionTextArea.setColumns(20);
+        realimentacionTextArea.setEditable(false);
+        realimentacionTextArea.setRows(5);
+        realimentacionTextArea.setFocusable(false);
+        realimentacionTextArea.setMaximumSize(new java.awt.Dimension(400, 350));
+        realimentacionTextArea.setName("realimentacionTextArea"); // NOI18N
+        jScrollPane2.setViewportView(realimentacionTextArea);
+
+        jSplitPane1.setRightComponent(jScrollPane2);
+
+        jToggleButton1.setText(resourceMap.getString("jToggleButton1.text")); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(toolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toolBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -279,7 +311,7 @@ public class GraphSView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(toolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -338,6 +370,11 @@ public class GraphSView extends FrameView {
         compileMenuItem.setText(resourceMap.getString("compileMenuItem.text")); // NOI18N
         compileMenuItem.setToolTipText(resourceMap.getString("compileMenuItem.toolTipText")); // NOI18N
         compileMenuItem.setName("compileMenuItem"); // NOI18N
+        compileMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compileMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(compileMenuItem);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
@@ -428,11 +465,11 @@ public class GraphSView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -461,30 +498,40 @@ public class GraphSView extends FrameView {
         newGraph();
     }//GEN-LAST:event_newMenuItemActionPerformed
 
-    private void newButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newButtonMouseClicked
-        // TODO add your handling code here:
-        newGraph();
-    }//GEN-LAST:event_newButtonMouseClicked
-
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         // TODO add your handling code here:
         openGraph();
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    private void openButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openButtonMouseClicked
-        // TODO add your handling code here:
-        openGraph();
-    }//GEN-LAST:event_openButtonMouseClicked
-
-    private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-        // TODO add your handling code here:
-        saveGraph();
-    }//GEN-LAST:event_saveButtonMouseClicked
-
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
         saveGraph();
     }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void compileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compileButtonActionPerformed
+        // TODO add your handling code here:
+        compileGraph();
+    }//GEN-LAST:event_compileButtonActionPerformed
+
+    private void compileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compileMenuItemActionPerformed
+        // TODO add your handling code here:
+        compileGraph();
+    }//GEN-LAST:event_compileMenuItemActionPerformed
+
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        // TODO add your handling code here:
+        newGraph();
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
+        // TODO add your handling code here:
+        openGraph();
+    }//GEN-LAST:event_openButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        saveGraph();
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton compileButton;
@@ -496,12 +543,15 @@ public class GraphSView extends FrameView {
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newButton;
@@ -512,6 +562,7 @@ public class GraphSView extends FrameView {
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JTextArea procesadorTextArea;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JTextArea realimentacionTextArea;
     private javax.swing.JMenuItem redoMenuItem;
     private javax.swing.JButton saveAsButton;
     private javax.swing.JMenuItem saveAsMenuItem;
@@ -532,6 +583,7 @@ public class GraphSView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+    private JDialog visorBox;
 
     public void newGraph () {
         procesadorTextArea.setText("");
@@ -539,7 +591,7 @@ public class GraphSView extends FrameView {
 
     public void openGraph () {
         JFileChooser fcAbrir = new JFileChooser();
-        fcAbrir.addChoosableFileFilter(new FiltreSimple("Ficheros GraphS (*.graphs)",".graphs"));
+        fcAbrir.addChoosableFileFilter(new FiltreSimple());
 
         int valorDevuelto = fcAbrir.showOpenDialog(null);
         //Recoger el nombre del fichero seleccionado por el usuario
@@ -549,6 +601,7 @@ public class GraphSView extends FrameView {
                 File file = fcAbrir.getSelectedFile();
                 //TODO cambiar el titulo de la ventana indicando el fichero abierto
                 procesadorTextArea.setText("");
+                realimentacionTextArea.setText("Opening " + file.getAbsolutePath() + " ...\n");
                 br = new BufferedReader(new FileReader(file));
                 String line = br.readLine();
                 while (line != null) {
@@ -556,6 +609,7 @@ public class GraphSView extends FrameView {
                     line = br.readLine();
                 }
                 br.close();
+                realimentacionTextArea.append("Graph opened.");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -572,16 +626,26 @@ public class GraphSView extends FrameView {
 
     public void saveGraph () {
         JFileChooser fcGuardar = new JFileChooser();
-        fcGuardar.addChoosableFileFilter(new FiltreSimple("Ficheros GraphS (*.graphs)",".graphs"));
-
+        FiltreSimple graph = new FiltreSimple();
+        fcGuardar.addChoosableFileFilter(graph);
+        fcGuardar.setFileFilter(graph);
+        
         int valorDevuelto = fcGuardar.showSaveDialog(null);
         if (valorDevuelto == JFileChooser.APPROVE_OPTION) {
             BufferedWriter bw = null;
             try {
                 File file = fcGuardar.getSelectedFile();
+                String fileName = file.getAbsolutePath();
+                System.out.println(fileName);
+                if (!fileName.endsWith(graph.getExtension())){
+                    fileName = fileName + graph.getExtension();
+                }
+                System.out.println(fileName);
+                file = new File(fileName);
+                System.out.println(file.getName());
                 bw = new BufferedWriter(new FileWriter(file));
-                //procesadorTextArea.getText();
                 bw.write(procesadorTextArea.getText());
+                realimentacionTextArea.append("Graph saved as " + file);
             } catch (IOException ex) {
                 Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
@@ -593,5 +657,14 @@ public class GraphSView extends FrameView {
             }
 
         }
+    }
+
+    public void compileGraph(){
+        if (visorBox == null) {
+            JFrame mainFrame = GraphSApp.getApplication().getMainFrame();
+            visorBox = new GraphsVisorBox(mainFrame, true);
+            visorBox.setLocationRelativeTo(mainFrame);
+        }
+        GraphSApp.getApplication().show(visorBox);
     }
 }

@@ -4,6 +4,7 @@
 
 package graphs;
 
+import java.awt.Dimension;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -15,8 +16,19 @@ public class GraphSApp extends SingleFrameApplication {
     /**
      * At startup create and show the main frame of the application.
      */
+    public final int MAXWIDTH = 100;
+    public final int MAXHEIGHT = 650;
+
     @Override protected void startup() {
-        show(new GraphSView(this));
+        Dimension dim = new Dimension();
+        dim.height = MAXHEIGHT;
+        dim.width = MAXWIDTH;
+        GraphSView gv = new GraphSView(this);
+        gv.getFrame().setMinimumSize(dim);
+        gv.getFrame().setMaximumSize(dim);
+        gv.getFrame().setSize(dim);
+        gv.getFrame().setResizable(false);
+        show(gv);
     }
 
     /**
