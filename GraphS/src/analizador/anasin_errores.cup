@@ -1,0 +1,311 @@
+/* Especificaciones de package e imports */
+package analizador;
+
+import java_cup.runtime.*;
+import dominio.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+/* Componentes de codigo de usuario */
+parser code {:
+	public static final int GLOBAL = 0;
+	public static final int LOCAL = 1;
+    public static final int NODE = 0;
+    public static final int EDGE = 1;
+
+	public int ambito = GLOBAL;
+    public boolean dirigido = false;
+    public boolean no_dirigido = false;
+
+	private Hashtable<ClaveTS, EntradaTS> tablaSimbolos = new Hashtable<ClaveTS, EntradaTS>();
+
+	public void borrarTS() {
+		tablaSimbolos.clear();
+	}
+
+	public boolean existeSimbolo(ClaveTS clave) {
+		return tablaSimbolos.containsKey(clave);
+	}
+
+    public boolean existeSimbolo(String identificador, int scope) {
+        ClaveTS c = new ClaveTS(identificador, scope);
+		return tablaSimbolos.containsKey((ClaveTS)c);
+	}
+
+	public Hashtable<ClaveTS, EntradaTS> getTabla() {
+		return tablaSimbolos;
+	}
+
+	public void insertarSimbolo(String nombre, int scope, Object objeto) {
+        ClaveTS c = new ClaveTS(nombre, scope);
+        EntradaTS e = new EntradaTS(objeto, 0);
+		tablaSimbolos.put(c, e);
+	}
+
+    public void insertarSimbolo(ClaveTS c, EntradaTS e) {
+		tablaSimbolos.put(c, e);
+	}
+
+	public EntradaTS obtenerSimbolo(String nombre, int scope) {
+        ClaveTS c = new ClaveTS(nombre, scope);
+		return tablaSimbolos.get(c);
+	}
+
+    public EntradaTS obtenerSimbolo(ClaveTS clave) {
+		return tablaSimbolos.get(clave);
+	}
+
+	public int obtenerTipoSimbolo(String nombre) {
+		return tablaSimbolos.get(nombre).getTipo();
+	}
+
+
+
+
+
+	public void report_error (String message, Object info) {
+		StringBuffer m = new StringBuffer("Error");
+
+		if (info instanceof java_cup.runtime.Symbol) {
+			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+			if (s.left >= 0) {
+				m.append(" en la linea "+(s.left));
+				if (s.right >= 0)
+					m.append(", columna "+(s.right));
+			}
+		}
+		m.append(" : "+message);
+		System.err.println(m);
+	}
+
+	public void report_fatal_error(String message, Object info) {
+		report_error(message,info);
+		System.exit(1);
+	}
+:};
+
+
+/* Lista de simbolos de la gramatica (terminales y no terminales) */
+terminal graph, node, edge, op, operadorUnario, operadorBinario, operadorQuinario;
+terminal l_bracket, r_bracket, l_paren, r_paren;
+terminal semicolon, comma, equal;
+terminal String ident, connector;
+terminal Integer number;
+non terminal Integer DECL;
+non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY;
+non terminal OPS_GEN, OPS, OP, OP1, OP2, OP5, DECL_NODES, DECL_EDGES;
+non terminal IDENTS_NODE;
+non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED;
+non terminal ARCS;
+non terminal ARC;
+
+/* Declaraciones de precedencia */
+
+/* Especificacion de la gramatica */
+SYNTAX		::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET
+		|   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET
+		;
+GRAPHS_SET 	::= GRAPH
+		|   GRAPH {: parser.dirigido = false; parser.no_dirigido = false; :} GRAPHS_SET
+		;
+GRAPH 		::= graph ident l_bracket BODY r_bracket
+		| error
+			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
+		;
+BODY 		::= DECL ARCS OPS
+		|   OPS_GEN   OPS
+		| error
+			{: parser.report_error("Error de sintaxis en la zona de declaracion.",null); :}
+		;
+DECL 		::= DECL_NODES
+		|   DECL_EDGES
+		;
+DECL_NODES 	::= node IDENTS_NODE semicolon
+		|   node IDENTS_NODE semicolon DECL
+		;
+IDENTS_NODE	::= ident:identificador
+			{:
+				boolean existe = false;
+				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+				}
+				if (!existe) {
+					Node nodo = new Node(identificador);
+					parser.insertarSimbolo(identificador, parser.ambito, nodo);
+				}
+			:}
+		|   ident:identificador comma IDENTS_NODE
+            {:
+				boolean existe = false;
+				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+					System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+				}
+				if (!existe) {
+					Node nodo = new Node(identificador);
+					parser.insertarSimbolo(identificador, parser.ambito, nodo);
+				}
+			:}
+		;
+DECL_EDGES 	::= edge IDENTS semicolon
+		|   edge IDENTS semicolon DECL
+		;
+IDENTS		::= IDENTS_SIMPLE
+		|   IDENTS_WEIGHTED
+		;
+IDENTS_SIMPLE	::= ident:identificador
+			{:
+				boolean existe = false;
+				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+				}
+				if (!existe) {
+					Edge edge = new Edge(identificador, 0);
+					parser.insertarSimbolo(identificador, parser.ambito, edge);
+				}
+			:}
+		|   ident:identificador comma IDENTS
+			{:
+				boolean existe = false;
+				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+				}
+				if (!existe) {
+					Edge edge = new Edge(identificador, 0);
+					parser.insertarSimbolo(identificador, parser.ambito, edge);
+				}
+			:}
+		;
+IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
+			{:
+				boolean existe = false;
+				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+				}
+				if (!existe) {
+                    if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
+                        Edge edge = new Edge(identificador, peso);
+                        parser.insertarSimbolo(identificador, parser.ambito, edge);
+                    }
+                    else {
+                        System.out.println ("Error semantico: peso incorrecto");
+                    }
+				}
+			:}
+		|   ident:identificador l_paren number:peso r_paren comma IDENTS
+			{:
+				boolean existe = false;
+				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+				}
+				if (!existe) {
+                    if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
+                        Edge edge = new Edge(identificador, peso);
+                        parser.insertarSimbolo(identificador, parser.ambito, edge);
+                    }
+                    else {
+                        System.out.println ("Error semantico: peso incorrecto");
+                    }
+				}
+			:}
+		;
+ARCS 		::= ARC
+		|   ARC ARCS
+		;
+ARC 		::= ident:identificador_arista equal ident:identificador_nodo_origen connector:conector ident:identificador_nodo_destino semicolon
+                {:
+                    EntradaTS entrada = null;
+                    Node source = null;
+                    Node target = null;
+                    Edge edge = null;
+                    // Comprobamos que existe el nodo origen
+                    if (parser.existeSimbolo(identificador_nodo_origen, parser.LOCAL) || parser.existeSimbolo(identificador_nodo_origen, parser.GLOBAL)) {
+                        if (parser.existeSimbolo(identificador_nodo_origen, parser.LOCAL)) {
+                            entrada = parser.obtenerSimbolo(identificador_nodo_origen, parser.LOCAL);
+                            if (entrada.getTipo() == parser.NODE) {
+                                source = (Node)entrada.getVariable();
+                            }
+                            else System.out.println ("Error semantico: el nodo origen no es un nodo");
+                        }
+                        else { //Global
+                            entrada = parser.obtenerSimbolo(identificador_nodo_origen, parser.GLOBAL);
+                            if (entrada.getTipo() == parser.NODE)
+                                source = (Node)entrada.getVariable();
+                            else System.out.println ("Error semantico: el nodo origen no es un nodo");
+                        }
+                        // Comprobamos que existe el nodo destino
+                        if (parser.existeSimbolo(identificador_nodo_destino, parser.LOCAL) || parser.existeSimbolo(identificador_nodo_destino, parser.GLOBAL)) {
+                            if (parser.existeSimbolo(identificador_nodo_destino, parser.LOCAL)) {
+                                entrada = parser.obtenerSimbolo(identificador_nodo_destino, parser.LOCAL);
+                                if (entrada.getTipo() == parser.NODE) {
+                                    target = (Node)entrada.getVariable();
+                                }
+                                else System.out.println ("Error semantico: el nodo destino no es un nodo");
+                            }
+                            else { //Global
+                                entrada = parser.obtenerSimbolo(identificador_nodo_destino, parser.GLOBAL);
+                                if (entrada.getTipo() == parser.NODE)
+                                    target = (Node)entrada.getVariable();
+                                else System.out.println ("Error semantico: el nodo destino no es un nodo");
+                            }
+                            // Comprobamos que existe la arista
+                            if (parser.existeSimbolo(identificador_arista, parser.LOCAL) || parser.existeSimbolo(identificador_arista, parser.GLOBAL)) {
+                                if (parser.existeSimbolo(identificador_arista, parser.LOCAL)) {
+                                    entrada = parser.obtenerSimbolo(identificador_arista, parser.LOCAL);
+                                    if (entrada.getTipo() == parser.EDGE) {
+                                        edge = (Edge)entrada.getVariable();
+                                    }
+                                    else System.out.println ("Error semantico: la arista no es una arista");
+                                }
+                                else { //Global
+                                    entrada = parser.obtenerSimbolo(identificador_arista, parser.GLOBAL);
+                                    if (entrada.getTipo() == parser.EDGE)
+                                        edge = (Edge)entrada.getVariable();
+                                    else System.out.println ("Error semantico: la arista no es una arista");
+                                }
+                                edge.setFrom(source);
+                                edge.setTo(target);
+                                if (conector.equals("-") && !parser.dirigido) parser.no_dirigido = true;
+                                else {
+                                    if (conector.equals("->") && !parser.no_dirigido) parser.dirigido = true;
+                                    else {
+                                        System.out.println ("Error semantico: todas las aristas deben ser del mismo tipo");
+                                    }
+                                }
+                            }
+                            else {
+                                System.out.println("Error semantico: arista no declarada");
+                            }
+                        }
+                        else {
+                            System.out.println("Error semantico: nodo destino no declarado");
+                        }
+                    }
+                    else {
+                        System.out.println("Error semantico: nodo origen no declarado");
+                    }
+                :}
+		| error
+			{: parser.report_error("Error de sintaxis en la zona de conexion de aristas.",null); :}
+		;
+OPS_GEN 	::= OP5 semicolon
+		;
+OPS 		::= op OP
+		|   OPS op OP
+		;
+OP 		::= OP1 semicolon
+		|   OP2 semicolon
+		| error
+			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
+		;
+OP1 		::= operadorUnario   l_paren ident                                                 r_paren
+		;
+OP2 		::= operadorBinario  l_paren ident comma ident                                     r_paren
+		;
+OP5 		::= operadorQuinario l_paren ident comma ident comma ident comma ident comma ident r_paren
+		;
