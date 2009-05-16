@@ -43,7 +43,7 @@ public class Node implements Comparable<Node> {
 	}
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new Node(name);
     }
 

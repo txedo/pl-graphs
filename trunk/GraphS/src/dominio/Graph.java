@@ -20,6 +20,15 @@ public class Graph {
         operations = null;
 	}
 
+    public Graph (String na, boolean w, boolean d, ArrayList<Node> n, ArrayList<Edge> e, ArrayList<Operation> op) {
+		name = na;
+		weighted = w;
+		directed = d;
+		nodes = n;
+		edges = e;
+        operations = op;
+	}
+
     public ArrayList<Operation> getOperations() {
         return operations;
     }

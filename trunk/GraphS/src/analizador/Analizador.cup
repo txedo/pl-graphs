@@ -18,6 +18,8 @@ parser code {:
 	public int ambito = GLOBAL;
     public boolean dirigido = false;
     public boolean no_dirigido = false;
+    public boolean valorado = false;
+    public boolean no_valorado = false;
     public boolean errorAnalisis = false;
 
 	private Hashtable<ClaveTS, EntradaTS> tablaSimbolos = new Hashtable<ClaveTS, EntradaTS>();
@@ -71,6 +73,10 @@ parser code {:
         System.out.println ("Warning: " + mensaje);
     }
 
+    public void mostrarWarning (String mensaje, int fila, int columna) {
+        System.out.println ("Warning: " + mensaje + " " + fila + ":" + columna);
+    }
+
 
     public void resetearAnalisis (){
         Enumeration<ClaveTS> elements;
@@ -81,6 +87,8 @@ parser code {:
 
         dirigido = false;
         no_dirigido = false;
+        valorado = false;
+        no_valorado = false;
         errorAnalisis = false;
         elements = tablaSimbolos.keys();
         while (elements.hasMoreElements()) {
@@ -140,7 +148,7 @@ terminal semicolon, comma, equal;
 terminal String ident, connector;
 terminal Integer number;
 non terminal DECL;
-non terminal SYNTAX, GRAPHS_SET, GRAPH;
+non terminal SYNTAX;
 non terminal DECL_NODES, DECL_EDGES;
 non terminal IDENTS_NODE;
 non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED;
@@ -148,21 +156,77 @@ non terminal ARCS;
 non terminal ARC;
 non terminal ArrayList<Operation> OPS, BODY;
 non terminal Operation OP, OPS_GEN, OP1, OP2, OP5;
+non terminal Graph GRAPH;
+non terminal ArrayList<Graph> GRAPHS_SET;
 
 /* Declaraciones de precedencia */
 
 /* Especificacion de la gramatica */
-SYNTAX		::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET
-		|   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET
+SYNTAX		::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
+            {:
+                parser.resetearAnalisis();
+                System.out.println(((ArrayList<Graph>)listaGrafos).toString());
+            :}
+		|   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
+            {:
+                parser.resetearAnalisis();
+                System.out.println(((ArrayList<Graph>)listaGrafos).toString());
+            :}
 		;
-GRAPHS_SET 	::= GRAPH
-		|   GRAPH {: parser.resetearAnalisis(); :} GRAPHS_SET
+GRAPHS_SET 	::= GRAPH:grafo
+            {:
+                ArrayList<Graph> listaGrafos = new ArrayList<Graph>();
+                if ((Graph)grafo != null) listaGrafos.add(0, (Graph)grafo);
+                RESULT = (ArrayList<Graph>)listaGrafos;
+            :}
+		|   GRAPH:grafo {: parser.resetearAnalisis(); :} GRAPHS_SET:listaGrafos
+            {:
+                if ((Graph)grafo != null) ((ArrayList<Graph>)listaGrafos).add(0, (Graph)grafo);
+                RESULT = (ArrayList<Graph>)listaGrafos;
+            :}
 		;
 GRAPH 		::= graph ident:identificador_grafo l_bracket BODY:lista_operaciones r_bracket
             {:
-                //Crear el grafo con los simbolos de ambito 0 y 1 usados mas de una vez (con clone)
-                //Añadirle la lista de operaciones que ha subido de body, comprobando antes que existen.
-                //Añadir el grafo a la tabla de simbolos con ambito global
+                Graph gr = null;
+                if (!parser.existeSimbolo(identificador_grafo, parser.GLOBAL)) {
+                    if (!parser.errorAnalisis) {
+                        //Crear el grafo con los simbolos de ambito 0 y 1 usados mas de una vez (con clone)
+                        ArrayList<Node> nodes = new ArrayList<Node>();
+                        ArrayList<Edge> edges = new ArrayList<Edge>();
+                        Enumeration<ClaveTS> elements;
+                        ClaveTS clave;
+                        EntradaTS entrada;
+                        Edge aristaAux = null;
+                        Node nodoAux = null;
+
+                        elements = parser.getTabla().keys();
+                        while (elements.hasMoreElements()) {
+                            clave = elements.nextElement();
+                            entrada = parser.getTabla().get(clave);
+                            if (entrada.getTimesUsed() > 0) {
+                                if (entrada.getTipo() == parser.EDGE) {
+                                    aristaAux = (Edge)entrada.getVariable();
+                                    edges.add(0, (Edge)aristaAux.clone());
+                                }
+                                if (entrada.getTipo() == parser.NODE) {
+                                    nodoAux = (Node)entrada.getVariable();
+                                    nodes.add(0, (Node)nodoAux.clone());
+                                }
+                            }
+                        }
+                        //Añadirle la lista de operaciones que ha subido de body, comprobando antes que existen.
+                        gr = new Graph((String)identificador_grafo, parser.valorado, parser.dirigido, nodes, edges, (ArrayList<Operation>)lista_operaciones);
+                        //Añadir el grafo a la tabla de simbolos con ambito global
+                        parser.insertarSimbolo(identificador_grafo, parser.GLOBAL, gr);
+                    }
+                    else {
+                        parser.mostrarError ("Graph " + identificador_grafo + " not generated.", identificador_grafoleft, identificador_graforight);
+                    }
+                }
+                else {
+                    parser.mostrarError(identificador_grafo + " is already defined.", identificador_grafoleft, identificador_graforight);
+                }
+                RESULT = (Graph)gr;
             :}
 		| error
 			{: parser.report_error("Syntax error in graph definition.",null); :}
@@ -224,6 +288,8 @@ IDENTS_SIMPLE	::= ident:identificador
                     parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
+                    parser.no_valorado = true;
+                    if (parser.valorado) parser.mostrarWarning ("Edge " + identificador + " is not explicitally weighted. Assuming weight 0.", identificadorleft, identificadorright);
 					Edge edge = new Edge(identificador, 0);
 					parser.insertarSimbolo(identificador, parser.ambito, edge);
 				}
@@ -236,6 +302,8 @@ IDENTS_SIMPLE	::= ident:identificador
                     parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
+                    parser.no_valorado = true;
+                    if (parser.valorado) parser.mostrarWarning ("Edge " + identificador + " is not explicitally weighted. Assuming weight 0.", identificadorleft, identificadorright);
 					Edge edge = new Edge(identificador, 0);
 					parser.insertarSimbolo(identificador, parser.ambito, edge);
 				}
@@ -250,6 +318,7 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
 				}
 				if (!existe) {
                     if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
+                        parser.valorado = true;
                         Edge edge = new Edge(identificador, peso);
                         parser.insertarSimbolo(identificador, parser.ambito, edge);
                     }
@@ -267,6 +336,7 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
 				}
 				if (!existe) {
                     if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
+                        parser.valorado = true;
                         Edge edge = new Edge(identificador, peso);
                         parser.insertarSimbolo(identificador, parser.ambito, edge);
                     }
@@ -368,12 +438,12 @@ OPS_GEN 	::= OP5:operacion semicolon
 OPS 		::= op OP:operacion
             {:
                 ArrayList<Operation> lista_operaciones = new ArrayList<Operation>();
-                lista_operaciones.add((Operation)operacion);
+                lista_operaciones.add(0, (Operation)operacion);
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		|   OPS:lista_operaciones op OP:operacion
             {:
-                ((ArrayList<Operation>)lista_operaciones).add((Operation)operacion);
+                ((ArrayList<Operation>)lista_operaciones).add(0, (Operation)operacion);
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		;
