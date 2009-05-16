@@ -75,7 +75,7 @@ public class Edge implements Comparable<Edge> {
 	}
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return new Edge (name, from, to, weight);
     }
 
