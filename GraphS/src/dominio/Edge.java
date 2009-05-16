@@ -7,25 +7,51 @@ public class Edge implements Comparable<Edge> {
 	Node from, to;
 	int weight;
 
-	Edge(String n, int w){
+	public Edge(String n, int w){
 		name = n;
 		from = null;
 		to = null;
 		weight = w;
 	}
-	/*
-	Edge(Node f, Node t, int w){
-		from = f;
-		to = t;
-		weight = w;
-	}
-	*/
-	Edge(String n, Node f, Node t, int w){
+
+	public Edge(String n, Node f, Node t, int w){
 		name = n;
 		from = f;
 		to = t;
 		weight = w;
 	}
+
+    public Node getFrom() {
+        return from;
+    }
+
+    public void setFrom(Node from) {
+        this.from = from;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Node getTo() {
+        return to;
+    }
+
+    public void setTo(Node to) {
+        this.to = to;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
 	public int compareTo(Edge e){
 		return weight - e.weight;
@@ -47,4 +73,11 @@ public class Edge implements Comparable<Edge> {
 		res += "Arista " + name + " desde "+from.toString()+" hasta "+to.toString()+" con peso "+weight;
 		return res;
 	}
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Edge (name, from, to, weight);
+    }
+
+
 }

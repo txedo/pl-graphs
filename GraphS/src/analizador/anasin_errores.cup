@@ -5,6 +5,7 @@ import java_cup.runtime.*;
 import dominio.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Enumeration;
 
 /* Componentes de codigo de usuario */
 parser code {:
@@ -12,10 +13,12 @@ parser code {:
 	public static final int LOCAL = 1;
     public static final int NODE = 0;
     public static final int EDGE = 1;
+    public static final int GRAPH = 2;
 
 	public int ambito = GLOBAL;
     public boolean dirigido = false;
     public boolean no_dirigido = false;
+    public boolean errorAnalisis = false;
 
 	private Hashtable<ClaveTS, EntradaTS> tablaSimbolos = new Hashtable<ClaveTS, EntradaTS>();
 
@@ -59,9 +62,55 @@ parser code {:
 		return tablaSimbolos.get(nombre).getTipo();
 	}
 
+    public void mostrarError (String mensaje, int fila, int columna) {
+        errorAnalisis = true;
+        System.out.println ("Semantic error: " + mensaje + " " + fila + ":" + columna);
+    }
+
+    public void mostrarWarning (String mensaje) {
+        System.out.println ("Warning: " + mensaje);
+    }
 
 
+    public void resetearAnalisis (){
+        Enumeration<ClaveTS> elements;
+        ClaveTS clave;
+        EntradaTS entrada;
+        Edge aristaAux = null;
+        Node nodoAux = null;
 
+        dirigido = false;
+        no_dirigido = false;
+        errorAnalisis = false;
+        elements = tablaSimbolos.keys();
+        while (elements.hasMoreElements()) {
+            clave = elements.nextElement();
+            entrada = tablaSimbolos.get(clave);
+            if (clave.getScope() == LOCAL) {
+                if (entrada.getTimesUsed() == 0) { //Warning
+                    if (entrada.getTipo() == EDGE) {
+                        aristaAux = (Edge)entrada.getVariable();
+                        mostrarWarning ("Edge " + aristaAux.getName() + " not used. Assuming it does not exist.");
+                    }
+                    else { // NODE
+                        nodoAux = (Node)entrada.getVariable();
+                        mostrarWarning ("Node " + nodoAux.getName() + " not used. Assuming it does not exist.");
+                    }
+                }
+                tablaSimbolos.remove(clave);
+            }
+            else { // GLOBAL
+                // reseteamos las veces usadas
+                entrada.setTimesUsed(0);
+                if (entrada.getTipo() == EDGE) {
+                    Edge e = (Edge)entrada.getVariable();
+                    e.setFrom(null);
+                    e.setTo(null);
+                    e.setWeight(0);
+                }
+            }
+        }
+    }
 
 	public void report_error (String message, Object info) {
 		StringBuffer m = new StringBuffer("Error");
@@ -69,9 +118,9 @@ parser code {:
 		if (info instanceof java_cup.runtime.Symbol) {
 			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
 			if (s.left >= 0) {
-				m.append(" en la linea "+(s.left));
+				m.append(" at line "+(s.left));
 				if (s.right >= 0)
-					m.append(", columna "+(s.right));
+					m.append(", column "+(s.right));
 			}
 		}
 		m.append(" : "+message);
@@ -86,14 +135,17 @@ parser code {:
 
 
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
-terminal graph, node, edge, op, operadorUnario, operadorBinario, operadorQuinario;
+terminal graph, node, edge, op;
 terminal l_bracket, r_bracket, l_paren, r_paren;
 terminal semicolon, comma, equal;
 terminal String ident, connector;
+terminal String operadorUnario, operadorBinario, operadorQuinario;
 terminal Integer number;
 non terminal Integer DECL;
-non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY;
-non terminal OPS_GEN, OPS, OP, OP1, OP2, OP5, DECL_NODES, DECL_EDGES;
+non terminal SYNTAX, GRAPHS_SET, GRAPH;
+non terminal DECL_NODES, DECL_EDGES;
+non terminal Operation OP, OP1, OP2, OP5, OPS_GEN;
+non terminal ArrayList<Operation> OPS, BODY;
 non terminal IDENTS_NODE;
 non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED;
 non terminal ARCS;
@@ -106,16 +158,28 @@ SYNTAX		::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET
 		|   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET
 		;
 GRAPHS_SET 	::= GRAPH
-		|   GRAPH {: parser.dirigido = false; parser.no_dirigido = false; :} GRAPHS_SET
+		|   GRAPH {: parser.resetearAnalisis(); :} GRAPHS_SET
 		;
-GRAPH 		::= graph ident l_bracket BODY r_bracket
+GRAPH 		::= graph ident:identificador_grafo l_bracket BODY:lista_operaciones r_bracket
+            {:
+                //Crear el grafo con los simbolos de ambito 0 y 1 usados mas de una vez (con clone)
+                //Añadirle la lista de operaciones que ha subido de body, comprobando antes que existen.
+                //Añadir el grafo a la tabla de simbolos
+            :}
 		| error
-			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
+			{: parser.report_error("Syntax error in graph definition.",null); :}
 		;
-BODY 		::= DECL ARCS OPS
-		|   OPS_GEN   OPS
+BODY 		::= DECL ARCS OPS:lista_operaciones
+            {:
+                RESULT = lista_operaciones;
+            :}
+		|   OPS_GEN:operacion   OPS:lista_operaciones
+            {:
+                lista_operaciones.add(0, operacion);
+                RESULT = lista_operaciones;
+            :}
 		| error
-			{: parser.report_error("Error de sintaxis en la zona de declaracion.",null); :}
+			{: parser.report_error("Syntax error in declaration zone.",null); :}
 		;
 DECL 		::= DECL_NODES
 		|   DECL_EDGES
@@ -128,7 +192,7 @@ IDENTS_NODE	::= ident:identificador
 				boolean existe = false;
 				if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
-                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
 					Node nodo = new Node(identificador);
@@ -140,7 +204,7 @@ IDENTS_NODE	::= ident:identificador
 				boolean existe = false;
 				if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
-					System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+					parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
 					Node nodo = new Node(identificador);
@@ -159,7 +223,7 @@ IDENTS_SIMPLE	::= ident:identificador
 				boolean existe = false;
 				if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
-                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
 					Edge edge = new Edge(identificador, 0);
@@ -171,7 +235,7 @@ IDENTS_SIMPLE	::= ident:identificador
 				boolean existe = false;
 				if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
-                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
 					Edge edge = new Edge(identificador, 0);
@@ -184,7 +248,7 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
 				boolean existe = false;
 				if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
-                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
                     if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
@@ -192,7 +256,7 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
                         parser.insertarSimbolo(identificador, parser.ambito, edge);
                     }
                     else {
-                        System.out.println ("Error semantico: peso incorrecto");
+                        parser.mostrarError ("Invalid weight for edge " + identificador, pesoleft, pesoright);
                     }
 				}
 			:}
@@ -201,7 +265,7 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
 				boolean existe = false;
 				if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
-                    System.out.println("Error semantico: variable declarada muchas veces " + identificadorleft + ":" + identificadorright);
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
 				}
 				if (!existe) {
                     if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
@@ -209,7 +273,7 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
                         parser.insertarSimbolo(identificador, parser.ambito, edge);
                     }
                     else {
-                        System.out.println ("Error semantico: peso incorrecto");
+                        parser.mostrarError ("Invalid weight for edge " + identificador, pesoleft, pesoright);
                     }
 				}
 			:}
@@ -219,93 +283,253 @@ ARCS 		::= ARC
 		;
 ARC 		::= ident:identificador_arista equal ident:identificador_nodo_origen connector:conector ident:identificador_nodo_destino semicolon
                 {:
-                    EntradaTS entrada = null;
+                    EntradaTS entradaSource = null;
+                    EntradaTS entradaTarget = null;
+                    EntradaTS entradaEdge = null;
                     Node source = null;
                     Node target = null;
                     Edge edge = null;
                     // Comprobamos que existe el nodo origen
                     if (parser.existeSimbolo(identificador_nodo_origen, parser.LOCAL) || parser.existeSimbolo(identificador_nodo_origen, parser.GLOBAL)) {
                         if (parser.existeSimbolo(identificador_nodo_origen, parser.LOCAL)) {
-                            entrada = parser.obtenerSimbolo(identificador_nodo_origen, parser.LOCAL);
-                            if (entrada.getTipo() == parser.NODE) {
-                                source = (Node)entrada.getVariable();
+                            entradaSource = parser.obtenerSimbolo(identificador_nodo_origen, parser.LOCAL);
+                            if (entradaSource.getTipo() == parser.NODE) {
+                                source = (Node)entradaSource.getVariable();
                             }
-                            else System.out.println ("Error semantico: el nodo origen no es un nodo");
+                            else parser.mostrarError ("Source node " + identificador_nodo_origen + " is not a node.", identificador_nodo_origenleft, identificador_nodo_origenright);
                         }
                         else { //Global
-                            entrada = parser.obtenerSimbolo(identificador_nodo_origen, parser.GLOBAL);
-                            if (entrada.getTipo() == parser.NODE)
-                                source = (Node)entrada.getVariable();
-                            else System.out.println ("Error semantico: el nodo origen no es un nodo");
+                            entradaSource = parser.obtenerSimbolo(identificador_nodo_origen, parser.GLOBAL);
+                            if (entradaSource.getTipo() == parser.NODE)
+                                source = (Node)entradaSource.getVariable();
+                            else parser.mostrarError ("Source node " + identificador_nodo_origen + " is not a node.", identificador_nodo_origenleft, identificador_nodo_origenright);
                         }
                         // Comprobamos que existe el nodo destino
                         if (parser.existeSimbolo(identificador_nodo_destino, parser.LOCAL) || parser.existeSimbolo(identificador_nodo_destino, parser.GLOBAL)) {
                             if (parser.existeSimbolo(identificador_nodo_destino, parser.LOCAL)) {
-                                entrada = parser.obtenerSimbolo(identificador_nodo_destino, parser.LOCAL);
-                                if (entrada.getTipo() == parser.NODE) {
-                                    target = (Node)entrada.getVariable();
+                                entradaTarget = parser.obtenerSimbolo(identificador_nodo_destino, parser.LOCAL);
+                                if (entradaTarget.getTipo() == parser.NODE) {
+                                    target = (Node)entradaTarget.getVariable();
                                 }
-                                else System.out.println ("Error semantico: el nodo destino no es un nodo");
+                                else parser.mostrarError ("Target node " + identificador_nodo_destino + " is not a node.", identificador_nodo_destinoleft, identificador_nodo_destinoright);
                             }
                             else { //Global
-                                entrada = parser.obtenerSimbolo(identificador_nodo_destino, parser.GLOBAL);
-                                if (entrada.getTipo() == parser.NODE)
-                                    target = (Node)entrada.getVariable();
-                                else System.out.println ("Error semantico: el nodo destino no es un nodo");
+                                entradaTarget = parser.obtenerSimbolo(identificador_nodo_destino, parser.GLOBAL);
+                                if (entradaTarget.getTipo() == parser.NODE)
+                                    target = (Node)entradaTarget.getVariable();
+                                else parser.mostrarError ("Target node " + identificador_nodo_destino + " is not a node.", identificador_nodo_destinoleft, identificador_nodo_destinoright);
                             }
                             // Comprobamos que existe la arista
                             if (parser.existeSimbolo(identificador_arista, parser.LOCAL) || parser.existeSimbolo(identificador_arista, parser.GLOBAL)) {
                                 if (parser.existeSimbolo(identificador_arista, parser.LOCAL)) {
-                                    entrada = parser.obtenerSimbolo(identificador_arista, parser.LOCAL);
-                                    if (entrada.getTipo() == parser.EDGE) {
-                                        edge = (Edge)entrada.getVariable();
+                                    entradaEdge = parser.obtenerSimbolo(identificador_arista, parser.LOCAL);
+                                    if (entradaEdge.getTipo() == parser.EDGE) {
+                                        edge = (Edge)entradaEdge.getVariable();
                                     }
-                                    else System.out.println ("Error semantico: la arista no es una arista");
+                                    else parser.mostrarError ("Edge " + identificador_arista + " is not an edge.", identificador_aristaleft, identificador_aristaright);
                                 }
                                 else { //Global
-                                    entrada = parser.obtenerSimbolo(identificador_arista, parser.GLOBAL);
-                                    if (entrada.getTipo() == parser.EDGE)
-                                        edge = (Edge)entrada.getVariable();
-                                    else System.out.println ("Error semantico: la arista no es una arista");
+                                    entradaEdge = parser.obtenerSimbolo(identificador_arista, parser.GLOBAL);
+                                    if (entradaEdge.getTipo() == parser.EDGE)
+                                        edge = (Edge)entradaEdge.getVariable();
+                                    else parser.mostrarError ("Edge " + identificador_arista + " is not an edge.", identificador_aristaleft, identificador_aristaright);
                                 }
                                 edge.setFrom(source);
                                 edge.setTo(target);
+                                entradaSource.setTimesUsed(entradaSource.getTimesUsed() + 1);
+                                entradaTarget.setTimesUsed(entradaTarget.getTimesUsed() + 1);
+                                entradaEdge.setTimesUsed(entradaEdge.getTimesUsed() + 1);
                                 if (conector.equals("-") && !parser.dirigido) parser.no_dirigido = true;
                                 else {
                                     if (conector.equals("->") && !parser.no_dirigido) parser.dirigido = true;
                                     else {
-                                        System.out.println ("Error semantico: todas las aristas deben ser del mismo tipo");
+                                        parser.mostrarError ("All edges must be directed or not directed.", conectorleft, conectorright);
                                     }
                                 }
                             }
                             else {
-                                System.out.println("Error semantico: arista no declarada");
+                                parser.mostrarError ("Edge " + identificador_arista + " has not been declared.", identificador_aristaleft, identificador_aristaright);
                             }
                         }
                         else {
-                            System.out.println("Error semantico: nodo destino no declarado");
+                            parser.mostrarError ("Target node " + identificador_nodo_destino + " has not been declared.", identificador_nodo_destinoleft, identificador_nodo_destinoright);
                         }
                     }
                     else {
-                        System.out.println("Error semantico: nodo origen no declarado");
+                        parser.mostrarError ("Source node " + identificador_nodo_origen + " has not been declared.", identificador_nodo_origenleft, identificador_nodo_origenright);
                     }
                 :}
 		| error
-			{: parser.report_error("Error de sintaxis en la zona de conexion de aristas.",null); :}
+			{: parser.report_error("Syntax error in connection edge zone.",null); :}
 		;
-OPS_GEN 	::= OP5 semicolon
+OPS_GEN 	::= OP5:operacion semicolon
+            {:
+                RESULT = operacion;
+            :}
 		;
-OPS 		::= op OP
-		|   OPS op OP
+OPS 		::= op OP:operacion
+            {:
+                ArrayList<Operation> lista_operaciones = new ArrayList<Operation>();
+                lista_operaciones.add(operacion);
+                RESULT = lista_operaciones;
+            :}
+		|   OPS:lista_operaciones op OP:operacion
+            {:
+                lista_operaciones.add(operacion);
+                RESULT = lista_operaciones;
+            :}
 		;
-OP 		::= OP1 semicolon
-		|   OP2 semicolon
+OP 		::= OP1:operacion semicolon
+            {:
+                RESULT = operacion;
+            :}
+		|   OP2:operacion semicolon
+            {:
+                RESULT = operacion;
+            :}
 		| error
-			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
+			{: parser.report_error("Syntax error in operation zone.",null); :}
 		;
-OP1 		::= operadorUnario   l_paren ident                                                 r_paren
+OP1 		::= operadorUnario:identificador_operacion   l_paren ident:identificador_nodo                                                 r_paren
+            {:
+                EntradaTS entrada = null;
+                Node source = null;
+                if (parser.existeSimbolo(identificador_nodo, parser.LOCAL) || parser.existeSimbolo(identificador_nodo, parser.GLOBAL)) {
+                    if (parser.existeSimbolo(identificador_nodo, parser.LOCAL)) {
+                        entrada = parser.obtenerSimbolo(identificador_nodo, parser.LOCAL);
+                        if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0) {
+                            source = (Node)entrada.getVariable();
+                        }
+                        else parser.mostrarError("Param " + identificador_nodo + " must be a connected node.", identificador_nodoleft, identificador_nodoright);
+                    }
+                    else { //Global
+                        entrada = parser.obtenerSimbolo(identificador_nodo, parser.GLOBAL);
+                        if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0)
+                            source = (Node)entrada.getVariable();
+                        else parser.mostrarError("Param " + identificador_nodo + " must be a connected node.", identificador_nodoleft, identificador_nodoright);
+                    }
+                }
+                else {
+                    parser.mostrarError("Node " + identificador_nodo + " has not been declared.", identificador_nodoleft, identificador_nodoright);
+                }
+                ArrayList<Object> lista = new ArrayList<Object>();
+                if (source != null) lista.add(source);
+                Operation o = new Operation(identificador_operacion, lista);
+                RESULT = o;
+            :}
 		;
-OP2 		::= operadorBinario  l_paren ident comma ident                                     r_paren
+OP2 		::= operadorBinario:identificador_operacion  l_paren ident:identificador_nodo_origen comma ident:identificador_nodo_destino                                     r_paren
+            {:
+                EntradaTS entrada = null;
+                Node source = null;
+                Node target = null;
+                // Comprobamos el nodo origen
+                if (parser.existeSimbolo(identificador_nodo_origen, parser.LOCAL) || parser.existeSimbolo(identificador_nodo_origen, parser.GLOBAL)) {
+                    if (parser.existeSimbolo(identificador_nodo_origen, parser.LOCAL)) {
+                        entrada = parser.obtenerSimbolo(identificador_nodo_origen, parser.LOCAL);
+                        if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0) {
+                            source = (Node)entrada.getVariable();
+                        }
+                        else parser.mostrarError("First param " + identificador_nodo_origen + " must be a connected node.", identificador_nodo_origenleft, identificador_nodo_origenright);
+                    }
+                    else { //Global
+                        entrada = parser.obtenerSimbolo(identificador_nodo_origen, parser.GLOBAL);
+                        if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0)
+                            source = (Node)entrada.getVariable();
+                        else parser.mostrarError("First param " + identificador_nodo_origen + " must be a connected node.", identificador_nodo_origenleft, identificador_nodo_origenright);
+                    }
+                    // Comprobamos el nodo destino
+                    if (parser.existeSimbolo(identificador_nodo_destino, parser.LOCAL) || parser.existeSimbolo(identificador_nodo_destino, parser.GLOBAL)) {
+                        if (parser.existeSimbolo(identificador_nodo_destino, parser.LOCAL)) {
+                            entrada = parser.obtenerSimbolo(identificador_nodo_destino, parser.LOCAL);
+                            if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0) {
+                                target = (Node)entrada.getVariable();
+                            }
+                            else parser.mostrarError("Second param " + identificador_nodo_destino + " must be a connected node.", identificador_nodo_destinoleft, identificador_nodo_destinoright);
+                        }
+                        else { //Global
+                            entrada = parser.obtenerSimbolo(identificador_nodo_destino, parser.GLOBAL);
+                            if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0)
+                                target = (Node)entrada.getVariable();
+                            else parser.mostrarError("Second param " + identificador_nodo_destino + " must be a connected node.", identificador_nodo_destinoleft, identificador_nodo_destinoright);
+                        }
+                    }
+                    else {
+                        parser.mostrarError ("Node " + identificador_nodo_destino + " has not been declared.", identificador_nodo_destinoleft, identificador_nodo_destinoright);
+                    }
+                }
+                else {
+                    parser.mostrarError ("Node " + identificador_nodo_origen + " has not been declared.", identificador_nodo_origenleft, identificador_nodo_origenright);
+                }
+                ArrayList<Object> lista = new ArrayList<Object>();
+                if (source != null && target != null) {
+                    lista.add(source);
+                    lista.add(target);
+                }
+                Operation o = new Operation(identificador_operacion, lista);
+                RESULT = o;
+            :}
 		;
-OP5 		::= operadorQuinario l_paren ident comma ident comma ident comma ident comma ident r_paren
+OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_grafo_origen comma ident:identificador_grafo_destino comma ident:identificador_nodo_origen comma ident:identificador_nodo_destino comma ident:identificador_arista r_paren
+            {:
+                EntradaTS entrada = null;
+                Graph sourceGraph = null;
+                Graph targetGraph = null;
+                Node source = null;
+                Node target = null;
+                Edge edge = null;
+                ArrayList<Object> lista = new ArrayList<Object>();
+                if (parser.existeSimbolo(identificador_grafo_origen, parser.GLOBAL)) {
+                    entrada = parser.obtenerSimbolo(identificador_grafo_origen, parser.GLOBAL);
+                    if (entrada.getTipo() == parser.GRAPH)
+                        sourceGraph = (Graph)entrada.getVariable();
+                    else parser.mostrarError("First param " + identificador_grafo_origen + " must be a graph.", identificador_grafo_origenleft, identificador_grafo_origenright);
+                    // Comprobamos que existe el grafo 2
+                    if (parser.existeSimbolo(identificador_grafo_destino, parser.GLOBAL)) {
+                        entrada = parser.obtenerSimbolo(identificador_grafo_destino, parser.GLOBAL);
+                        if (entrada.getTipo() == parser.GRAPH)
+                            targetGraph = (Graph)entrada.getVariable();
+                        else parser.mostrarError("Second param " + identificador_grafo_destino + " must be a graph.", identificador_grafo_destinoleft, identificador_grafo_destinoright);
+                        // Comprobamos que existe el nodo origen en sourceGraph, si existe es porque el grafo es conexo
+                        if (sourceGraph.hasNode(identificador_nodo_origen)) {
+                            source = (Node)sourceGraph.getNode(identificador_nodo_origen);
+                            // Comprobamos que existe el nodo destino en targetGraph
+                            if (targetGraph.hasNode(identificador_nodo_destino)) {
+                                target = (Node)targetGraph.getNode(identificador_nodo_destino);
+                                // Comprobamos que existe la arista globalmente
+                                if (parser.existeSimbolo(identificador_arista, parser.GLOBAL)) {
+                                    entrada = parser.obtenerSimbolo(identificador_arista, parser.GLOBAL);
+                                    if (entrada.getTipo() == parser.EDGE) {
+                                        edge = (Edge)entrada.getVariable();
+                                        // como se cumplen todas las condiciones...
+                                        lista.add(sourceGraph);
+                                        lista.add(targetGraph);
+                                        lista.add(source);
+                                        lista.add(target);
+                                        lista.add(edge);
+                                    }
+                                    else parser.mostrarError("Fifth param " + identificador_arista + " must be an edge.", identificador_aristaleft, identificador_aristaright);
+                                }
+                                else {
+                                    parser.mostrarError("Edge " + identificador_arista + " must be globally declared.", identificador_aristaleft, identificador_aristaright);
+                                }
+                            }
+                            else {
+                                parser.mostrarError("Fourth param " + identificador_nodo_destino + " must be an existing node in " + identificador_grafo_destino + ".", identificador_nodo_destinoleft, identificador_nodo_destinoright);
+                            }
+                        }
+                        else {
+                            parser.mostrarError("Third param " + identificador_nodo_origen + " must be an existing node in " + identificador_grafo_origen + ".", identificador_nodo_origenleft, identificador_nodo_origenright);
+                        }
+                    }
+                    else {
+                        parser.mostrarError("Second param " + identificador_grafo_destino + " has not been defined.", identificador_grafo_destinoleft, identificador_grafo_destinoright);
+                    }
+                }
+                else {
+                    parser.mostrarError("First param " + identificador_grafo_origen + " has not been defined.", identificador_grafo_origenleft, identificador_grafo_origenright);
+                }
+                Operation o = new Operation(identificador_operacion, lista);
+                RESULT = o;
+            :}
 		;

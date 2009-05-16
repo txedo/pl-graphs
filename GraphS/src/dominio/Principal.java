@@ -64,15 +64,15 @@ public class Principal {
 		edges.add(n);
 		edges.add(o);
 		edges.add(p);
-		/*
-		Edge x1 = new Edge(B, A, 4);
-		Edge y1 = new Edge(C, A, 1);
-		Edge z1 = new Edge(E, A, 2);
-		Edge l1 = new Edge(E, C, 3);
-		Edge m1 = new Edge(D, C, 3);
-		Edge n1 = new Edge(D, E, 2);
-		Edge o1 = new Edge(E, B, 3);
-		Edge p1 = new Edge(D, B, 1);
+		
+		Edge x1 = new Edge("x1", B, A, 4);
+		Edge y1 = new Edge("y1", C, A, 1);
+		Edge z1 = new Edge("z1", E, A, 2);
+		Edge l1 = new Edge("l1", E, C, 3);
+		Edge m1 = new Edge("m1", D, C, 3);
+		Edge n1 = new Edge("n1", D, E, 2);
+		Edge o1 = new Edge("o1", E, B, 3);
+		Edge p1 = new Edge("p1", D, B, 1);
 		edges.add(x1);
 		edges.add(y1);
 		edges.add(z1);
@@ -81,7 +81,7 @@ public class Principal {
 		edges.add(n1);
 		edges.add(o1);
 		edges.add(p1);
-		*/
+		
 
 		res = new Graph("Grafo2", false, false, nodes, edges);
 		return res;
@@ -108,18 +108,18 @@ public class Principal {
 		nodes.add(t);
 		
 		ArrayList<Edge> edges = new ArrayList<Edge>();
-		Edge a = new Edge("a", s, uno, 2);
-		Edge b = new Edge("b", s, cinco, 1);
-		Edge c = new Edge("c", uno, dos, 2);
-		Edge d = new Edge("d", uno, tres, 2);
-		Edge e = new Edge("e", uno, cuatro, 4);
-		Edge f = new Edge("f", tres, cuatro, 4);
-		Edge g = new Edge("g", tres, cinco, 3);
-		Edge h = new Edge("h", cinco, seis, 5);
-		Edge i = new Edge("i", dos, cuatro, 3);
-		Edge j = new Edge("j", dos, t, 1);
-		Edge k = new Edge("k", cuatro, seis, 7);
-		Edge l = new Edge("l", seis, t, 6);
+		Edge a = new Edge("a", s, uno, 0);
+		Edge b = new Edge("b", s, cinco, 0);
+		Edge c = new Edge("c", uno, dos, 0);
+		Edge d = new Edge("d", uno, tres, 0);
+		Edge e = new Edge("e", uno, cuatro, 0);
+		Edge f = new Edge("f", tres, cuatro, 0);
+		Edge g = new Edge("g", tres, cinco, 0);
+		Edge h = new Edge("h", cinco, seis, 0);
+		Edge i = new Edge("i", dos, cuatro, 0);
+		Edge j = new Edge("j", dos, t, 0);
+		Edge k = new Edge("k", cuatro, seis, 0);
+		Edge l = new Edge("l", seis, t, 0);
 		edges.add(a);
 		edges.add(b);
 		edges.add(c);
@@ -132,7 +132,32 @@ public class Principal {
 		edges.add(j);
 		edges.add(k);
 		edges.add(l);
-
+        /*
+        Edge a1 = new Edge("a1", uno, s, 2);
+		Edge b1 = new Edge("b1", cinco, s, 1);
+		Edge c1 = new Edge("c1", dos, uno, 2);
+		Edge d1 = new Edge("d1", tres, uno, 2);
+		Edge e1 = new Edge("e1", cuatro, uno, 4);
+		Edge f1 = new Edge("f1", cuatro, uno, 4);
+		Edge g1 = new Edge("g1", cinco, tres, 3);
+		Edge h1 = new Edge("h1", seis, cinco, 5);
+		Edge i1 = new Edge("i1", cuatro, dos, 3);
+		Edge j1 = new Edge("j1", t, dos, 1);
+		Edge k1 = new Edge("k1", seis, cuatro, 7);
+		Edge l1 = new Edge("l1", t, seis, 6);
+		edges.add(a1);
+		edges.add(b1);
+		edges.add(c1);
+		edges.add(d1);
+		edges.add(e1);
+		edges.add(f1);
+		edges.add(g1);
+		edges.add(h1);
+		edges.add(i1);
+		edges.add(j1);
+		edges.add(k1);
+		edges.add(l1);
+        */
 		res = new Graph ("Grafo1", false, false, nodes, edges);
 		return res;
 	}
