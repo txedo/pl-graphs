@@ -1,7 +1,9 @@
+ENTRADA PROLETOOL:
+
 graph ident l_bracket node ident comma ident semicolon edge ident semicolon node ident semicolon ident equal ident connector ident semicolon operadorBinario l_paren ident comma ident r_paren semicolon operadorUnario l_paren ident r_paren semicolon r_bracket semicolon
 
 
-
+EQUIVALENTE GraphS:
 	
 graph Grafo1 {
 	node A, B;
@@ -10,6 +12,6 @@ graph Grafo1 {
 
 	X = A - B;
 
-	shortestPath (A, E);
-	minimumSpanningTree (D);
-};
+	op shortestPath (A, E);
+	op minimumSpanningTree (D);
+}
