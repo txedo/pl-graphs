@@ -133,23 +133,21 @@ parser code {:
 	}
 :};
 
-
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
-terminal graph, node, edge, op;
+terminal graph, node, edge, op, operadorUnario, operadorBinario, operadorQuinario;
 terminal l_bracket, r_bracket, l_paren, r_paren;
 terminal semicolon, comma, equal;
 terminal String ident, connector;
-terminal String operadorUnario, operadorBinario, operadorQuinario;
 terminal Integer number;
-non terminal Integer DECL;
+non terminal DECL;
 non terminal SYNTAX, GRAPHS_SET, GRAPH;
 non terminal DECL_NODES, DECL_EDGES;
-non terminal Operation OP, OP1, OP2, OP5, OPS_GEN;
-non terminal ArrayList<Operation> OPS, BODY;
 non terminal IDENTS_NODE;
 non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED;
 non terminal ARCS;
 non terminal ARC;
+non terminal ArrayList<Operation> OPS, BODY;
+non terminal Operation OP, OPS_GEN, OP1, OP2, OP5;
 
 /* Declaraciones de precedencia */
 
@@ -164,19 +162,19 @@ GRAPH 		::= graph ident:identificador_grafo l_bracket BODY:lista_operaciones r_b
             {:
                 //Crear el grafo con los simbolos de ambito 0 y 1 usados mas de una vez (con clone)
                 //Añadirle la lista de operaciones que ha subido de body, comprobando antes que existen.
-                //Añadir el grafo a la tabla de simbolos
+                //Añadir el grafo a la tabla de simbolos con ambito global
             :}
 		| error
 			{: parser.report_error("Syntax error in graph definition.",null); :}
 		;
 BODY 		::= DECL ARCS OPS:lista_operaciones
             {:
-                RESULT = lista_operaciones;
+                RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		|   OPS_GEN:operacion   OPS:lista_operaciones
             {:
-                lista_operaciones.add(0, operacion);
-                RESULT = lista_operaciones;
+                ((ArrayList<Operation>)lista_operaciones).add(0, (Operation)operacion);
+                RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		| error
 			{: parser.report_error("Syntax error in declaration zone.",null); :}
@@ -364,28 +362,28 @@ ARC 		::= ident:identificador_arista equal ident:identificador_nodo_origen conne
 		;
 OPS_GEN 	::= OP5:operacion semicolon
             {:
-                RESULT = operacion;
+                RESULT = (Operation)operacion;
             :}
 		;
 OPS 		::= op OP:operacion
             {:
                 ArrayList<Operation> lista_operaciones = new ArrayList<Operation>();
-                lista_operaciones.add(operacion);
-                RESULT = lista_operaciones;
+                lista_operaciones.add((Operation)operacion);
+                RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		|   OPS:lista_operaciones op OP:operacion
             {:
-                lista_operaciones.add(operacion);
-                RESULT = lista_operaciones;
+                ((ArrayList<Operation>)lista_operaciones).add((Operation)operacion);
+                RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		;
 OP 		::= OP1:operacion semicolon
             {:
-                RESULT = operacion;
+                RESULT = (Operation)operacion;
             :}
 		|   OP2:operacion semicolon
             {:
-                RESULT = operacion;
+                RESULT = (Operation)operacion;
             :}
 		| error
 			{: parser.report_error("Syntax error in operation zone.",null); :}
@@ -414,8 +412,8 @@ OP1 		::= operadorUnario:identificador_operacion   l_paren ident:identificador_n
                 }
                 ArrayList<Object> lista = new ArrayList<Object>();
                 if (source != null) lista.add(source);
-                Operation o = new Operation(identificador_operacion, lista);
-                RESULT = o;
+                Operation o = new Operation((String)identificador_operacion, lista);
+                RESULT = (Operation)o;
             :}
 		;
 OP2 		::= operadorBinario:identificador_operacion  l_paren ident:identificador_nodo_origen comma ident:identificador_nodo_destino                                     r_paren
@@ -466,8 +464,8 @@ OP2 		::= operadorBinario:identificador_operacion  l_paren ident:identificador_n
                     lista.add(source);
                     lista.add(target);
                 }
-                Operation o = new Operation(identificador_operacion, lista);
-                RESULT = o;
+                Operation o = new Operation((String)identificador_operacion, lista);
+                RESULT = (Operation)o;
             :}
 		;
 OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_grafo_origen comma ident:identificador_grafo_destino comma ident:identificador_nodo_origen comma ident:identificador_nodo_destino comma ident:identificador_arista r_paren
@@ -529,7 +527,7 @@ OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_g
                 else {
                     parser.mostrarError("First param " + identificador_grafo_origen + " has not been defined.", identificador_grafo_origenleft, identificador_grafo_origenright);
                 }
-                Operation o = new Operation(identificador_operacion, lista);
-                RESULT = o;
+                Operation o = new Operation((String)identificador_operacion, lista);
+                RESULT = (Operation)o;
             :}
 		;
