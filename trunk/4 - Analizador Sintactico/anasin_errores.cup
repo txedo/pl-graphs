@@ -26,7 +26,7 @@ parser code {:
 
 
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
-terminal graph, node, edge, operadorUnario, operadorBinario, operadorQuinario;
+terminal graph, node, edge, op, operadorUnario, operadorBinario, operadorQuinario;
 terminal l_bracket, r_bracket, l_paren, r_paren;
 terminal semicolon, comma, equal, connector, ident, number;
 non terminal SYNTAX, GRAPHS_SET, GRAPH, BODY, DECL, DECL_NODES, DECL_EDGES;
@@ -41,18 +41,14 @@ SYNTAX		::=      GRAPHS_SET
 GRAPHS_SET 	::= GRAPH 
 		|   GRAPH GRAPHS_SET
 		;
-GRAPH 		::= graph ident l_bracket BODY r_bracket semicolon
+GRAPH 		::= graph ident l_bracket BODY r_bracket
 		| error
 			{: parser.report_error("Error de sintaxis en la definicion de grafo.",null); :}
 		;
 BODY 		::= DECL ARCS OPS 
 		|   OPS_GEN   OPS
-		| error ARCS OPS
-			{: parser.report_error("Error de sintaxis en la zona de declaracion de nodos y aristas.",null); :}
-		| error OPS
-			{: parser.report_error("Error de sintaxis en la conexion de aristas o generacion de grafo.",null); :}
 		| error
-			{: parser.report_error("Error de sintaxis en la zona de operaciones.",null); :}
+			{: parser.report_error("Error de sintaxis en la zona de declaracion.",null); :}
 		;
 DECL 		::= DECL_NODES 
 		|   DECL_EDGES
@@ -76,14 +72,16 @@ IDENTS_WEIGHTED	::= ident l_paren number r_paren
 		|   ident l_paren number r_paren comma IDENTS
 		;
 ARCS 		::= ARC
-		|   ARC ARCS
+		|   ARCS ARC
 		;
 ARC 		::= ident equal ident connector ident semicolon 
+		| error
+			{: parser.report_error("Error de sintaxis en la zona de conexion de aristas.",null); :}
 		;
 OPS_GEN 	::= OP5 semicolon
 		;
-OPS 		::= OP
-		|   OP OPS
+OPS 		::= op OP
+		|   OPS op OP
 		;
 OP 		::= OP1 semicolon 
 		|   OP2 semicolon
