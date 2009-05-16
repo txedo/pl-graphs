@@ -7,7 +7,7 @@ public class Node implements Comparable<Node> {
 	int lowlink = -1;          // used for Tarjan's algorithm
 	int index = -1;            // used for Tarjan's algorithm
 	
-	Node(String n){
+	public Node(String n){
 		name = n;
 	}
 	
@@ -15,12 +15,20 @@ public class Node implements Comparable<Node> {
 		boolean equals = false;
 		if ((ob != null) && (ob instanceof Node)) {
 			Node n = (Node)ob;
-			if (n.name == name) {
+			if (n.name.equals(name)) {
 				equals = true;
 			}
 		}
 		return equals;
 	}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 	public int compareTo(Node n){
 		if(n == this)
@@ -33,4 +41,11 @@ public class Node implements Comparable<Node> {
 		res += name;
 		return res;
 	}
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Node(name);
+    }
+
+
 }

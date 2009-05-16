@@ -2,6 +2,7 @@ package analizador;
 
 import dominio.Node;
 import dominio.Edge;
+import dominio.Graph;
 
 public class EntradaTS {
     private Object variable;
@@ -33,6 +34,7 @@ public class EntradaTS {
         
         if (variable instanceof Node) tipo = parser.NODE;
         if (variable instanceof Edge) tipo = parser.EDGE;
+        if (variable instanceof Graph) tipo = parser.GRAPH;
         
         return tipo;
     }

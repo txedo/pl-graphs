@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 
 public class Floyd {
-	
+	// The Floyd-Warshall algorithm finds the shortest path in a weighted, directed graph for all node pairs in a single execution. 
 	static int[][] D;
 	static Node[][] P;
 

@@ -9,6 +9,7 @@ public class Graph {
 	boolean directed;
 	ArrayList<Node> nodes;
 	ArrayList<Edge> edges;
+    ArrayList<Operation> operations;
 	
 	public Graph (String na, boolean w, boolean d, ArrayList<Node> n, ArrayList<Edge> e) {
 		name = na;
@@ -16,7 +17,16 @@ public class Graph {
 		directed = d;
 		nodes = n;
 		edges = e;
+        operations = null;
 	}
+
+    public ArrayList<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(ArrayList<Operation> operations) {
+        this.operations = operations;
+    }
 	
 	public String toString(){
 		String res = "";
@@ -31,6 +41,23 @@ public class Graph {
 		
 		return res;
 	}
+
+    public boolean hasNode (String id) {
+        boolean exists = false;
+
+        Node n = new Node (id);
+        int index = nodes.indexOf(n);
+        if (index != -1) exists = true;
+
+        return exists;
+    }
+
+    public Node getNode (String id) {
+        Node n = new Node (id);
+        int index = nodes.indexOf(n);
+
+        return nodes.get(index);
+    }
 	
 	public Edge getEdge (Node source, Node target) {
 		Edge e = new Edge ("", source, target, 0);
