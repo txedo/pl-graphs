@@ -13,7 +13,7 @@ grammar graphs
 	GRAPHS_SET 	:= GRAPH 
 			|  GRAPH GRAPHS_SET
 			;
-	GRAPH 		:= graph ident l_bracket BODY r_bracket semicolon
+	GRAPH 		:= graph ident l_bracket BODY r_bracket
 			;
 	BODY 		:= DECL ARCS OPS 
 			|  OPS_GEN   OPS
@@ -46,8 +46,8 @@ grammar graphs
 			;
 	OPS_GEN 	:= OP5 semicolon
 			;
-	OPS 		:= OP
-			|  OP OPS
+	OPS 		:= op OP
+			|  OPS op OP
 			;
 	OP 		:= OP1 semicolon 
 			|  OP2 semicolon
