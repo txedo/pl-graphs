@@ -3,7 +3,7 @@ import java_cup.runtime.*;
 /* Codigo de usuario */
 
 class Utility {
-	public static final String Keywords[] = {"graph","node","edge","minimumSpanningTree","shortestPath","union"};
+	public static final String Keywords[] = {"graph","node","edge", "op", "minimumSpanningTree","shortestPath","union"};
 	public static final String errorMsg[] = {
 		"Identificador no valido",
 		"Error de sintaxis"
@@ -23,6 +23,7 @@ class Utility {
 		if (cadena.equals("graph")) token = "graph";
 		else if (cadena.equals("node")) token = "node";
 		else if (cadena.equals("edge")) token = "edge";
+		else if (cadena.equals("op")) token = "op";
 		else if (cadena.equals("minimumSpanningTree")) token = "operadorUnario";
 		else if (cadena.equals("shortestPath")) token = "operadorBinario";
 		else if (cadena.equals("union")) token = "operadorQuinario";
@@ -120,6 +121,7 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
 							if (yytext().equals("graph")) return symbol(sym.graph);
 							if (yytext().equals("node")) return symbol(sym.node);
 							if (yytext().equals("edge")) return symbol(sym.edge);
+							if (yytext().equals("op")) return symbol(sym.op);
 						} else {
 							if (yytext().equals("minimumSpanningTree")) return symbol(sym.operadorUnario, yytext());
 							if (yytext().equals("shortestPath")) return symbol(sym.operadorBinario, yytext());
