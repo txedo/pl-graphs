@@ -16,7 +16,7 @@
    version="1.0"
    sodipodi:docname="graph.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\graph.png"
+   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\pl-graphs\2 - Problema y Lenguaje\graph.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -197,26 +197,6 @@
            sodipodi:role="line">}</tspan></text>
     </g>
     <path
-       sodipodi:type="arc"
-       style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path6744"
-       sodipodi:cx="277.14316"
-       sodipodi:cy="305.67261"
-       sodipodi:rx="60.552288"
-       sodipodi:ry="59.970055"
-       d="M 337.69545,305.67261 A 60.552288,59.970055 0 1 1 216.59087,305.67261 A 60.552288,59.970055 0 1 1 337.69545,305.67261 z"
-       transform="translate(772.04171,1.7467061)" />
-    <text
-       xml:space="preserve"
-       style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="1044.527"
-       y="314.40613"
-       id="text6763"><tspan
-         sodipodi:role="line"
-         id="tspan6765"
-         x="1044.527"
-         y="314.40613">;</tspan></text>
-    <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
        d="M 98.979704,314.40612 L 139.90051,314.63862"
        id="path6787"
@@ -253,13 +233,6 @@
        d="M 941.88942,307.41932 L 987.63258,307.41931"
        id="path10418"
        inkscape:connector-type="polyline"
-       inkscape:connection-start="#g6746"
-       inkscape:connection-end="#path6744" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none"
-       d="M 1110.7372,307.41932 L 1181.9341,307.41932"
-       id="path10937"
-       inkscape:connector-type="polyline"
-       inkscape:connection-start="#path6744" />
+       inkscape:connection-start="#g6746" />
   </g>
 </svg>

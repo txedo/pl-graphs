@@ -21,7 +21,7 @@ graph Grafo1 {
 	//definicion de operaciones
 	op shortestPath (A, E); //Dijkstra o Floyd -> weighted and directed graphs
 	op minimumSpanningTree (D); //Kruskal o Prim -> weighted graph
-};
+}
 
 
 /* Ejemplo de un grafo no dirigido y valorado */
@@ -39,7 +39,7 @@ graph Grafo2 {
 
 	op shortestPath (A, F);
 	op minimumSpanningTree (E);
-};
+}
 
 
 /* Ejemplo de un grafo dirigido y valorado */
@@ -57,4 +57,4 @@ graph Grafo3 {
 
 	op shortestPath (A, F);
 	op minimumSpanningTree (E);
-};
+}

@@ -1,6 +1,6 @@
 SYNTAX ::= DECL GRAPHS_SET
 GRAPHS_SET ::= GRAPH {GRAPH}
-GRAPH ::= graph ID '{' BODY '}' ';'
+GRAPH ::= graph ID '{' BODY '}'
 BODY ::= (DECL ARCS | OPS_GEN) [OPS]
 DECL ::= {DECL_NODES | DECL_EDGES}
 DECL_NODES ::= node ID {',' ID} ';'
@@ -11,7 +11,7 @@ CONNECTOR ::= '-' | '->'
 OPS_GEN ::= OP_GEN
 OP_GEN::= OP5
 OPS ::= {OP}
-OP ::= (OP1 | OP2) ';'
+OP ::= op (OP1 | OP2) ';'
 OP1 ::= OPN1 '(' ID ')'
 OPN1 ::= minimumSpanningTree
 OP2 ::= OPN2 '(' ID ',' ID ')'
