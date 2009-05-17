@@ -1,3 +1,5 @@
+package analizador;
+
 import java_cup.runtime.*;
 
 /* Codigo de usuario */
@@ -76,6 +78,7 @@ class Main {
 %cup	/* Compatibilidad con el interfaz CUP */
 /* %standalone */
 /* %type Object */
+%public
 %line
 %column
 %switch
