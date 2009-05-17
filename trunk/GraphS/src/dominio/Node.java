@@ -31,7 +31,7 @@ public class Node implements Comparable<Node> {
     }
 
 	public int compareTo(Node n){
-		if(n == this)
+		if(n.equals(this))
 			return 0;
 		return -1;
 	}
