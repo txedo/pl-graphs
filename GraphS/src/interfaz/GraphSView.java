@@ -154,9 +154,6 @@ public class GraphSView extends FrameView {
         jSeparator2 = new javax.swing.JSeparator();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        undoMenuItem = new javax.swing.JMenuItem();
-        redoMenuItem = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JSeparator();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
         pasteMenuItem = new javax.swing.JMenuItem();
@@ -164,6 +161,7 @@ public class GraphSView extends FrameView {
         jSeparator4 = new javax.swing.JSeparator();
         selectAllMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
@@ -340,7 +338,7 @@ public class GraphSView extends FrameView {
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toolBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))
+                    .addComponent(toolBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -348,7 +346,7 @@ public class GraphSView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(toolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -433,21 +431,6 @@ public class GraphSView extends FrameView {
         jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
         jMenu1.setName("jMenu1"); // NOI18N
 
-        undoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        undoMenuItem.setIcon(resourceMap.getIcon("undoMenuItem.icon")); // NOI18N
-        undoMenuItem.setText(resourceMap.getString("undoMenuItem.text")); // NOI18N
-        undoMenuItem.setName("undoMenuItem"); // NOI18N
-        jMenu1.add(undoMenuItem);
-
-        redoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        redoMenuItem.setIcon(resourceMap.getIcon("redoMenuItem.icon")); // NOI18N
-        redoMenuItem.setText(resourceMap.getString("redoMenuItem.text")); // NOI18N
-        redoMenuItem.setName("redoMenuItem"); // NOI18N
-        jMenu1.add(redoMenuItem);
-
-        jSeparator3.setName("jSeparator3"); // NOI18N
-        jMenu1.add(jSeparator3);
-
         cutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         cutMenuItem.setIcon(resourceMap.getIcon("cutMenuItem.icon")); // NOI18N
         cutMenuItem.setText(resourceMap.getString("cutMenuItem.text")); // NOI18N
@@ -485,6 +468,11 @@ public class GraphSView extends FrameView {
         deleteMenuItem.setIcon(resourceMap.getIcon("deleteMenuItem.icon")); // NOI18N
         deleteMenuItem.setText(resourceMap.getString("deleteMenuItem.text")); // NOI18N
         deleteMenuItem.setName("deleteMenuItem"); // NOI18N
+        deleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(deleteMenuItem);
 
         jSeparator4.setName("jSeparator4"); // NOI18N
@@ -493,12 +481,22 @@ public class GraphSView extends FrameView {
         selectAllMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         selectAllMenuItem.setText(resourceMap.getString("selectAllMenuItem.text")); // NOI18N
         selectAllMenuItem.setName("selectAllMenuItem"); // NOI18N
+        selectAllMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectAllMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(selectAllMenuItem);
 
         menuBar.add(jMenu1);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
+
+        jMenuItem1.setIcon(resourceMap.getIcon("jMenuItem1.icon")); // NOI18N
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        helpMenu.add(jMenuItem1);
 
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
         aboutMenuItem.setIcon(resourceMap.getIcon("aboutMenuItem.icon")); // NOI18N
@@ -526,7 +524,7 @@ public class GraphSView extends FrameView {
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -670,6 +668,14 @@ public class GraphSView extends FrameView {
         procesadorTextArea.paste();
     }//GEN-LAST:event_pasteMenuItemActionPerformed
 
+    private void selectAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllMenuItemActionPerformed
+        procesadorTextArea.selectAll();
+    }//GEN-LAST:event_selectAllMenuItemActionPerformed
+
+    private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
+        procesadorTextArea.setText(procesadorTextArea.getText().substring(0, procesadorTextArea.getSelectionStart()-1) + procesadorTextArea.getText().substring(procesadorTextArea.getSelectionEnd(), procesadorTextArea.getText().length()));
+    }//GEN-LAST:event_deleteMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton compileButton;
     private javax.swing.JMenuItem compileMenuItem;
@@ -679,11 +685,11 @@ public class GraphSView extends FrameView {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
@@ -700,7 +706,6 @@ public class GraphSView extends FrameView {
     private javax.swing.JTextArea procesadorTextArea;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JTextArea realimentacionTextArea;
-    private javax.swing.JMenuItem redoMenuItem;
     private javax.swing.JButton saveAsButton;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JButton saveButton;
@@ -710,7 +715,6 @@ public class GraphSView extends FrameView {
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JToolBar toolBar;
-    private javax.swing.JMenuItem undoMenuItem;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;

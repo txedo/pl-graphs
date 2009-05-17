@@ -1,31 +1,8 @@
-/*
- * AutoPro
- *
- * AutoPro is the legal property of its developers. Please refer to the 
- * COPYRIGHT file distributed with this source distribution.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- */
 
 package utilidades;
-import java.util.LinkedList;
 import java.io.File;
 import dominio.*;
 import interfaz.GraphSView;
-import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -34,10 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author glam
- */
 public class Result {
     
     /*Esta clase se encargara de mostrar el resultado. Utilizamos un patron
@@ -47,7 +20,6 @@ public class Result {
      *y mostrandola mediante html*/
     private String dotUbication = "dot";
     private static Result INSTANCE = null;
-    private String generacion = "default";
     private static StringBuffer result = new StringBuffer("");
 
     // Private constructor suppresses 
@@ -101,10 +73,6 @@ public class Result {
         return cabecera;
     }
     
-    private void setGeneracion(String g) {
-        this.generacion = g;
-    }
-        
     public void creaGrafos(ArrayList<Graph> listaGrafos, String title) {
         Graph grafo = null;
         GraphViz gv = null;
@@ -112,10 +80,10 @@ public class Result {
         archivo = iniciarHTML();
         java.io.File prueba = null;
         java.io.File resultado = null;
+        archivo += "<br><H1>Compiled file: " + title + "</H1>\n";
         for (int i=0;i<listaGrafos.size();i++) {
             grafo = listaGrafos.get(i);
             //archivo += "<table align=\"center\" border=\"1\" width=800> <thead> <tr> <td></td>\n";
-            archivo += "<br><H1>Compiled file: " + title + "</H1>\n";
             //archivo += "</tr> </thead> <tbody>\n";
             //archivo += "<tr><th>Nodes</th></tr>\n <tr>";
             //archivo += "<br><b>Nodes</b>\n";
@@ -243,11 +211,10 @@ public class Result {
     
     public static String getResultado() {
         result.append("\n\n<h3>" +
-                "<font color=black size=+2><i>AutoPro</i></font>\n\n" +
+                "<font color=black size=+2><i>GraphS</i></font>\n\n" +
                 "Creado por:\n" +
                 "Jose Domingo Lopez Lopez\n" +
                 "Angel Escribano Santamarina\n\n");
-        result.append("</body></html>");
         
         return (result.toString()).replaceAll("\n", "<br>");
     }
