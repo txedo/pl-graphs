@@ -849,6 +849,7 @@ public class GraphSView extends FrameView {
         parser parser_obj = null;
         ArrayList<Graph> grafos = null;
         String msg = "";
+        boolean compiled = false;
         if (!realimentacionTextArea.getText().equals("")) msg += "---\n";
         try {
             if (!procesadorTextArea.getText().equals("")) {
@@ -863,11 +864,18 @@ public class GraphSView extends FrameView {
                 }
                 parser_obj.parse();
                 grafos = parser_obj.getGrafos();
+                compiled = true;
             }
             else {
                 msg += "Error: cannot compile an empty graph";
             }
-            realimentacionTextArea.append(msg + parser_obj.getMensajes());
+
+            if (compiled) {
+                realimentacionTextArea.append(msg + parser_obj.getMensajes());
+            }
+            else {
+                realimentacionTextArea.append("There is nothing to compile.\n");
+            }
         } catch (Exception ex) {
             Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -877,7 +885,12 @@ public class GraphSView extends FrameView {
                 visorBox.setLocationRelativeTo(GraphSApp.getApplication().getMainFrame());
             }
             Result r = Result.getInstance();
-            r.creaGrafos(grafos);
+            if (grafoModificado) {
+                r.creaGrafos(grafos, "Current graph");
+            }
+            else {
+                r.creaGrafos(grafos, fileGraph.getName());
+            }
             //GraphSApp.getApplication().show(visorBox);
         }
     }

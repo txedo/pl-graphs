@@ -457,12 +457,16 @@ OPS_GEN 	::= OP5 semicolon
 OPS 		::= op OP:operacion
             {:
                 ArrayList<Operation> lista_operaciones = new ArrayList<Operation>();
-                lista_operaciones.add(0, (Operation)operacion);
+                if (operacion != null) {
+                    lista_operaciones.add(0, (Operation)operacion);
+                }
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		|   OPS:lista_operaciones op OP:operacion
             {:
-                ((ArrayList<Operation>)lista_operaciones).add(0, (Operation)operacion);
+                if (operacion != null) {
+                    ((ArrayList<Operation>)lista_operaciones).add(0, (Operation)operacion);
+                }
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		;
@@ -481,27 +485,33 @@ OP1 		::= operadorUnario:identificador_operacion   l_paren ident:identificador_n
             {:
                 EntradaTS entrada = null;
                 Node source = null;
-                if (parser.existeSimbolo(identificador_nodo, parser.LOCAL) || parser.existeSimbolo(identificador_nodo, parser.GLOBAL)) {
-                    if (parser.existeSimbolo(identificador_nodo, parser.LOCAL)) {
-                        entrada = parser.obtenerSimbolo(identificador_nodo, parser.LOCAL);
-                        if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0) {
-                            source = (Node)entrada.getVariable();
-                        }
-                        else parser.mostrarError("Param " + identificador_nodo + " must be a connected node.", identificador_nodoleft, identificador_nodoright);
-                    }
-                    else { //Global
-                        entrada = parser.obtenerSimbolo(identificador_nodo, parser.GLOBAL);
-                        if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0)
-                            source = (Node)entrada.getVariable();
-                        else parser.mostrarError("Param " + identificador_nodo + " must be a connected node.", identificador_nodoleft, identificador_nodoright);
-                    }
+                Operation o = null;
+                if (parser.dirigido && identificador_operacion.equals("minimumSpanningTree")) {
+                    parser.mostrarWarning("Operation " + identificador_operacion + " can only be applied to undirected graphs.", identificador_operacionleft, identificador_operacionright);
                 }
                 else {
-                    parser.mostrarError("Node " + identificador_nodo + " has not been declared.", identificador_nodoleft, identificador_nodoright);
+                    if (parser.existeSimbolo(identificador_nodo, parser.LOCAL) || parser.existeSimbolo(identificador_nodo, parser.GLOBAL)) {
+                        if (parser.existeSimbolo(identificador_nodo, parser.LOCAL)) {
+                            entrada = parser.obtenerSimbolo(identificador_nodo, parser.LOCAL);
+                            if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0) {
+                                source = (Node)entrada.getVariable();
+                            }
+                            else parser.mostrarError("Param " + identificador_nodo + " must be a connected node.", identificador_nodoleft, identificador_nodoright);
+                        }
+                        else { //Global
+                            entrada = parser.obtenerSimbolo(identificador_nodo, parser.GLOBAL);
+                            if (entrada.getTipo() == parser.NODE && entrada.getTimesUsed() > 0)
+                                source = (Node)entrada.getVariable();
+                            else parser.mostrarError("Param " + identificador_nodo + " must be a connected node.", identificador_nodoleft, identificador_nodoright);
+                        }
+                        ArrayList<Object> lista = new ArrayList<Object>();
+                        if (source != null) lista.add(source);
+                        o = new Operation((String)identificador_operacion, lista);
+                    }
+                    else {
+                        parser.mostrarError("Node " + identificador_nodo + " has not been declared.", identificador_nodoleft, identificador_nodoright);
+                    }
                 }
-                ArrayList<Object> lista = new ArrayList<Object>();
-                if (source != null) lista.add(source);
-                Operation o = new Operation((String)identificador_operacion, lista);
                 RESULT = (Operation)o;
             :}
 		;
