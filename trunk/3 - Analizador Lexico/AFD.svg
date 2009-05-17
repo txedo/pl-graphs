@@ -14,9 +14,9 @@
    sodipodi:version="0.32"
    inkscape:version="0.46"
    version="1.0"
-   sodipodi:docname="AutomataFinito4.svg"
+   sodipodi:docname="AFD.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\pl-graphs\3 - Analizador Lexico\AutomataFinito4.png"
+   inkscape:export-filename="C:\Angel\Archivos\7º año\Procesadores de Lenguajes\Prácticas\pl-graphs\3 - Analizador Lexico\AFD.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -63,8 +63,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.85876191"
-     inkscape:cx="1126.9164"
-     inkscape:cy="-1345.2148"
+     inkscape:cx="709.87702"
+     inkscape:cy="-578.70626"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -485,7 +485,7 @@
            y="329.54422"
            x="688.20007"
            id="tspan6296"
-           sodipodi:role="line">q11</tspan></text>
+           sodipodi:role="line">q10</tspan></text>
     </g>
     <text
        xml:space="preserve"
@@ -762,7 +762,7 @@
            y="329.54422"
            x="689.3645"
            id="tspan2551"
-           sodipodi:role="line">q13</tspan></text>
+           sodipodi:role="line">q12</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -833,7 +833,7 @@
            y="137.40714"
            x="554.28638"
            id="tspan2608"
-           sodipodi:role="line">q14</tspan></text>
+           sodipodi:role="line">q13</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -872,7 +872,7 @@
            y="137.40714"
            x="554.28638"
            id="tspan2626"
-           sodipodi:role="line">q15</tspan></text>
+           sodipodi:role="line">q14</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -933,7 +933,7 @@
            y="137.40714"
            x="554.28638"
            id="tspan3432"
-           sodipodi:role="line">q16</tspan></text>
+           sodipodi:role="line">q15</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -972,7 +972,7 @@
            y="2025.8368"
            x="1326.0669"
            id="tspan3446"
-           sodipodi:role="line">q17</tspan></text>
+           sodipodi:role="line">q16</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -1011,7 +1011,7 @@
            y="137.40714"
            x="554.28638"
            id="tspan3460"
-           sodipodi:role="line">q18</tspan></text>
+           sodipodi:role="line">q17</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -1050,7 +1050,7 @@
            y="137.40714"
            x="554.28638"
            id="tspan3474"
-           sodipodi:role="line">q19</tspan></text>
+           sodipodi:role="line">q18</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -1089,7 +1089,7 @@
            y="2242.4382"
            x="1072.5491"
            id="tspan3488"
-           sodipodi:role="line">q20</tspan></text>
+           sodipodi:role="line">q19</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -1128,7 +1128,7 @@
            y="137.40714"
            x="554.28638"
            id="tspan3502"
-           sodipodi:role="line">q21</tspan></text>
+           sodipodi:role="line">q20</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-opacity:1;display:inline"
@@ -1328,7 +1328,7 @@
            y="329.54422"
            x="688.20007"
            id="tspan4533"
-           sodipodi:role="line">q12</tspan></text>
+           sodipodi:role="line">q11</tspan></text>
     </g>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.02332067;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

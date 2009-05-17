@@ -6,15 +6,15 @@ graph Grafo1 {
 	edge X;
 
 	X = A - B;
-};
+}
 
 graph Grafo2 {
 	node C, D;
 	edge Y;
 
 	Y = C - D;
-};
+}
 
 graph Grafo3 {
 	union (Grafo1, Grafo2, B, C, Z);
-};
+}
