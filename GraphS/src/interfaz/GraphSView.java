@@ -6,9 +6,9 @@ package interfaz;
 
 import analizador.*;
 import dominio.*;
+import utilidades.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdesktop.application.Action;
@@ -631,7 +631,7 @@ public class GraphSView extends FrameView {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void procesadorTextAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_procesadorTextAreaKeyTyped
-        if (!grafoModificado) {
+        if (!grafoModificado && !evt.isControlDown()) {
             grafoModificado = true;
             String currentTitle = GraphSApp.getApplication().getMainFrame().getTitle();
             GraphSApp.getApplication().getMainFrame().setTitle(currentTitle + " *");
@@ -777,7 +777,7 @@ public class GraphSView extends FrameView {
     }
 
     public int saveGraph () {
-        int res = NO_OP;
+        int res = CANCEL_OP;
         if (fileGraph == null){
             res = saveAsGraph();
         }
@@ -876,7 +876,9 @@ public class GraphSView extends FrameView {
                 visorBox = new GraphsVisorBox(GraphSApp.getApplication().getMainFrame(), true);
                 visorBox.setLocationRelativeTo(GraphSApp.getApplication().getMainFrame());
             }
-            GraphSApp.getApplication().show(visorBox);
+            Result r = Result.getInstance();
+            r.creaGrafos(grafos);
+            //GraphSApp.getApplication().show(visorBox);
         }
     }
 

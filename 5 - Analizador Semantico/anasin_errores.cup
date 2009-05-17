@@ -235,9 +235,8 @@ BODY 		::= DECL ARCS OPS:lista_operaciones
             {:
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
-		|   OPS_GEN:operacion   OPS:lista_operaciones
+		|   OPS_GEN   OPS:lista_operaciones
             {:
-                ((ArrayList<Operation>)lista_operaciones).add(0, (Operation)operacion);
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
 		| error
@@ -430,7 +429,7 @@ ARC 		::= ident:identificador_arista equal ident:identificador_nodo_origen conne
 		| error
 			{: parser.report_error("Syntax error in connection edge zone.",null); :}
 		;
-OPS_GEN 	::= OP5:operacion semicolon
+OPS_GEN 	::= OP5 semicolon
             {:
                 RESULT = (Operation)operacion;
             :}
@@ -546,7 +545,9 @@ OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_g
                 Node source = null;
                 Node target = null;
                 Edge edge = null;
-                ArrayList<Object> lista = new ArrayList<Object>();
+                Graph graphAux = null;
+                Node nodeAux = null;
+                Edge edgeAux = null;
                 if (parser.existeSimbolo(identificador_grafo_origen, parser.GLOBAL)) {
                     entrada = parser.obtenerSimbolo(identificador_grafo_origen, parser.GLOBAL);
                     if (entrada.getTipo() == parser.GRAPH)
@@ -555,39 +556,53 @@ OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_g
                     // Comprobamos que existe el grafo 2
                     if (parser.existeSimbolo(identificador_grafo_destino, parser.GLOBAL)) {
                         entrada = parser.obtenerSimbolo(identificador_grafo_destino, parser.GLOBAL);
-                        if (entrada.getTipo() == parser.GRAPH)
+                        if (entrada.getTipo() == parser.GRAPH) {
                             targetGraph = (Graph)entrada.getVariable();
-                        else parser.mostrarError("Second param " + identificador_grafo_destino + " must be a graph.", identificador_grafo_destinoleft, identificador_grafo_destinoright);
-                        // Comprobamos que existe el nodo origen en sourceGraph, si existe es porque el grafo es conexo
-                        if (sourceGraph.hasNode(identificador_nodo_origen)) {
-                            source = (Node)sourceGraph.getNode(identificador_nodo_origen);
-                            // Comprobamos que existe el nodo destino en targetGraph
-                            if (targetGraph.hasNode(identificador_nodo_destino)) {
-                                target = (Node)targetGraph.getNode(identificador_nodo_destino);
-                                // Comprobamos que existe la arista globalmente
-                                if (parser.existeSimbolo(identificador_arista, parser.GLOBAL)) {
-                                    entrada = parser.obtenerSimbolo(identificador_arista, parser.GLOBAL);
-                                    if (entrada.getTipo() == parser.EDGE) {
-                                        edge = (Edge)entrada.getVariable();
-                                        // como se cumplen todas las condiciones...
-                                        lista.add(sourceGraph);
-                                        lista.add(targetGraph);
-                                        lista.add(source);
-                                        lista.add(target);
-                                        lista.add(edge);
+                            if ((sourceGraph.isDirected() && targetGraph.isDirected()) || (!sourceGraph.isDirected() && !targetGraph.isDirected())) {
+                                if ((sourceGraph.isWeighted() && !targetGraph.isWeighted()) || (!sourceGraph.isWeighted() && targetGraph.isWeighted()))
+                                    parser.mostrarWarning("Both " + identificador_grafo_origen + " and " + identificador_grafo_destino + " are not weighted.", identificador_grafo_origenleft, identificador_grafo_destinoright);
+                                // Comprobamos que existe el nodo origen en sourceGraph, si existe es porque el grafo es conexo
+                                if (sourceGraph.hasNode(identificador_nodo_origen)) {
+                                    source = (Node)sourceGraph.getNode(identificador_nodo_origen);
+                                    // Comprobamos que existe el nodo destino en targetGraph
+                                    if (targetGraph.hasNode(identificador_nodo_destino)) {
+                                        target = (Node)targetGraph.getNode(identificador_nodo_destino);
+                                        // Comprobamos que existe la arista globalmente
+                                        if (parser.existeSimbolo(identificador_arista, parser.GLOBAL)) {
+                                            entrada = parser.obtenerSimbolo(identificador_arista, parser.GLOBAL);
+                                            if (entrada.getTipo() == parser.EDGE) {
+                                                edge = (Edge)entrada.getVariable();
+                                                // como se cumplen todas las condiciones...
+                                                graphAux = Graph.Union(sourceGraph, targetGraph, source, target, edge);
+                                                for (Node n : graphAux.getNodes()) {
+                                                    nodeAux = (Node)n;
+                                                    parser.insertarSimbolo(nodeAux.getName(), parser.LOCAL, nodeAux, 1);
+                                                }
+                                                for (Edge e : graphAux.getEdges()) {
+                                                    edgeAux = (Edge)e;
+                                                    parser.insertarSimbolo(edgeAux.getName(), parser.LOCAL, edgeAux, 1);
+                                                }
+                                            }
+                                            else parser.mostrarError("Fifth param " + identificador_arista + " must be an edge.", identificador_aristaleft, identificador_aristaright);
+                                        }
+                                        else {
+                                            parser.mostrarError("Edge " + identificador_arista + " must be globally declared.", identificador_aristaleft, identificador_aristaright);
+                                        }
                                     }
-                                    else parser.mostrarError("Fifth param " + identificador_arista + " must be an edge.", identificador_aristaleft, identificador_aristaright);
+                                    else {
+                                        parser.mostrarError("Fourth param " + identificador_nodo_destino + " must be an existing node in " + identificador_grafo_destino + ".", identificador_nodo_destinoleft, identificador_nodo_destinoright);
+                                    }
                                 }
                                 else {
-                                    parser.mostrarError("Edge " + identificador_arista + " must be globally declared.", identificador_aristaleft, identificador_aristaright);
+                                    parser.mostrarError("Third param " + identificador_nodo_origen + " must be an existing node in " + identificador_grafo_origen + ".", identificador_nodo_origenleft, identificador_nodo_origenright);
                                 }
                             }
                             else {
-                                parser.mostrarError("Fourth param " + identificador_nodo_destino + " must be an existing node in " + identificador_grafo_destino + ".", identificador_nodo_destinoleft, identificador_nodo_destinoright);
+                                parser.mostrarError(identificador_grafo_origen + " and " + identificador_grafo_destino + " must be both directed graphs or undirected graphs.", identificador_grafo_origenleft, identificador_grafo_destinoright);
                             }
                         }
                         else {
-                            parser.mostrarError("Third param " + identificador_nodo_origen + " must be an existing node in " + identificador_grafo_origen + ".", identificador_nodo_origenleft, identificador_nodo_origenright);
+                            parser.mostrarError("Second param " + identificador_grafo_destino + " must be a graph.", identificador_grafo_destinoleft, identificador_grafo_destinoright);
                         }
                     }
                     else {
@@ -597,7 +612,5 @@ OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_g
                 else {
                     parser.mostrarError("First param " + identificador_grafo_origen + " has not been defined.", identificador_grafo_origenleft, identificador_grafo_origenright);
                 }
-                Operation o = new Operation((String)identificador_operacion, lista);
-                RESULT = (Operation)o;
             :}
 		;
