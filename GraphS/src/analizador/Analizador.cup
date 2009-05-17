@@ -22,6 +22,21 @@ parser code {:
     public boolean no_valorado = false;
     public boolean errorAnalisis = false;
 
+    private ArrayList<Graph> grafos = new ArrayList<Graph>();
+    private String mensajes = new String("");
+
+    public ArrayList<Graph> getGrafos () {
+        return grafos;
+    }
+
+    public void setGrafos (ArrayList<Graph> lg) {
+        grafos = lg;
+    }
+
+    public String getMensajes() {
+        return mensajes;
+    }
+
 	private Hashtable<ClaveTS, EntradaTS> tablaSimbolos = new Hashtable<ClaveTS, EntradaTS>();
 
 	public void borrarTS() {
@@ -66,15 +81,15 @@ parser code {:
 
     public void mostrarError (String mensaje, int fila, int columna) {
         errorAnalisis = true;
-        System.out.println ("Semantic error: " + mensaje + " " + fila + ":" + columna);
+        mensajes += fila + ":" + columna + " Semantic error: " + mensaje + "\n";
     }
 
     public void mostrarWarning (String mensaje) {
-        System.out.println ("Warning: " + mensaje);
+        mensajes += "Warning: " + mensaje + "\n";
     }
 
     public void mostrarWarning (String mensaje, int fila, int columna) {
-        System.out.println ("Warning: " + mensaje + " " + fila + ":" + columna);
+        mensajes += fila + ":" + columna + " Warning: " + mensaje + "\n";
     }
 
 
@@ -121,23 +136,24 @@ parser code {:
     }
 
 	public void report_error (String message, Object info) {
-		StringBuffer m = new StringBuffer("Error");
+		StringBuffer m = new StringBuffer("");
 
 		if (info instanceof java_cup.runtime.Symbol) {
 			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
 			if (s.left >= 0) {
-				m.append(" at line "+(s.left));
+				m.append(""+(s.left));
 				if (s.right >= 0)
-					m.append(", column "+(s.right));
+					m.append(":"+(s.right)+" ");
 			}
 		}
-		m.append(" : "+message);
+		m.append(message);
 		System.err.println(m);
+        mensajes += m + "\n";
 	}
 
 	public void report_fatal_error(String message, Object info) {
 		report_error(message,info);
-		System.exit(1);
+		//System.exit(1);
 	}
 :};
 
@@ -165,12 +181,12 @@ non terminal ArrayList<Graph> GRAPHS_SET;
 SYNTAX		::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
             {:
                 parser.resetearAnalisis();
-                System.out.println(((ArrayList<Graph>)listaGrafos).toString());
+                parser.setGrafos((ArrayList<Graph>)listaGrafos);
             :}
 		|   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
             {:
                 parser.resetearAnalisis();
-                System.out.println(((ArrayList<Graph>)listaGrafos).toString());
+                parser.setGrafos((ArrayList<Graph>)listaGrafos);
             :}
 		;
 GRAPHS_SET 	::= GRAPH:grafo
