@@ -29,6 +29,26 @@ public class Graph {
         operations = op;
 	}
 
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public boolean isDirected() {
+        return directed;
+    }
+
+    public boolean isWeighted() {
+        return weighted;
+    }
+    
     public ArrayList<Operation> getOperations() {
         return operations;
     }
@@ -96,7 +116,7 @@ public class Graph {
 	
 	public static Graph Union (Graph graph1, Graph graph2, Node source, Node target, Edge ed) {
 		Graph res = null;
-		String union_name = graph1.name + "_" + graph2.name;
+		String union_name = graph1.name + graph2.name;
 		boolean weighted = false;
 		if (graph1.weighted && graph2.weighted) weighted = true;
 		boolean directed = false;
@@ -104,19 +124,19 @@ public class Graph {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		ArrayList<Edge> edges = new ArrayList<Edge>();
 		for (Node n: graph1.nodes) {
-			nodes.add(new Node(n.name + "_" + graph1.name));
+			nodes.add(new Node(n.name + graph1.name));
 		}
 		for (Node n: graph2.nodes) {
-			nodes.add(new Node(n.name + "_" + graph2.name));
+			nodes.add(new Node(n.name + graph2.name));
 		}
 		for (Edge e: graph1.edges) {
-			edges.add(new Edge(e.name + "_" + graph1.name, new Node(e.from.name + "_" + graph1.name), new Node(e.to.name + "_" + graph1.name), e.weight));
+			edges.add(new Edge(e.name + graph1.name, new Node(e.from.name + graph1.name), new Node(e.to.name + graph1.name), e.weight));
 		}
 		for (Edge e: graph2.edges) {
-			edges.add(new Edge(e.name + "_" + graph2.name, new Node(e.from.name + "_" + graph2.name), new Node(e.to.name + "_" + graph2.name), e.weight));
+			edges.add(new Edge(e.name + graph2.name, new Node(e.from.name + graph2.name), new Node(e.to.name + graph2.name), e.weight));
 		}
 		// Metemos la arista que une los dos grafos
-		edges.add(new Edge(ed.name + "_" + union_name, new Node(source.name + "_" + graph1.name), new Node(target.name + "_" + graph2.name), ed.weight));
+		edges.add(new Edge(ed.name + union_name, new Node(source.name + graph1.name), new Node(target.name + graph2.name), ed.weight));
 		res = new Graph (union_name, weighted, directed, nodes, edges);
 		return res;
 	}

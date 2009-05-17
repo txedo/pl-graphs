@@ -19,18 +19,18 @@ public class Kruskal {
 	 */
 	
 	public Graph getMST(Graph graph){
-		Graph res = new Graph (graph.name + "_Kruskal", graph.weighted, graph.directed, graph.nodes, new ArrayList<Edge>());
-		ArrayList<Node> nodes = graph.nodes;
+		Graph res = new Graph (graph.name + "_Kruskal", graph.weighted, graph.directed, new ArrayList<Node>(), new ArrayList<Edge>());
 		ArrayList<Edge> edges = new ArrayList<Edge>(graph.edges);
 		java.util.Collections.sort(edges);
 		DisjointSet<Node> nodeset = new DisjointSet<Node>();
-		nodeset.createSubsets(nodes);
+		nodeset.createSubsets(graph.nodes);
 		for(Edge e : edges){
 			if(nodeset.find(e.from) != nodeset.find(e.to)){
 				nodeset.merge(nodeset.find(e.from), nodeset.find(e.to));
 				res.edges.add(e);
 			}
 		}
+        if (res.edges.size() > 0) res.nodes.addAll(graph.nodes);
 		return res;
 	}
 
