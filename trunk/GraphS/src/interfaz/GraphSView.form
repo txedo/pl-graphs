@@ -23,7 +23,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jSplitPane1" alignment="0" min="-2" pref="430" max="-2" attributes="0"/>
-                      <Component id="toolBar" alignment="0" pref="451" max="32767" attributes="0"/>
+                      <Component id="toolBar" alignment="0" pref="431" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -34,7 +34,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="toolBar" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jSplitPane1" pref="289" max="32767" attributes="0"/>
+                  <Component id="jSplitPane1" pref="286" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -368,31 +368,6 @@
             <Property name="name" type="java.lang.String" value="jMenu1" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="undoMenuItem">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+Z"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="undoMenuItem.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="undoMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="undoMenuItem" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="redoMenuItem">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+Y"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="redoMenuItem.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="redoMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="redoMenuItem" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JSeparator" name="jSeparator3">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="jSeparator3" noResource="true"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="cutMenuItem">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
@@ -441,6 +416,9 @@
                 <Property name="text" type="java.lang.String" resourceKey="deleteMenuItem.text"/>
                 <Property name="name" type="java.lang.String" value="deleteMenuItem" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator4">
               <Properties>
@@ -455,6 +433,9 @@
                 <Property name="text" type="java.lang.String" resourceKey="selectAllMenuItem.text"/>
                 <Property name="name" type="java.lang.String" value="selectAllMenuItem" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectAllMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -468,6 +449,13 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jMenuItem1.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jMenuItem1.text"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
