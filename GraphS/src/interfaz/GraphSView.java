@@ -161,7 +161,7 @@ public class GraphSView extends FrameView {
         jSeparator4 = new javax.swing.JSeparator();
         selectAllMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        userManualMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
@@ -346,7 +346,7 @@ public class GraphSView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(toolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -493,10 +493,15 @@ public class GraphSView extends FrameView {
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
-        jMenuItem1.setIcon(resourceMap.getIcon("jMenuItem1.icon")); // NOI18N
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        helpMenu.add(jMenuItem1);
+        userManualMenuItem.setIcon(resourceMap.getIcon("userManualMenuItem.icon")); // NOI18N
+        userManualMenuItem.setText(resourceMap.getString("userManualMenuItem.text")); // NOI18N
+        userManualMenuItem.setName("userManualMenuItem"); // NOI18N
+        userManualMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userManualMenuItemActionPerformed(evt);
+            }
+        });
+        helpMenu.add(userManualMenuItem);
 
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
         aboutMenuItem.setIcon(resourceMap.getIcon("aboutMenuItem.icon")); // NOI18N
@@ -524,7 +529,7 @@ public class GraphSView extends FrameView {
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -676,6 +681,30 @@ public class GraphSView extends FrameView {
         procesadorTextArea.setText(procesadorTextArea.getText().substring(0, procesadorTextArea.getSelectionStart()-1) + procesadorTextArea.getText().substring(procesadorTextArea.getSelectionEnd(), procesadorTextArea.getText().length()));
     }//GEN-LAST:event_deleteMenuItemActionPerformed
 
+    private void userManualMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManualMenuItemActionPerformed
+        String nombreSO = System.getProperty("os.name");
+        String url = "UserManual.html";
+        try {
+            if (nombreSO.startsWith("Windows"))
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+            else{
+                //se asume  Unix or Linux
+                String[] navegadores = { "firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape" };
+                String navegador = null;
+                for (int contador = 0; contador < navegadores.length && navegador == null; contador++){
+                    if (Runtime.getRuntime().exec( new String[] {"which", navegadores[contador]}).waitFor() == 0)
+                        navegador = navegadores[contador];
+                }
+
+                if (navegador == null) throw new Exception("No se encuentra navegador web");
+                else
+                    Runtime.getRuntime().exec(new String[] {navegador, url});
+                }
+        } catch (Exception ex) {
+            Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex + "Error al intentar lanzar el navegador web");
+        }
+}//GEN-LAST:event_userManualMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton compileButton;
     private javax.swing.JMenuItem compileMenuItem;
@@ -685,7 +714,6 @@ public class GraphSView extends FrameView {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
@@ -715,6 +743,7 @@ public class GraphSView extends FrameView {
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JToolBar toolBar;
+    private javax.swing.JMenuItem userManualMenuItem;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
@@ -884,10 +913,6 @@ public class GraphSView extends FrameView {
             Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (grafos != null && grafos.size() > 0) {
-            if (visorBox == null) {
-                visorBox = new GraphsVisorBox(GraphSApp.getApplication().getMainFrame(), true);
-                visorBox.setLocationRelativeTo(GraphSApp.getApplication().getMainFrame());
-            }
             Result r = Result.getInstance();
             if (grafoModificado) {
                 r.creaGrafos(grafos, "Current graph");
@@ -895,7 +920,6 @@ public class GraphSView extends FrameView {
             else {
                 r.creaGrafos(grafos, fileGraph.getName());
             }
-            //GraphSApp.getApplication().show(visorBox);
         }
     }
 
