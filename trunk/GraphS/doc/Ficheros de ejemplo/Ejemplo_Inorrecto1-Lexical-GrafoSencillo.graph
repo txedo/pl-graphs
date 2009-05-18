@@ -1,0 +1,17 @@
+node 1C;
+edge 0_Z;
+
+graph 56Ejemplo1GrafoSencillo {
+	node A,B;
+	edge Y;
+
+	Y = A -> B;
+	Z = C -> A;
+
+	op shortestPath(A,B);
+}
+
+
+
+
+

@@ -1,0 +1,30 @@
+node C, D;
+edge Z;
+
+graph Ejemplo3GC1 {
+	node A, B, E, F;
+	edge Y, X, H;
+
+	Y = A - B;
+	Z = E - F;
+	X = B - E;
+	H = E - A;
+
+	op minimumSpanningTree(A);
+}
+
+graph Ejemplo3GC2 {
+	node A, B;
+	edge Y, U, O, P;
+	Y = A - B;
+	U = C - A;
+	O = D - C;
+	P = D - B;
+
+	op minimumSpanningTree(A);
+}
+
+graph Ejemplo3GC3 {
+	union(Ejemplo3GC1,Ejemplo3GC2,A,B,Z);
+	op minimumSpanningTree(AEjemplo3GC1);
+}
