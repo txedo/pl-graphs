@@ -9,13 +9,13 @@ import java.util.Enumeration;
 
 /* Componentes de codigo de usuario */
 parser code {:
-	public static final int GLOBAL = 0;
-	public static final int LOCAL = 1;
+    public static final int GLOBAL = 0;
+    public static final int LOCAL = 1;
     public static final int NODE = 0;
     public static final int EDGE = 1;
     public static final int GRAPH = 2;
 
-	public int ambito = GLOBAL;
+    public int ambito = GLOBAL;
     public boolean dirigido = false;
     public boolean no_dirigido = false;
     public boolean valorado = false;
@@ -37,53 +37,53 @@ parser code {:
         return mensajes;
     }
 
-	private Hashtable<ClaveTS, EntradaTS> tablaSimbolos = new Hashtable<ClaveTS, EntradaTS>();
+    private Hashtable<ClaveTS, EntradaTS> tablaSimbolos = new Hashtable<ClaveTS, EntradaTS>();
 
-	public void borrarTS() {
-		tablaSimbolos.clear();
-	}
+    public void borrarTS() {
+        tablaSimbolos.clear();
+    }
 
-	public boolean existeSimbolo(ClaveTS clave) {
-		return tablaSimbolos.containsKey(clave);
-	}
+    public boolean existeSimbolo(ClaveTS clave) {
+        return tablaSimbolos.containsKey(clave);
+    }
 
     public boolean existeSimbolo(String identificador, int scope) {
         ClaveTS c = new ClaveTS(identificador, scope);
-		return tablaSimbolos.containsKey((ClaveTS)c);
-	}
+        return tablaSimbolos.containsKey((ClaveTS)c);
+    }
 
-	public Hashtable<ClaveTS, EntradaTS> getTabla() {
-		return tablaSimbolos;
-	}
+    public Hashtable<ClaveTS, EntradaTS> getTabla() {
+        return tablaSimbolos;
+    }
 
-	public void insertarSimbolo(String nombre, int scope, Object objeto) {
+    public void insertarSimbolo(String nombre, int scope, Object objeto) {
         ClaveTS c = new ClaveTS(nombre, scope);
         EntradaTS e = new EntradaTS(objeto, 0);
-		tablaSimbolos.put(c, e);
-	}
+        tablaSimbolos.put(c, e);
+    }
 
-	public void insertarSimbolo(String nombre, int scope, Object objeto, int timesUsed) {
+    public void insertarSimbolo(String nombre, int scope, Object objeto, int timesUsed) {
         ClaveTS c = new ClaveTS(nombre, scope);
         EntradaTS e = new EntradaTS(objeto, timesUsed);
-		tablaSimbolos.put(c, e);
-	}
+        tablaSimbolos.put(c, e);
+    }
 
     public void insertarSimbolo(ClaveTS c, EntradaTS e) {
-		tablaSimbolos.put(c, e);
-	}
+        tablaSimbolos.put(c, e);
+    }
 
-	public EntradaTS obtenerSimbolo(String nombre, int scope) {
+    public EntradaTS obtenerSimbolo(String nombre, int scope) {
         ClaveTS c = new ClaveTS(nombre, scope);
-		return tablaSimbolos.get(c);
-	}
+        return tablaSimbolos.get(c);
+    }
 
     public EntradaTS obtenerSimbolo(ClaveTS clave) {
-		return tablaSimbolos.get(clave);
-	}
+        return tablaSimbolos.get(clave);
+    }
 
-	public int obtenerTipoSimbolo(String nombre) {
-		return tablaSimbolos.get(nombre).getTipo();
-	}
+    public int obtenerTipoSimbolo(String nombre) {
+        return tablaSimbolos.get(nombre).getTipo();
+    }
 
     public void mostrarError (String mensaje, int fila, int columna) {
         errorAnalisis = true;
@@ -141,26 +141,26 @@ parser code {:
         }
     }
 
-	public void report_error (String message, Object info) {
-		StringBuffer m = new StringBuffer("");
+    public void report_error (String message, Object info) {
+        StringBuffer m = new StringBuffer("");
 
-		if (info instanceof java_cup.runtime.Symbol) {
-			java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
-			if (s.left >= 0) {
-				m.append(""+(s.left));
-				if (s.right >= 0)
-					m.append(":"+(s.right)+" ");
-			}
-		}
-		m.append(message);
-		System.err.println(m);
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            if (s.left >= 0) {
+                m.append(""+(s.left));
+                if (s.right >= 0)
+                    m.append(":"+(s.right)+" ");
+            }
+        }
+        m.append(message);
+        System.err.println(m);
         mensajes += m + "\n";
-	}
+    }
 
-	public void report_fatal_error(String message, Object info) {
-		report_error(message,info);
-		//System.exit(1);
-	}
+    public void report_fatal_error(String message, Object info) {
+        report_error(message,info);
+        //System.exit(1);
+    }
 :};
 
 /* Lista de simbolos de la gramatica (terminales y no terminales) */
@@ -169,14 +169,8 @@ terminal l_bracket, r_bracket, l_paren, r_paren;
 terminal semicolon, comma, equal;
 terminal String ident, connector;
 terminal Integer number;
-non terminal DECL;
-non terminal SYNTAX;
-non terminal DECL_NODES, DECL_EDGES;
-non terminal IDENTS_NODE;
-non terminal IDENTS, IDENTS_SIMPLE, IDENTS_WEIGHTED;
-non terminal ARCS;
-non terminal ARC;
-non terminal OPS_GEN, OP5;
+non terminal SYNTAX, DECL, DECL_NODES, DECL_EDGES, IDENTS_NODE, IDENTS;
+non terminal IDENTS_SIMPLE, IDENTS_WEIGHTED, ARCS, ARC, OPS_GEN, OP5;
 non terminal ArrayList<Operation> OPS, BODY;
 non terminal Operation OP, OP1, OP2;
 non terminal Graph GRAPH;
@@ -185,30 +179,30 @@ non terminal ArrayList<Graph> GRAPHS_SET;
 /* Declaraciones de precedencia */
 
 /* Especificacion de la gramatica */
-SYNTAX		::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
+SYNTAX        ::=      {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
             {:
                 parser.resetearAnalisis();
                 parser.setGrafos((ArrayList<Graph>)listaGrafos);
             :}
-		|   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
+        |   DECL {: parser.ambito = parser.LOCAL; :} GRAPHS_SET:listaGrafos
             {:
                 parser.resetearAnalisis();
                 parser.setGrafos((ArrayList<Graph>)listaGrafos);
             :}
-		;
-GRAPHS_SET 	::= GRAPH:grafo
+        ;
+GRAPHS_SET     ::= GRAPH:grafo
             {:
                 ArrayList<Graph> listaGrafos = new ArrayList<Graph>();
                 if ((Graph)grafo != null) listaGrafos.add(0, (Graph)grafo);
                 RESULT = (ArrayList<Graph>)listaGrafos;
             :}
-		|   GRAPH:grafo {: parser.resetearAnalisis(); :} GRAPHS_SET:listaGrafos
+        |   GRAPH:grafo {: parser.resetearAnalisis(); :} GRAPHS_SET:listaGrafos
             {:
                 if ((Graph)grafo != null) ((ArrayList<Graph>)listaGrafos).add(0, (Graph)grafo);
                 RESULT = (ArrayList<Graph>)listaGrafos;
             :}
-		;
-GRAPH 		::= graph ident:identificador_grafo l_bracket BODY:lista_operaciones r_bracket
+        ;
+GRAPH         ::= graph ident:identificador_grafo l_bracket BODY:lista_operaciones r_bracket
             {:
                 Graph gr = null;
                 if (!parser.existeSimbolo(identificador_grafo, parser.GLOBAL)) {
@@ -251,94 +245,94 @@ GRAPH 		::= graph ident:identificador_grafo l_bracket BODY:lista_operaciones r_b
                 }
                 RESULT = (Graph)gr;
             :}
-		| error
-			{: parser.report_error("Syntax error in graph definition.",null); :}
-		;
-BODY 		::= DECL ARCS OPS:lista_operaciones
+        | error
+            {: parser.report_error("Syntax error in graph definition.",null); :}
+        ;
+BODY         ::= DECL ARCS OPS:lista_operaciones
             {:
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
-		|   OPS_GEN   OPS:lista_operaciones
+        |   OPS_GEN   OPS:lista_operaciones
             {:
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
-		| error
-			{: parser.report_error("Syntax error in declaration zone.",null); :}
-		;
-DECL 		::= DECL_NODES
-		|   DECL_EDGES
-		;
-DECL_NODES 	::= node IDENTS_NODE semicolon
-		|   node IDENTS_NODE semicolon DECL
-		;
-IDENTS_NODE	::= ident:identificador
-			{:
-				boolean existe = false;
-				if (parser.existeSimbolo(identificador, parser.ambito)) {
-                    existe = true;
-                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
-				}
-				if (!existe) {
-					Node nodo = new Node(identificador);
-					parser.insertarSimbolo(identificador, parser.ambito, nodo);
-				}
-			:}
-		|   ident:identificador comma IDENTS_NODE
+        | error
+            {: parser.report_error("Syntax error in declaration zone.",null); :}
+        ;
+DECL         ::= DECL_NODES
+        |   DECL_EDGES
+        ;
+DECL_NODES     ::= node IDENTS_NODE semicolon
+        |   node IDENTS_NODE semicolon DECL
+        ;
+IDENTS_NODE    ::= ident:identificador
             {:
-				boolean existe = false;
-				if (parser.existeSimbolo(identificador, parser.ambito)) {
-                    existe = true;
-					parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
-				}
-				if (!existe) {
-					Node nodo = new Node(identificador);
-					parser.insertarSimbolo(identificador, parser.ambito, nodo);
-				}
-			:}
-		;
-DECL_EDGES 	::= edge IDENTS semicolon
-		|   edge IDENTS semicolon DECL
-		;
-IDENTS		::= IDENTS_SIMPLE
-		|   IDENTS_WEIGHTED
-		;
-IDENTS_SIMPLE	::= ident:identificador
-			{:
-				boolean existe = false;
-				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                boolean existe = false;
+                if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
                     parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
-				}
-				if (!existe) {
+                }
+                if (!existe) {
+                    Node nodo = new Node(identificador);
+                    parser.insertarSimbolo(identificador, parser.ambito, nodo);
+                }
+            :}
+        |   ident:identificador comma IDENTS_NODE
+            {:
+                boolean existe = false;
+                if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
+                }
+                if (!existe) {
+                    Node nodo = new Node(identificador);
+                    parser.insertarSimbolo(identificador, parser.ambito, nodo);
+                }
+            :}
+        ;
+DECL_EDGES     ::= edge IDENTS semicolon
+        |   edge IDENTS semicolon DECL
+        ;
+IDENTS        ::= IDENTS_SIMPLE
+        |   IDENTS_WEIGHTED
+        ;
+IDENTS_SIMPLE    ::= ident:identificador
+            {:
+                boolean existe = false;
+                if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    existe = true;
+                    parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
+                }
+                if (!existe) {
                     parser.no_valorado = true;
                     if (parser.valorado) parser.mostrarWarning ("Edge " + identificador + " is not explicitally weighted. Assuming weight 0.", identificadorleft, identificadorright);
-					Edge edge = new Edge(identificador, 0);
-					parser.insertarSimbolo(identificador, parser.ambito, edge);
-				}
-			:}
-		|   ident:identificador comma IDENTS
-			{:
-				boolean existe = false;
-				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    Edge edge = new Edge(identificador, 0);
+                    parser.insertarSimbolo(identificador, parser.ambito, edge);
+                }
+            :}
+        |   ident:identificador comma IDENTS
+            {:
+                boolean existe = false;
+                if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
                     parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
-				}
-				if (!existe) {
+                }
+                if (!existe) {
                     parser.no_valorado = true;
                     if (parser.valorado) parser.mostrarWarning ("Edge " + identificador + " is not explicitally weighted. Assuming weight 0.", identificadorleft, identificadorright);
-					Edge edge = new Edge(identificador, 0);
-					parser.insertarSimbolo(identificador, parser.ambito, edge);
-				}
-			:}
-		;
-IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
-			{:
-				boolean existe = false;
-				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                    Edge edge = new Edge(identificador, 0);
+                    parser.insertarSimbolo(identificador, parser.ambito, edge);
+                }
+            :}
+        ;
+IDENTS_WEIGHTED    ::= ident:identificador l_paren number:peso r_paren
+            {:
+                boolean existe = false;
+                if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
                     parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
-				}
-				if (!existe) {
+                }
+                if (!existe) {
                     if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
                         parser.valorado = true;
                         Edge edge = new Edge(identificador, peso);
@@ -347,16 +341,16 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
                     else {
                         parser.mostrarError ("Invalid weight for edge " + identificador, pesoleft, pesoright);
                     }
-				}
-			:}
-		|   ident:identificador l_paren number:peso r_paren comma IDENTS
-			{:
-				boolean existe = false;
-				if (parser.existeSimbolo(identificador, parser.ambito)) {
+                }
+            :}
+        |   ident:identificador l_paren number:peso r_paren comma IDENTS
+            {:
+                boolean existe = false;
+                if (parser.existeSimbolo(identificador, parser.ambito)) {
                     existe = true;
                     parser.mostrarError(identificador + " is already defined.", identificadorleft, identificadorright);
-				}
-				if (!existe) {
+                }
+                if (!existe) {
                     if (peso.intValue() >= 0 && peso.intValue() < Integer.MAX_VALUE) {
                         parser.valorado = true;
                         Edge edge = new Edge(identificador, peso);
@@ -365,13 +359,13 @@ IDENTS_WEIGHTED	::= ident:identificador l_paren number:peso r_paren
                     else {
                         parser.mostrarError ("Invalid weight for edge " + identificador, pesoleft, pesoright);
                     }
-				}
-			:}
-		;
-ARCS 		::= ARC
-		|   ARC ARCS
-		;
-ARC 		::= ident:identificador_arista equal ident:identificador_nodo_origen connector:conector ident:identificador_nodo_destino semicolon
+                }
+            :}
+        ;
+ARCS         ::= ARC
+        |   ARC ARCS
+        ;
+ARC         ::= ident:identificador_arista equal ident:identificador_nodo_origen connector:conector ident:identificador_nodo_destino semicolon
                 {:
                     EntradaTS entradaSource = null;
                     EntradaTS entradaTarget = null;
@@ -449,12 +443,12 @@ ARC 		::= ident:identificador_arista equal ident:identificador_nodo_origen conne
                         parser.mostrarError ("Source node " + identificador_nodo_origen + " has not been declared.", identificador_nodo_origenleft, identificador_nodo_origenright);
                     }
                 :}
-		| error
-			{: parser.report_error("Syntax error in connection edge zone.",null); :}
-		;
-OPS_GEN 	::= OP5 semicolon
-		;
-OPS 		::= op OP:operacion
+        | error
+            {: parser.report_error("Syntax error in connection edge zone.",null); :}
+        ;
+OPS_GEN     ::= OP5 semicolon
+        ;
+OPS         ::= op OP:operacion
             {:
                 ArrayList<Operation> lista_operaciones = new ArrayList<Operation>();
                 if (operacion != null) {
@@ -462,26 +456,26 @@ OPS 		::= op OP:operacion
                 }
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
-		|   OPS:lista_operaciones op OP:operacion
+        |   OPS:lista_operaciones op OP:operacion
             {:
                 if (operacion != null) {
                     ((ArrayList<Operation>)lista_operaciones).add(0, (Operation)operacion);
                 }
                 RESULT = (ArrayList<Operation>)lista_operaciones;
             :}
-		;
-OP 		::= OP1:operacion semicolon
+        ;
+OP         ::= OP1:operacion semicolon
             {:
                 RESULT = (Operation)operacion;
             :}
-		|   OP2:operacion semicolon
+        |   OP2:operacion semicolon
             {:
                 RESULT = (Operation)operacion;
             :}
-		| error
-			{: parser.report_error("Syntax error in operation zone.",null); :}
-		;
-OP1 		::= operadorUnario:identificador_operacion   l_paren ident:identificador_nodo                                                 r_paren
+        | error
+            {: parser.report_error("Syntax error in operation zone.",null); :}
+        ;
+OP1         ::= operadorUnario:identificador_operacion   l_paren ident:identificador_nodo                                                 r_paren
             {:
                 EntradaTS entrada = null;
                 Node source = null;
@@ -515,8 +509,8 @@ OP1 		::= operadorUnario:identificador_operacion   l_paren ident:identificador_n
                 }
                 RESULT = (Operation)o;
             :}
-		;
-OP2 		::= operadorBinario:identificador_operacion  l_paren ident:identificador_nodo_origen comma ident:identificador_nodo_destino                                     r_paren
+        ;
+OP2         ::= operadorBinario:identificador_operacion  l_paren ident:identificador_nodo_origen comma ident:identificador_nodo_destino                                     r_paren
             {:
                 EntradaTS entrada = null;
                 Node source = null;
@@ -574,8 +568,8 @@ OP2 		::= operadorBinario:identificador_operacion  l_paren ident:identificador_n
                 }
                 RESULT = (Operation)o;
             :}
-		;
-OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_grafo_origen comma ident:identificador_grafo_destino comma ident:identificador_nodo_origen comma ident:identificador_nodo_destino comma ident:identificador_arista r_paren
+        ;
+OP5         ::= operadorQuinario:identificador_operacion l_paren ident:identificador_grafo_origen comma ident:identificador_grafo_destino comma ident:identificador_nodo_origen comma ident:identificador_nodo_destino comma ident:identificador_arista r_paren
             {:
                 EntradaTS entrada = null;
                 Graph sourceGraph = null;
@@ -653,4 +647,4 @@ OP5 		::= operadorQuinario:identificador_operacion l_paren ident:identificador_g
                     parser.mostrarError("First param " + identificador_grafo_origen + " has not been defined.", identificador_grafo_origenleft, identificador_grafo_origenright);
                 }
             :}
-		;
+        ;
