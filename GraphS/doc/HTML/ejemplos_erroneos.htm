@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!-- saved from url=(0029)http://www.helpandmanual.com/ -->
+<head><script type="text/javascript" src="helpman_topicinit.js"></script>
+<!-- Redirect browser to frame page if page is not in the content frame. -->
+<script type="text/javascript">
+<!--
+if(top.frames.length==0) { top.location.href="index.html?ejemplos_erroneos.htm"; }
+else { parent.quicksync('a4.2'); }
+//-->
+</script>
+<script type="text/javascript" src="highlight.js"></script>
+   <title>Ejemplos erróneos</title>
+   <meta name="generator" content="Help &amp; Manual" />
+   <meta name="keywords" content="" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="Content-Style-Type" content="text/css" />
+   <link type="text/css" href="default.css" rel="stylesheet" />
+</head>
+<body style="margin: 0px 0px 0px 0px; background: #FFFFFF;" onload="highlight();">
+<div id="hmpopupDiv" style="visibility:hidden; position:absolute; z-index:1000; "></div>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#649CCC">
+  <tr valign="middle">
+    <td align="left">
+      <p class="p_Heading1"><span class="f_Heading1">Ejemplos erróneos</span></p>
+
+    </td>
+    <td align="right">
+     <span style="font-size: 9pt">
+     <a href="introduccion.htm">Top</a>&nbsp;
+     <a href="ejemplos_correctos.htm">Previous</a>&nbsp;
+     
+     </span>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Placeholder for topic body. -->
+<table width="100%" border="0" cellspacing="0" cellpadding="5"><tr valign="top"><td align="left">
+<p><span style="font-size: 16pt;">Ejemplo 1</span></p>
+<p>&nbsp;</p>
+<p>En el siguiente ejemplo se observa como un error léxico, producido porque hay identificadores de variables que empiezan por un dígito, provoca también. Esto es debido a que no se genera el token ident correspondiente y la secuencia de tokens que se pasa al analizador sintáctico no tiene una estructura correcta.</p>
+<p>Para resolverlo habría que renombrar las variables con identificador incorrecto a uno que fuera correcto.</p>
+<p>&nbsp;</p>
+<div style="text-align: center;"><div align="center"><img src="ejemplo_inorrecto1-lexical-grafosencillo.png" width="454" height="646" border="0" alt="Ejemplo_Incorrecto1-Lexical-GrafoSencillo - Compilación"><p style="text-align:center;width:454px"><span class="f_ImageCaption">Ejemplo_Incorrecto1-Lexical-GrafoSencillo - Compilación</span></p></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 16pt;">Ejemplo 2</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>En el siguiente ejemplo se observan varios errores sintácticos. Por ejemplo, la declaración de nodos locales debería llevar una coma entre cada identificador, la arista W debería indicar su peso entre los paréntesis y la conexión en la arista Y no tiene nodo destino y la sentencia no finaliza con punto y coma.</p>
+<p>Como se puede observar en la consola de realimentación únicamente se muestra el primer error sintáctico y el análisis finaliza porque no es capaz de recuperarse de ese error.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div style="text-align: center;"><div align="center"><img src="ejemplo_inorrecto2-syntax1-grafosencillo.png" width="454" height="650" border="0" alt="Ejemplo_Incorrecto2-Syntax1-GrafoSencillo - Compilación"><p style="text-align:center;width:454px"><span class="f_ImageCaption">Ejemplo_Incorrecto2-Syntax1-GrafoSencillo - Compilación</span></p></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 16pt;">Ejemplo 3</span></p>
+<p>&nbsp;</p>
+<p>Este ejemplo es similar al anterior, solo que se han corregido los errores sintácticos que había en la zona de declaración de variables y en la zona de conexión de aristas. Pero se ha introducido un nuevo error en la zona de definición de operaciones ya que no se cierra el paréntesis de la operación shortestPath. Como se puede observar, esto también genera un error sintáctico pero a su vez la corrección de la conexión en la arista Y genera errores semánticos ya que todas las aristas del grafo deben de ser del mismo tipo: dirigidas o no dirigidas. Para resolverlo habría que poner todas las aristas del mismo tipo y cerrar el paréntesis de la operación.</p>
+<p>&nbsp;</p>
+<div style="text-align: center;"><div align="center"><img src="ejemplo_inorrecto2-syntax2-grafosencillo.png" width="456" height="648" border="0" alt="Ejemplo_Incorrecto2-Syntax2-GrafoSencillo - Compilación"><p style="text-align:center;width:456px"><span class="f_ImageCaption">Ejemplo_Incorrecto2-Syntax2-GrafoSencillo - Compilación</span></p></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 16pt;">Ejemplo 4</span></p>
+<p>&nbsp;</p>
+<p>En la siguiente imagen se puede observar un error semántico un tanto peculiar, porque aunque parezca semánticamente correcto de cara al usuario no lo es de cara al compilador. Esto se debe a que cuando generamos un grafo por medio de la operación generadora union los nodos y aristas de los dos grafos originales son renombrados concatenando el identificador del grafo al final del identificador del nodo o arista. La razón de esto es para evitar la existencia de identificadores repetidos en el grafo generado. Para solucionarlo, siempre que queramos referirnos a un nodo arista del grafo generado habrá que concatenar el identificador del grafo al que pertenecía ese nodo o arista. Para este ejemplo la sentencia sería <span style="font-style: italic;">op minimumSpanningTree(AEjemplo3GC1);</span></p>
+<p><span style="font-style: italic;">&nbsp;</span></p>
+<div style="text-align: center;"><div align="center"><img src="ejemplo_inorrecto3-semantic-grafoscomplejos.png" width="456" height="649" border="0" alt="Ejemplo_Incorrecto3-Semantic-GrafosComplejos - Compilación"><p style="text-align:center;width:456px"><span class="f_ImageCaption">Ejemplo_Incorrecto3-Semantic-GrafosComplejos - Compilación</span></p></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div style="text-align: center;"><div align="center"><img src="ejemplo3gc2.png" width="395" height="97" border="0" alt="Ejemplo3GC2"><p style="text-align:center;width:395px"><span class="f_ImageCaption">Ejemplo3GC2</span></p></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div style="text-align: center;"><div align="center"><img src="ejemplo3gc2_kruskal.png" width="395" height="97" border="0" alt="Ejemplo3GC2_Kruskal"><p style="text-align:center;width:395px"><span class="f_ImageCaption">Ejemplo3GC2_Kruskal</span></p></div></div>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
+
+</td></tr></table>
+
+</body>
+</html>
