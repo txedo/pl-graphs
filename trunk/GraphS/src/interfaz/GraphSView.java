@@ -689,7 +689,7 @@ public class GraphSView extends FrameView {
 
     private void userManualMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManualMenuItemActionPerformed
         String nombreSO = System.getProperty("os.name");
-        String url = "file:UserManual/UserManual.html";
+        String url = "file:UserManual/index.html";
         try {
             if (nombreSO.startsWith("Windows"))
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
