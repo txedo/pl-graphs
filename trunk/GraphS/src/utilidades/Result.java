@@ -21,6 +21,7 @@ public class Result {
     private String dotUbication = "dot";
     private static Result INSTANCE = null;
     private static StringBuffer result = new StringBuffer("");
+    private static int grafosCreados = 0;
 
     // Private constructor suppresses 
     
@@ -59,8 +60,13 @@ public class Result {
     }
 
     public static Result getInstance() {
+        grafosCreados = 0;
         if (INSTANCE == null) createInstance();
         return INSTANCE;
+    }
+
+    public int getGrafosCreados() {
+        return grafosCreados;
     }
 
     private String cerrarHTML() {
@@ -144,7 +150,9 @@ public class Result {
                 prueba = new java.io.File("reports/" + aux.getName() + ".png");
                 archivo += "<p align=\"center\"><b> Grafo: "+ aux.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img> </div>\n\n";
                 gv.writeGraphToFile(gv.getGraph(gv.getDotSource()),prueba);
+                grafosCreados++;
             }
+            grafosCreados++;
         }
         archivo += cerrarHTML();
         resultado = new java.io.File("reports/" + title + ".html");
