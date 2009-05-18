@@ -83,22 +83,12 @@ public class Result {
         archivo += "<br><H1>Compiled file: " + title + "</H1>\n";
         for (int i=0;i<listaGrafos.size();i++) {
             grafo = listaGrafos.get(i);
-            //archivo += "<table align=\"center\" border=\"1\" width=800> <thead> <tr> <td></td>\n";
-            //archivo += "</tr> </thead> <tbody>\n";
-            //archivo += "<tr><th>Nodes</th></tr>\n <tr>";
-            //archivo += "<br><b>Nodes</b>\n";
             gv = new GraphViz(dotUbication);
             if (grafo.isDirected()) gv.addln(gv.start_digraph(grafo.getName()));
             else gv.addln(gv.start_graph(grafo.getName()));
             gv.addln("node [shape=circle, style=filled, fillcolor=grey90]");
             gv.addln("rankdir=LR");
-            //for (Node n : grafo.getNodes()) {
-            //    archivo += n.getName() + " ";
-            //}
-            //archivo += "</tr> <tr><th>Edges</th></tr>\n<tr>";
-            //archivo += "<br>Edges</bh>\n";
             for (Edge e : grafo.getEdges()) {
-                //archivo += e.getName() + " ";
                 if (e.getWeight() == 0) {
                     if (grafo.isDirected()) gv.addln(e.getFrom().getName() + " -> " + e.getTo().getName() + " [label=" + e.getName() + "];");
                     else gv.addln(e.getFrom().getName() + " -- " + e.getTo().getName() + " [label=" + e.getName() + "];");
@@ -108,12 +98,9 @@ public class Result {
                     else gv.addln(e.getFrom().getName() + " -- " + e.getTo().getName() + " [label=\"" + e.getName() + "=" + e.getWeight() + "\"];");
                 }
             }
-            //archivo += "</tr> <tr>\n";
             gv.addln(gv.end_graph());
-            prueba = new java.io.File(grafo.getName() + ".png");
-            //archivo += "<div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img><p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> </a></div>\n\n";
+            prueba = new java.io.File("reports/" + grafo.getName() + ".png");
             archivo += "<p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img></div>\n\n";
-            //archivo += "<img src=\""+ prueba.getName() + "\"></img><p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> </a></div>\n\n";
             gv.writeGraphToFile(gv.getGraph(gv.getDotSource()),prueba);
 
             for (Operation o : grafo.getOperations()) {
@@ -154,15 +141,13 @@ public class Result {
                     }
                 }
                 gv.addln(gv.end_graph());
-                prueba = new java.io.File(aux.getName() + ".png");
-                //archivo += "<div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img><p align=\"center\"><b> Grafo: "+ aux.getName() +"</b> </p> </a></div>\n\n";
+                prueba = new java.io.File("reports/" + aux.getName() + ".png");
                 archivo += "<p align=\"center\"><b> Grafo: "+ aux.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img> </div>\n\n";
                 gv.writeGraphToFile(gv.getGraph(gv.getDotSource()),prueba);
             }
         }
-        //archivo += "</tr> </tbody> </table>";
         archivo += cerrarHTML();
-        resultado = new java.io.File(title + ".html");
+        resultado = new java.io.File("reports/" + title + ".html");
 
 
         BufferedWriter bw = null;
@@ -173,7 +158,7 @@ public class Result {
         } catch (IOException ex) {
             Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        abrirURL(title + ".html");
+        abrirURL("file:reports/" + title + ".html");
 
     }
     
