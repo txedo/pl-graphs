@@ -110,7 +110,7 @@ public class Result {
             }
             //archivo += "</tr> <tr>\n";
             gv.addln(gv.end_graph());
-            prueba = new java.io.File(grafo.getName() + ".gif");
+            prueba = new java.io.File(grafo.getName() + ".png");
             //archivo += "<div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img><p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> </a></div>\n\n";
             archivo += "<p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img></div>\n\n";
             //archivo += "<img src=\""+ prueba.getName() + "\"></img><p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> </a></div>\n\n";
@@ -154,7 +154,7 @@ public class Result {
                     }
                 }
                 gv.addln(gv.end_graph());
-                prueba = new java.io.File(aux.getName() + ".gif");
+                prueba = new java.io.File(aux.getName() + ".png");
                 //archivo += "<div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img><p align=\"center\"><b> Grafo: "+ aux.getName() +"</b> </p> </a></div>\n\n";
                 archivo += "<p align=\"center\"><b> Grafo: "+ aux.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img> </div>\n\n";
                 gv.writeGraphToFile(gv.getGraph(gv.getDotSource()),prueba);
