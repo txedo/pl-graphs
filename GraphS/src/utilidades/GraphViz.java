@@ -46,7 +46,7 @@ import java.util.*;
  *    gv.addln(gv.end_graph());
  *    System.out.println(gv.getDotSource());
  *
- *    File out = new File("out.gif");
+ *    File out = new File("out.png");
  *    gv.writeGraphToFile(gv.getGraph(gv.getDotSource()), out);
  * </pre>
  * </dd>
@@ -168,7 +168,7 @@ public class GraphViz
     * It will call the external dot program, and return the image in
     * binary format.
     * @param dot Source of the graph (in dot language).
-    * @return The image of the graph in .gif format.
+    * @return The image of the graph in .png format.
     */
    private byte[] get_img_stream(File dot)
    {
@@ -176,11 +176,11 @@ public class GraphViz
       byte[] img_stream = null;
 
       try {
-         img = File.createTempFile("graph_", ".gif", new File(this.TEMP_DIR));
+         img = File.createTempFile("graph_", ".png", new File(this.TEMP_DIR));
          String temp = img.getAbsolutePath();
 
          Runtime rt = Runtime.getRuntime();
-         String cmd = DOT + " -Tgif "+dot.getAbsolutePath()+" -o "+img.getAbsolutePath();
+         String cmd = DOT + " -Tpng "+dot.getAbsolutePath()+" -o "+img.getAbsolutePath();
          System.out.println(cmd);
          Process p = rt.exec(cmd);
          p.waitFor();
