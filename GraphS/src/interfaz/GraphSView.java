@@ -585,7 +585,10 @@ public class GraphSView extends FrameView {
         int op = CANCEL_OP;
         if (grafoModificado) {
             op = confirmDialog();
-            if (op == YES_OP) saveGraph();
+            if (op == YES_OP) {
+                saveGraph();
+                compileGraph();
+            }
             else if (op == NO_OP) compileGraph();
         }
         else {
@@ -597,7 +600,10 @@ public class GraphSView extends FrameView {
         int op = CANCEL_OP;
         if (grafoModificado) {
             op = confirmDialog();
-            if (op == YES_OP) saveGraph();
+            if (op == YES_OP) {
+                saveGraph();
+                compileGraph();
+            }
             else if (op == NO_OP) compileGraph();
         }
         else {
@@ -703,6 +709,7 @@ public class GraphSView extends FrameView {
         } catch (Exception ex) {
             Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex + "Error al intentar lanzar el navegador web");
         }
+        
 }//GEN-LAST:event_userManualMenuItemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -905,6 +912,7 @@ public class GraphSView extends FrameView {
 
             if (compiled) {
                 realimentacionTextArea.append(msg + parser_obj.getMensajes());
+                parser_obj.clearMensajes();
             }
             else {
                 realimentacionTextArea.append("There is nothing to compile.\n");
@@ -920,6 +928,7 @@ public class GraphSView extends FrameView {
             else {
                 r.creaGrafos(grafos, fileGraph.getName());
             }
+            realimentacionTextArea.append("Done. " + r.getGrafosCreados() + " graphs compiled.\n");
         }
     }
 

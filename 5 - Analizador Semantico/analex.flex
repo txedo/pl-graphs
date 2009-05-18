@@ -7,8 +7,8 @@ import java_cup.runtime.*;
 class Utility {
     public static final String Keywords[] = {"graph","node","edge", "op", "minimumSpanningTree","shortestPath","union"};
     public static final String errorMsg[] = {
-        "Identificador no valido",
-        "Error de sintaxis"
+        "Error: Invalid variable name",
+        "Syntax error: "
     };
 
     public static boolean isKeyword (String cadena) {
@@ -29,7 +29,7 @@ class Utility {
         else if (cadena.equals("minimumSpanningTree")) token = "operadorUnario";
         else if (cadena.equals("shortestPath")) token = "operadorBinario";
         else if (cadena.equals("union")) token = "operadorQuinario";
-        else System.out.println (":: ERROR. El lexema no se encuentra asociado a ningun token.");
+        else System.out.println ("Error: Lexeme not associated with a token.");
 
         return token;
     }
@@ -56,7 +56,7 @@ class Utility {
 
 %eof{
     if(zzLexicalState==COMMENTM)
-            System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Apertura de comentario sin cierre. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1));
+            System.out.println((yyline+1) + ":" + (yycolumn+1) + " " + Utility.errorMsg(ERROR_SYNTAX)+"Unclosed comment.\n");
 %eof}
 
 %{
@@ -113,10 +113,10 @@ WhiteSpace = {LineTerminator} | [\t\f] | " "
     "="                { return symbol(sym.equal); }
     "-" | "->"         { return symbol(sym.connector, yytext()); }
     0 | [1-9][0-9]*    { return symbol(sym.number, new Integer(yytext())); }
-    "*/"               { System.out.println(Utility.errorMsg(ERROR_SYNTAX)+". Fin de comentario sin apertura. Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
-    [0-9][a-zA-Z0-9]*  { System.out.println(Utility.errorMsg(ERROR_MSG_IDENT)+" <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
+    "*/"               { parser.ponerMensajes((yyline+1) + ":" + (yycolumn+1) + " " + Utility.errorMsg(ERROR_SYNTAX)+"Illegal start of expresion.\n"); }
+    [0-9][a-zA-Z0-9]*  { parser.ponerMensajes((yyline+1) + ":" + (yycolumn+1) + " " + Utility.errorMsg(ERROR_MSG_IDENT)+" <"+yytext()+">\n"); }
     {WhiteSpace}       { }
-    .                  { System.out.println("Expresion ilegal <"+yytext()+"> Linea: "+(yyline+1)+" Columna: "+(yycolumn+1)); }
+    .                  { parser.ponerMensajes((yyline+1) + ":" + (yycolumn+1) + " Illegal exprsion <"+yytext()+">\n"); }
 }
 
 
