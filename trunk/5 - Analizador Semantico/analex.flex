@@ -29,7 +29,7 @@ class Utility {
         else if (cadena.equals("minimumSpanningTree")) token = "operadorUnario";
         else if (cadena.equals("shortestPath")) token = "operadorBinario";
         else if (cadena.equals("union")) token = "operadorQuinario";
-        else System.out.println ("Error: Lexeme not associated with a token.");
+        else parser.ponerMensajes("Error: Lexeme not associated with a token.");
 
         return token;
     }
@@ -56,7 +56,7 @@ class Utility {
 
 %eof{
     if(zzLexicalState==COMMENTM)
-            System.out.println((yyline+1) + ":" + (yycolumn+1) + " " + Utility.errorMsg(ERROR_SYNTAX)+"Unclosed comment.\n");
+            parser.ponerMensajes((yyline+1) + ":" + (yycolumn+1) + " " + Utility.errorMsg(ERROR_SYNTAX)+"Unclosed comment.\n");
 %eof}
 
 %{

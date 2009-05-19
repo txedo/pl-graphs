@@ -1,0 +1,85 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!-- saved from url=(0029)http://www.helpandmanual.com/ -->
+<head><script type="text/javascript" src="helpman_topicinit.js"></script>
+<!-- Redirect browser to frame page if page is not in the content frame. -->
+<script type="text/javascript">
+<!--
+if(top.frames.length==0) { top.location.href="index.html?restricciones.htm"; }
+else { parent.quicksync('a3.2.1'); }
+//-->
+</script>
+<script type="text/javascript" src="highlight.js"></script>
+   <title>Restricciones</title>
+   <meta name="generator" content="Help &amp; Manual" />
+   <meta name="keywords" content="" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="Content-Style-Type" content="text/css" />
+   <link type="text/css" href="default.css" rel="stylesheet" />
+</head>
+<body style="margin: 0px 0px 0px 0px; background: #FFFFFF;" onload="highlight();">
+<div id="hmpopupDiv" style="visibility:hidden; position:absolute; z-index:1000; "></div>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#649CCC">
+  <tr valign="middle">
+    <td align="left">
+      <p class="p_Heading1"><span class="f_Heading1">Restricciones</span></p>
+
+    </td>
+    <td align="right">
+     <span style="font-size: 9pt">
+     <a href="introduccion.htm">Top</a>&nbsp;
+     <a href="compilacion.htm">Previous</a>&nbsp;
+     <a href="salida_de_errores.htm">Next</a>
+     </span>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Placeholder for topic body. -->
+<table width="100%" border="0" cellspacing="0" cellpadding="5"><tr valign="top"><td align="left">
+<p>Existe un caso especial en el que el usuario puede tener problemas ya que hay que operar de un modo que no es muy intuitivo.</p>
+<p>&nbsp;</p>
+<p>Al generar un grafo mediante la operación <span style="font-weight: bold;">union</span> de dos grafos, el usuario debe especificar los dos grafos que desea unir, así como un nodo del primero grafo, un nodo del segundo grafo, y una arista para unir ambos nodos. Para evitar situaciones en las que la operación de <span style="font-weight: bold;">union</span> genere nodos y/o aristas repetidos, todas las variables serán renombradas por lo que el usuario deberá referirse a ellas por su nuevo nombre. Este nombre es: el nombre que contenía antes la variable concatenado con el identificador del grafo al que pertenece.</p>
+<p>&nbsp;</p>
+<p>A continuación se muestra un ejemplo concreto, preste especial atención a los argumentos de la operación <span style="font-weight: bold;">shortestPath</span> que se define en el grafo con identificador <span style="font-weight: bold;">grafo3</span>:</p>
+<p>&nbsp;</p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">node C, D;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; font-weight: bold; color: #000000;">edge Z;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">&nbsp;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">graph grafo1 {</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">node A, B, E, F;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">edge Y, X, H;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">Y = A -&gt; B;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">Z = E -&gt; F;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">X = B -&gt; E;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">H = E -&gt; A;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">op shortestPath(A,F);</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">op minimumSpanningTree(A);</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">}</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">&nbsp;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">graph grafo2 {</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">node A, B;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">edge Y, U, O, P;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">Y = A -&gt; B;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">U = C -&gt; A;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">O = D -&gt; C;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">P = D -&gt; B;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">op shortestPath(A,D);</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">}</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">&nbsp;</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">graph grafo3 {</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">union(grafo1,grafo2,</span><span style="font-size: 10pt; font-family: 'Courier New'; font-weight: bold; color: #000000;">A</span><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">,</span><span style="font-size: 10pt; font-family: 'Courier New'; font-weight: bold; color: #000000;">B</span><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">,</span><span style="font-size: 10pt; font-family: 'Courier New'; font-weight: bold; color: #000000;">Z</span><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">);</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">op shortestPath(</span><span style="font-size: 10pt; font-family: 'Courier New'; font-weight: bold; color: #000000;">Agrafo1,Bgrafo2</span><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">);</span></p>
+<p style="text-align: left; text-indent: -32px; margin: 0px 0px 0px 79px;"><span style="font-size: 10pt; font-family: 'Courier New'; color: #000000;">}</span></p>
+<p>&nbsp;</p>
+<p>Adem&aacute;s, el usuario debe notar que la arista empleada para generar un grafo mediante la uni&oacute;n de otros dos grafos ha de ser declarada globalmente.</p>
+<p>&nbsp;</p>
+<p>Si se produce alg&uacute;n error durante la generaci&oacute;n del grafo, &eacute;ste no ser&aacute; representado en el documento final.</p>
+
+</td></tr></table>
+
+</body>
+</html>
