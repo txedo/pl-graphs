@@ -2,6 +2,8 @@ package dominio;
 
 public class Node implements Comparable<Node> {
 
+    /* http://algowiki.net/wiki/index.php/Node */
+
 	String name;
 	boolean visited = false;   // used for Kosaraju's algorithm and Edmonds's algorithm
 	int lowlink = -1;          // used for Tarjan's algorithm

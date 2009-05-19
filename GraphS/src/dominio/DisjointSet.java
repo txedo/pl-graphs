@@ -5,6 +5,8 @@ import java.util.Collection;
 
 
 public class DisjointSet<E extends Comparable<E>> {
+
+    /* http://algowiki.net/wiki/index.php/Disjoint-set */
 	private ArrayList<ArrayList<E>> set = new ArrayList<ArrayList<E>>();
 
 	public void createSubsets(E[] items){
