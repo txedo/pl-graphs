@@ -3,6 +3,8 @@ package dominio;
 
 public class Edge implements Comparable<Edge> {
 
+    /* http://algowiki.net/wiki/index.php/Edge */
+
 	String name;
 	Node from, to;
 	int weight;
