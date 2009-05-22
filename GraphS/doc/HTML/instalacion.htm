@@ -40,26 +40,28 @@ else { parent.quicksync('a2'); }
 
 <!-- Placeholder for topic body. -->
 <table width="100%" border="0" cellspacing="0" cellpadding="5"><tr valign="top"><td align="left">
-<p>La aplicación está empaquetada en un archivo con extensión .jar autoejecutable, aunque al estar implementada en JAVA se necesita tener instalado el entorno de ejecución de Java (Java Runtime Enviroment) en una versión 1.6.x o superior. Ésta se puede descargar desde la siguiente página:</p>
+<p>La aplicación está implementada en Java y se distribuye empaquetada en un archivo ejecutable con extensión JAR. Por lo tanto, es necesario que el usuario tenga instalado en su sistema operativo una versión de la máquina virtual de Java (JRE, de sus siglas en inglés Java Runtime Environment) igual o superior a la 1.6.x, que puede descargarse de la siguiente página:</p>
 <p>&nbsp;</p>
 <p><a href="http://java.sun.com/javase/downloads/index.jsp" target="_blank" class="weblink">http://java.sun.com/javase/downloads/index.jsp</a></p>
 <p>&nbsp;</p>
-<p>Además de lo anterior, la aplicación hace uso de un programa externo para generar los grafos en imágenes con extensión .png.</p>
-<p>Este programa externo se llama GraphViz, que consta de una serie de librerías y aplicaciones. Se puede descargar desde la siguiente página:</p>
+<p>Dado el lenguaje de implementación, la aplicación puede ejecutarse tanto en entornos Windows como en entornos basados en Unix (p.e. GNU/Linux). Independientemente del entorno, la aplicación hace uso de un programa externo para generar las imágenes de grafos con extensión PNG. Este programa externo se llama GraphViz, que consta de una serie de librerías y aplicaciones. Se puede descargar desde la siguiente página:</p>
 <p>&nbsp;</p>
-<p><a href="http://www.graphviz.org/Download..php" target="_blank" class="weblink">http://www.graphviz.org/Download..php</a></p>
+<p><a href="http://www.graphviz.org/Download..php" target="_blank" class="weblink">http://www.graphviz.org/Download.php</a></p>
 <p>&nbsp;</p>
-<p>Una vez descargado el instalador, se debe proceder a instalarlo. Es importante recordar la ruta completa donde se intala, ya que el siguiente paso será almacenarla dentro de la variable de entorno $CLASSPATH para poder ejecutar la aplicación GraphS desde cualquier ubicación (ver Figuras 3 y 4).</p>
+<p>Los usuarios de una distribución GNU/Linux basada en Debian también pueden usar el gestor de paquetes e instalar automáticamente el paquete llamado <span style="font-weight: bold;">graphviz</span>.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-style: italic;">(Si eres usuario de GNU/Linux, el manual de instalación termina aquí. Si por el contrario eres usuario de Windows, continúa leyendo)</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Una vez que hemos descargado e instalado GraphViz, debemos añadir la ruta del ejecutable <span style="font-style: italic;">dot.exe</span> (Ruta_instalacion_de_GraphViz/bin) a la variable de entorno $CLASSPATH (ver Figuras 3 y 4).</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <div style="text-align: center;"><div align="center"><img src="variableentorno1.png" width="419" height="509" border="0" alt="Figura 3 - Variables de entorno"><p style="text-align:center;width:419px"><span class="f_ImageCaption">Figura 3 - Variables de entorno</span></p></div></div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <div style="text-align: center;"><div align="center"><img src="variableentorno2.png" width="386" height="429" border="0" alt="Figura 4 - Adición al CLASSPATH"><p style="text-align:center;width:386px"><span class="f_ImageCaption">Figura 4 - Adición al CLASSPATH</span></p></div></div>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>NOTA: Tanto el Java Runtime Enviroment como el programa GraphViz están disponibles para diferentes sistemas operativos, entre ellos Windows, GNU/Linux o MacOS.</p>
 
 </td></tr></table>
 

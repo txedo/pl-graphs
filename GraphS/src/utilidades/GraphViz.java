@@ -58,163 +58,194 @@ import java.util.*;
  */
 public class GraphViz
 {
-   /**
+    private final static int WINDOWS = 1;
+    private final static int UNIX = 2;
+    private static String messages = new String("");
+    /**
     * The dir where temporary files will be created.
     */
-   private static String TEMP_DIR   = "";
+    private static String TEMP_DIR   = "";
 
-   /**
+    /**
     * Where is your dot program located? It will be called externally.
     */
-   private static String DOT        = "dot";
+    private static String DOT        = "dot";
 
-   /**
+    /**
     * The source of the graph written in dot language.
     */
-	private StringBuffer graph = new StringBuffer();
+    private StringBuffer graph = new StringBuffer();
 
-   /**
+    /**
     * Constructor: creates a new GraphViz object that will contain
     * a graph.
     */
-   public GraphViz() {
-   }
+    public GraphViz() {
+        if (detectOS() == WINDOWS) TEMP_DIR = "";
+        else if (detectOS() == UNIX) TEMP_DIR = ".";
+    }
 
-   public GraphViz(String dotUbication) {
-       DOT = dotUbication;
-   }
+    public GraphViz(String dotUbication) {
+        DOT = dotUbication;
+        if (detectOS() == WINDOWS) TEMP_DIR = "";
+        else if (detectOS() == UNIX) TEMP_DIR = ".";
+    }
 
-   /**
+    public void addmsg(String msg) {
+        messages += msg + "\n";
+    }
+
+    public static String getMessages() {
+        return messages;
+    }
+
+    public static void clearMessages() {
+        messages = new String("");
+    }
+
+    /**
     * Returns the graph's source description in dot language.
     * @return Source of the graph in dot language.
     */
-   public String getDotSource() {
+    public String getDotSource() {
       return graph.toString();
-   }
+    }
 
-   /**
+    /**
     * Adds a string to the graph's source (without newline).
     */
-   public void add(String line) {
+    public void add(String line) {
       graph.append(line);
-   }
+    }
 
-   /**
+    /**
     * Adds a string to the graph's source (with newline).
     */
-   public void addln(String line) {
+    public void addln(String line) {
       graph.append(line+"\n");
-   }
+    }
 
-   /**
+    /**
     * Adds a newline to the graph's source.
     */
-   public void addln() {
+    public void addln() {
       graph.append('\n');
-   }
+    }
 
-   /**
+    /**
     * Returns the graph as an image in binary format.
     * @param dot_source Source of the graph to be drawn.
     * @return A byte array containing the image of the graph.
     */
-   public byte[] getGraph(String dot_source)
-   {
+    public byte[] getGraph(String dot_source)
+    {
       File dot;
       byte[] img_stream = null;
-   
+
       try {
          dot = writeDotSourceToFile(dot_source);
          if (dot != null)
          {
             img_stream = get_img_stream(dot);
             if (dot.delete() == false)
-               System.err.println("Warning: "+dot.getAbsolutePath()+" could not be deleted!");
+               System.err.println("Warning: "+dot.getCanonicalPath()+" could not be deleted!");
+               //addmsg("Warning: "+dot.getCanonicalPath()+" could not be deleted!");
             return img_stream;
          }
          return null;
       } catch (java.io.IOException ioe) { return null; }
-   }
+    }
 
-   /**
+    /**
     * Writes the graph's image in a file.
     * @param img   A byte array containing the image of the graph.
     * @param file  Name of the file to where we want to write.
     * @return Success: 1, Failure: -1
     */
-   public int writeGraphToFile(byte[] img, String file)
-   {
+    public int writeGraphToFile(byte[] img, String file)
+    {
       File to = new File(file);
       return writeGraphToFile(img, to);
-   }
+    }
 
-   /**
+    /**
     * Writes the graph's image in a file.
     * @param img   A byte array containing the image of the graph.
     * @param to    A File object to where we want to write.
     * @return Success: 1, Failure: -1
     */
-   public int writeGraphToFile(byte[] img, File to)
-   {
+    public int writeGraphToFile(byte[] img, File to)
+    {
       try {
          FileOutputStream fos = new FileOutputStream(to);
          fos.write(img);
          fos.close();
       } catch (java.io.IOException ioe) { return -1; }
       return 1;
-   }
+    }
 
-   /**
+    /**
     * It will call the external dot program, and return the image in
     * binary format.
     * @param dot Source of the graph (in dot language).
     * @return The image of the graph in .png format.
     */
-   private byte[] get_img_stream(File dot)
-   {
+    private byte[] get_img_stream(File dot)
+    {
       File img;
       byte[] img_stream = null;
+      Process p = null;
 
       try {
          img = File.createTempFile("graph_", ".png", new File(this.TEMP_DIR));
-         String temp = img.getAbsolutePath();
 
          Runtime rt = Runtime.getRuntime();
-         String cmd = DOT + " -Tpng "+dot.getAbsolutePath()+" -o "+img.getAbsolutePath();
-         System.out.println(cmd);
-         Process p = rt.exec(cmd);
+         if (detectOS() == WINDOWS) {
+             String cmd = DOT + " -Tpng "+dot.getCanonicalPath()+" -o "+img.getCanonicalPath();
+             System.out.println(cmd);
+             p = rt.exec(cmd);
+         }
+         else {
+             String [] cmd = {DOT,"-Tpng",dot.getCanonicalPath(),"-o",img.getCanonicalPath()};
+             System.out.println(DOT + " -Tpng "+dot.getCanonicalPath()+" -o "+img.getCanonicalPath());
+             p = rt.exec(cmd);
+         }
          p.waitFor();
 
-         FileInputStream in = new FileInputStream(img.getAbsolutePath());
+         FileInputStream in = new FileInputStream(img.getCanonicalPath());
          img_stream = new byte[in.available()];
          in.read(img_stream);
          // Close it if we need to
          if( in != null ) in.close();
 
          if (img.delete() == false)
-            System.err.println("Warning: "+img.getAbsolutePath()+" could not be deleted!");
+            System.err.println("Warning: "+img.getCanonicalPath()+" could not be deleted!");
+            //addmsg("Warning: "+img.getCanonicalPath()+" could not be deleted!");
       }
       catch (java.io.IOException ioe) {
          System.err.println("Error:    in I/O processing of tempfile in dir "+this.TEMP_DIR+"\n");
+         addmsg("Error:    in I/O processing of tempfile in dir "+this.TEMP_DIR+"\n");
          System.err.println("       or in calling external command");
+         addmsg("       or in calling external command");
          ioe.printStackTrace();
       }
       catch (java.lang.InterruptedException ie) {
          System.err.println("Error: the execution of the external program was interrupted");
+         addmsg("Error: the execution of the external program was interrupted");
          ie.printStackTrace();
       }
 
       return img_stream;
-   }
+    }
 
-   /**
+    /**
     * Writes the source of the graph in a file, and returns the written file
     * as a File object.
     * @param str Source of the graph (in dot language).
     * @return The file (as a File object) that contains the source of the graph.
     */
-   private File writeDotSourceToFile(String str) throws java.io.IOException
-   {
+    private File writeDotSourceToFile(String str) throws java.io.IOException
+    {
       File temp;
       try {
          temp = File.createTempFile("graph_", ".dot.tmp", new File(this.TEMP_DIR));
@@ -224,28 +255,41 @@ public class GraphViz
       }
       catch (Exception e) {
          System.err.println("Error: I/O error while writing the dot source to temp file!");
+         addmsg("Error: I/O error while writing the dot source to temp file!");
          return null;
       }
       return temp;
-   }
+    }
 
-   /**
+    /**
     * Returns a string that is used to start a graph.
     * @return A string to open a graph.
     */
-   public String start_graph(String id) {
+    public String start_graph(String id) {
       return "graph "+id+" {";
-   }
+    }
 
-   public String start_digraph(String id) {
+    public String start_digraph(String id) {
       return "digraph "+id+" {";
-   }
+    }
 
-   /**
+    /**
     * Returns a string that is used to end a graph.
     * @return A string to close a graph.
     */
-   public String end_graph() {
+    public String end_graph() {
       return "}";
-   }
+    }
+
+    public static int detectOS () {
+        int res = -1;
+        String nombreSO = System.getProperty("os.name");
+        if (nombreSO.startsWith("Windows"))
+            res = WINDOWS;
+        else{
+            //se asume  Unix or Linux
+            res = UNIX;
+        }
+        return res;
+    }
 }

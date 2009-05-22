@@ -10,8 +10,3 @@ graph Ejemplo1GrafoSencillo {
 
 	op shortestPath(A,B);
 }
-
-
-
-
-

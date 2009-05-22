@@ -12,30 +12,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Result {
-    
+
     /*Esta clase se encargara de mostrar el resultado. Utilizamos un patron
      *singleton para evitar que se cree mas de una instancia de la misma. Actuar�
-     *como un controlador del modelo vista-controlador, recibiendo la lista de 
+     *como un controlador del modelo vista-controlador, recibiendo la lista de
      *automatas que debe mostrar como resultado, generando su salida con graphviz
      *y mostrandola mediante html*/
+
     private String dotUbication = "dot";
     private static Result INSTANCE = null;
-    private static StringBuffer result = new StringBuffer("");
     private static int grafosCreados = 0;
+    private static String messages = new String("");
 
-    // Private constructor suppresses 
-    
+    // Private constructor suppresses
+
     private Result(String dotUbication) {
         this.dotUbication = dotUbication;
     }
-    
-    
+
+
 
     // creador sincronizado para protegerse de posibles problemas  multi-hilo
-    // otra prueba para evitar instantiaci�n m�ltiple 
-    
+    // otra prueba para evitar instantiaci�n m�ltiple
+
     private synchronized static void createInstance(String dotUbication) {
-        if (INSTANCE == null) { 
+        if (INSTANCE == null) {
             INSTANCE = new Result(dotUbication);
         }
     }
@@ -44,17 +45,17 @@ public class Result {
         if (INSTANCE == null) createInstance(dotUbication);
         return INSTANCE;
     }
-    
+
     private Result() {
         this.dotUbication = dotUbication;
     }
-    
+
 
     // creador sincronizado para protegerse de posibles problemas  multi-hilo
-    // otra prueba para evitar instantiaci�n m�ltiple 
-    
+    // otra prueba para evitar instantiaci�n m�ltiple
+
     private synchronized static void createInstance() {
-        if (INSTANCE == null) { 
+        if (INSTANCE == null) {
             INSTANCE = new Result();
         }
     }
@@ -69,6 +70,18 @@ public class Result {
         return grafosCreados;
     }
 
+    public void addmsg(String msg) {
+        messages += msg;
+    }
+
+    public static String getMessages() {
+        return messages;
+    }
+
+    public static void clearMessages() {
+        messages = new String("");
+    }
+
     private String cerrarHTML() {
         String cabecera = "</body>\n</head>";
         return cabecera;
@@ -78,7 +91,7 @@ public class Result {
         String cabecera = "<html>\n\t<head>\n\t\t<title>GraphS - Analysis report</title>\n\t</head><body>";
         return cabecera;
     }
-    
+
     public void creaGrafos(ArrayList<Graph> listaGrafos, String title) {
         Graph grafo = null;
         GraphViz gv = null;
@@ -108,6 +121,9 @@ public class Result {
             prueba = new java.io.File("reports/" + grafo.getName() + ".png");
             archivo += "<p align=\"center\"><b> Grafo: "+ grafo.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img></div>\n\n";
             gv.writeGraphToFile(gv.getGraph(gv.getDotSource()),prueba);
+            // mensajes de error y warnings
+            addmsg(gv.getMessages());
+            gv.clearMessages();
 
             for (Operation o : grafo.getOperations()) {
                 gv = new GraphViz(dotUbication);
@@ -118,7 +134,7 @@ public class Result {
                     aux = grafo.Kruskal();
                 if (aux.isDirected()) gv.addln(gv.start_digraph(aux.getName()));
                 else gv.addln(gv.start_graph(aux.getName()));
-                
+
                 gv.addln("rankdir=LR");
                 gv.addln("node [shape=circle, style=filled, fillcolor=grey90]");
                 for (Node n : aux.getNodes()) {
@@ -151,11 +167,15 @@ public class Result {
                 archivo += "<p align=\"center\"><b> Grafo: "+ aux.getName() +"</b> </p> <div align=\"center\"> <img src=\""+ prueba.getName() + "\"></img> </div>\n\n";
                 gv.writeGraphToFile(gv.getGraph(gv.getDotSource()),prueba);
                 grafosCreados++;
+                // mensajes de error y warnings
+                addmsg(gv.getMessages());
+                gv.clearMessages();
             }
             grafosCreados++;
         }
+        archivo += ponerFirma();
         archivo += cerrarHTML();
-        resultado = new java.io.File("reports/" + title + ".html");
+        resultado = new java.io.File(System.getProperty("user.dir")+"/reports/" + title + ".html");
 
 
         BufferedWriter bw = null;
@@ -166,11 +186,11 @@ public class Result {
         } catch (IOException ex) {
             Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        abrirURL("file:reports/" + title + ".html");
+        abrirURL("file:"+System.getProperty("user.dir")+"/reports/" + title + ".html");
 
     }
     
-  public void abrirURL(String url) {
+    public void abrirURL(String url) {
 
         String nombreSO = System.getProperty("os.name");
 
@@ -194,22 +214,16 @@ public class Result {
             Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex + "Error al intentar lanzar el navegador web");
         }
     }
-    
-    public static void limpiaResultados() {
-        result = new StringBuffer("");
-    }
-    public static void agregaTexto(String texto) {
-        result.append(texto);
-    }
-    
-    public static String getResultado() {
-        result.append("\n\n<h3>" +
-                "<font color=black size=+2><i>GraphS</i></font>\n\n" +
+
+    public String ponerFirma() {
+        String res = "";
+        res = "\n\n<h3>" +
+                "<i><font color=black size=+2>GraphS</font> - Yet Another Graph Specification Language</i>\n\n" +
                 "Creado por:\n" +
-                "Jose Domingo Lopez Lopez\n" +
-                "Angel Escribano Santamarina\n\n");
-        
-        return (result.toString()).replaceAll("\n", "<br>");
+                "Jose Domingo L&oacute;pez L&oacute;pez\n" +
+                "&Aacute;ngel Escribano Santamarina\n\n";
+
+        return (res.toString()).replaceAll("\n", "<br>");
     }
     
     
