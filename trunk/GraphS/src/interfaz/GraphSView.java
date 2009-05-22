@@ -6,6 +6,7 @@ package interfaz;
 
 import analizador.*;
 import dominio.*;
+import javax.swing.text.BadLocationException;
 import utilidades.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,6 +52,8 @@ public class GraphSView extends FrameView {
 
         initComponents();
 
+        procesadorTextArea.setTabSize(4);
+        statusMessageLabel.setText("1:1");
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
@@ -309,6 +312,11 @@ public class GraphSView extends FrameView {
         procesadorTextArea.setRows(5);
         procesadorTextArea.setMinimumSize(new java.awt.Dimension(20, 40));
         procesadorTextArea.setName("procesadorTextArea"); // NOI18N
+        procesadorTextArea.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                procesadorTextAreaCaretUpdate(evt);
+            }
+        });
         procesadorTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 procesadorTextAreaKeyTyped(evt);
@@ -346,7 +354,7 @@ public class GraphSView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(toolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -526,10 +534,10 @@ public class GraphSView extends FrameView {
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-            .addGroup(statusPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
+                .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -541,7 +549,7 @@ public class GraphSView extends FrameView {
                 .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusMessageLabel)
+                    .addComponent(statusMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(statusAnimationLabel)
                     .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3))
@@ -672,11 +680,27 @@ public class GraphSView extends FrameView {
     }//GEN-LAST:event_copyMenuItemActionPerformed
 
     private void pasteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteButtonActionPerformed
+        String before = procesadorTextArea.getText();
         procesadorTextArea.paste();
+        if (!before.equals(procesadorTextArea.getText())) {
+            if (!grafoModificado) {
+                grafoModificado = true;
+                String currentTitle = GraphSApp.getApplication().getMainFrame().getTitle();
+                GraphSApp.getApplication().getMainFrame().setTitle(currentTitle + " *");
+            }
+        }
     }//GEN-LAST:event_pasteButtonActionPerformed
 
     private void pasteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuItemActionPerformed
+        String before = procesadorTextArea.getText();
         procesadorTextArea.paste();
+        if (!before.equals(procesadorTextArea.getText())) {
+            if (!grafoModificado) {
+                grafoModificado = true;
+                String currentTitle = GraphSApp.getApplication().getMainFrame().getTitle();
+                GraphSApp.getApplication().getMainFrame().setTitle(currentTitle + " *");
+            }
+        }
     }//GEN-LAST:event_pasteMenuItemActionPerformed
 
     private void selectAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllMenuItemActionPerformed
@@ -689,7 +713,7 @@ public class GraphSView extends FrameView {
 
     private void userManualMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userManualMenuItemActionPerformed
         String nombreSO = System.getProperty("os.name");
-        String url = "file:UserManual/index.html";
+        String url = "file:" + System.getProperty("user.dir") + "/UserManual/index.html";
         try {
             if (nombreSO.startsWith("Windows"))
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
@@ -702,15 +726,28 @@ public class GraphSView extends FrameView {
                         navegador = navegadores[contador];
                 }
 
-                if (navegador == null) throw new Exception("No se encuentra navegador web");
+                if (navegador == null) realimentacionTextArea.append("No se encuentra navegador web.\n");
                 else
                     Runtime.getRuntime().exec(new String[] {navegador, url});
                 }
         } catch (Exception ex) {
-            Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex + "Error al intentar lanzar el navegador web");
+            realimentacionTextArea.append("Error al intentar lanzar el navegador web.\n"+ex.getMessage());
         }
         
 }//GEN-LAST:event_userManualMenuItemActionPerformed
+
+    private void procesadorTextAreaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_procesadorTextAreaCaretUpdate
+        // TODO add your handling code here:
+        int pos = evt.getDot();
+        int row, col;
+        try {
+            row = procesadorTextArea.getLineOfOffset(pos) + 1;
+            col = pos - procesadorTextArea.getLineStartOffset( row - 1 ) + 1;
+            statusMessageLabel.setText(row+":"+col);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(GraphSView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_procesadorTextAreaCaretUpdate
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton compileButton;
@@ -928,6 +965,8 @@ public class GraphSView extends FrameView {
             else {
                 r.creaGrafos(grafos, fileGraph.getName());
             }
+            realimentacionTextArea.append(r.getMessages());
+            r.clearMessages();
             realimentacionTextArea.append("Done. " + r.getGrafosCreados() + " graphs compiled.\n");
         }
     }
