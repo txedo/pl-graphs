@@ -1,12 +1,14 @@
+Graphs es un lenguaje de especificaci√≥n de grafos que se est√° dise√±ando para las pr√°cticas de Procesadores de Lenguajes (ESI@UCLM) para el curso 2008/2009
+
 Autores:
-	Jose Domingo LÛpez LÛpez
-	¡ngel Escribano Santamarina
+	Jose Domingo L√≥pez L√≥pez
+	√Ångel Escribano Santamarina
 
 
-En los directorios que comienzan por una numeraciÛn del 1 al 5, se puede observar el trabajo realizado a lo largo de las sesiones de pr·cticas.
+En los directorios que comienzan por una numeraci√≥n del 1 al 5, se puede observar el trabajo realizado a lo largo de las sesiones de pr√°cticas.
 
-En el directorio DOC se pueden encontrar algunos documentos interesantes junto con el instalador del compilador de ficheros DOT (graphviz-2.22.2.msi), necesario para utilizar la aplicaciÛn GraphS.
+En el directorio DOC se pueden encontrar algunos documentos interesantes junto con el instalador del compilador de ficheros DOT (graphviz-2.22.2.msi), necesario para utilizar la aplicaci√≥n GraphS.
 
-El directorio GraphS contiene todos los ficheros relativos al desarrollo del proyecto en Netbeans, asÌ como documentaciÛn final y cÛdigo fuente.
+El directorio GraphS contiene todos los ficheros relativos al desarrollo del proyecto en Netbeans, as√≠ como documentaci√≥n final y c√≥digo fuente.
 
-El directorio AplicaciÛn GraphS contiene las ˙ltimas versiones estables tanto del ejecutable, como de la documentaciÛn y el manual de usuario.
+El directorio Aplicaci√≥n GraphS contiene las √∫ltimas versiones estables tanto del ejecutable, como de la documentaci√≥n y el manual de usuario.
