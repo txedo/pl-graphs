@@ -1,3 +1,5 @@
+Graphs Specification Language
+
 Graphs es un lenguaje de especificación de grafos que se está diseñando para las prácticas de Procesadores de Lenguajes (ESI@UCLM) para el curso 2008/2009
 
 Autores:
